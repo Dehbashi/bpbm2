@@ -160,6 +160,7 @@ class AppTheme {
         titleMedium: TextStyle(
           fontSize: 24,
           color: primary,
+          fontWeight: FontWeight.bold,
         ),
         // title 3
         titleSmall: TextStyle(
