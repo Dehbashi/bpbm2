@@ -84,7 +84,9 @@ class _MainScreenState extends State<MainScreen> {
         key: _homeKey,
         index: 0,
         currentIndex: currentIndex,
-        child: const HomeScreen(),
+        child: HomeScreen(
+          scrollController: _scrollController,
+        ),
       ),
       navigatorMethod(
         key: _contactKey,

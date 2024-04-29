@@ -12,10 +12,14 @@ final class ServiceDetailInitial extends ServiceDetailState {}
 class ServiceDetailSuccess extends ServiceDetailState {
   final ServiceDetailModel serviceDetail;
 
-  const ServiceDetailSuccess({required this.serviceDetail});
+  const ServiceDetailSuccess({
+    required this.serviceDetail,
+  });
 
   @override
-  List<Object> get props => [serviceDetail];
+  List<Object> get props => [
+        serviceDetail,
+      ];
 }
 
 class ServiceDetailFailed extends ServiceDetailState {}

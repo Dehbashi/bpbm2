@@ -1,12 +1,18 @@
 import 'dart:convert';
 
+import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
 import 'package:bpbm2/data/models/service_list/service_exp_model.dart';
 import 'package:bpbm2/data/models/service_list/service_faq_model.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IFetchServiceDetailDataSource {
   Future<ServiceDetailModel> fetchServiceDetail({required int serviceId});
+  // Future<Image> fetchServiceIcons({
+  //   required int serviceId,
+  //   required int iconNumber,
+  // });
 }
 
 class FetchServiceDetailRemoteDataSource
@@ -36,4 +42,12 @@ class FetchServiceDetailRemoteDataSource
       throw Exception(response.statusCode);
     }
   }
+
+  // @override
+  // Future<Image> fetchServiceIcons(
+  //     {required int serviceId, required int iconNumber}) async {
+  //   final String imagePath = '/$baseAssetUrl/1/icon/10';
+  //   final image = Image.network(imagePath);
+  //   return image;
+  // }
 }

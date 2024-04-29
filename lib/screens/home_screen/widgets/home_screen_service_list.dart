@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreenServiceList extends StatelessWidget {
+  final ScrollController scrollController;
   const HomeScreenServiceList({
     super.key,
     required this.serviceList,
+    required this.scrollController,
   });
 
   final List<ServiceListModel> serviceList;
@@ -15,6 +17,7 @@ class HomeScreenServiceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
+      controller: scrollController,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
         crossAxisSpacing: 2,

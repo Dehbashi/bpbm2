@@ -19,7 +19,12 @@ class ServiceDetailBloc extends Bloc<ServiceDetailEvent, ServiceDetailState> {
               await fetchServiceDetailRepository.fetchServiceDetail(
             serviceId: event.serviceId,
           );
-          emit(ServiceDetailSuccess(serviceDetail: serviceDetail));
+
+          emit(
+            ServiceDetailSuccess(
+              serviceDetail: serviceDetail,
+            ),
+          );
         } catch (e) {
           emit(ServiceDetailFailed());
           customErrorMessenger(

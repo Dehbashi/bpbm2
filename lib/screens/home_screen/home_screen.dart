@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final ScrollController scrollController;
+  const HomeScreen({
+    super.key,
+    required this.scrollController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,10 @@ class HomeScreen extends StatelessWidget {
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.8,
-                    child: HomeScreenServiceList(serviceList: serviceList),
+                    child: HomeScreenServiceList(
+                      serviceList: serviceList,
+                      scrollController: scrollController,
+                    ),
                   ),
                 ],
               ),

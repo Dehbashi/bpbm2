@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -15,7 +18,21 @@ class ServiceDetailScreenWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              'آشنایی با سرویس ${utf8.decode(serviceDetail.serviceExp.title.codeUnits)}',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Image.network(
+              '$baseAssetUrl/${serviceDetail.serviceExp.id}/header.png',
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             HtmlWidget(
               serviceDetail.serviceExp.text,
               customWidgetBuilder: (element) {
@@ -28,6 +45,13 @@ class ServiceDetailScreenWidget extends StatelessWidget {
                   return DefaultTextStyle(
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                           height: 1.5,
+                        ),
+                    child: Text(element.text),
+                  );
+                } else if (element.localName == 'li') {
+                  return DefaultTextStyle(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          height: 2,
                         ),
                     child: Text(element.text),
                   );
