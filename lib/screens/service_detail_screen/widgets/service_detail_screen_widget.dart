@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
+import 'package:bpbm2/screens/service_detail_screen/widgets/service_detail_screen_paragraph_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
@@ -33,31 +34,24 @@ class ServiceDetailScreenWidget extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            HtmlWidget(
-              serviceDetail.serviceExp.text,
-              customWidgetBuilder: (element) {
-                if (element.localName == 'h3' || element.localName == 'h2') {
-                  return DefaultTextStyle(
-                    style: Theme.of(context).textTheme.titleSmall!,
-                    child: Text(element.text),
-                  );
-                } else if (element.localName == 'p') {
-                  return DefaultTextStyle(
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          height: 1.5,
-                        ),
-                    child: Text(element.text),
-                  );
-                } else if (element.localName == 'li') {
-                  return DefaultTextStyle(
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          height: 2,
-                        ),
-                    child: Text(element.text),
-                  );
-                }
-              },
+            ServiceDetailScreenParagraphWidget(serviceDetail: serviceDetail),
+            const SizedBox(
+              height: 10,
             ),
+            if (serviceDetail.serviceFaqs.isNotEmpty)
+              Text(
+                'سوالات متدوال',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+            if (serviceDetail.serviceFaqs.isNotEmpty)
+              ...serviceDetail.serviceFaqs.map((faq) {
+                return Column(
+                  children: [
+                    Text(utf8.decode(faq.title.codeUnits)),
+                    Text(utf8.decode(faq.text.codeUnits)),
+                  ],
+                );
+              }).toList()
           ],
         ),
       ),
