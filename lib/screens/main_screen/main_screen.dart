@@ -4,6 +4,7 @@ import 'package:bpbm2/screens/contact_screen/contact_screen.dart';
 import 'package:bpbm2/screens/home_screen/home_screen.dart';
 import 'package:bpbm2/screens/main_screen/methods/navigator_method.dart';
 import 'package:bpbm2/screens/main_screen/widgets/main_screen_app_bar.dart';
+import 'package:bpbm2/screens/main_screen/widgets/main_screen_drawer.dart';
 import 'package:bpbm2/screens/message_screen/message_screen.dart';
 import 'package:bpbm2/screens/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -140,6 +141,10 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         key: _scaffoldKey,
         appBar: const MainScreenAppBar(),
+        drawer: MainScreenDrawer(
+          navKey: _navigatorKey,
+          scaffoldKey: _scaffoldKey,
+        ),
         body: IndexedStack(
           index: currentIndex,
           children: screens,

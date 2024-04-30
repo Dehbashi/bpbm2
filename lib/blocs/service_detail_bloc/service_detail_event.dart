@@ -17,5 +17,8 @@ class ServiceDetailStarted extends ServiceDetailEvent {
   });
 
   @override
-  List<Object> get props => [serviceId, context];
+  List<Object> get props => [
+        serviceId,
+        context,
+      ];
 }

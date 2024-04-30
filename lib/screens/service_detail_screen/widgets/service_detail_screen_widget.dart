@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bpbm2/common/constants.dart';
+import 'package:bpbm2/common/widgets/faq_widget.dart';
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
 import 'package:bpbm2/screens/service_detail_screen/widgets/service_detail_screen_paragraph_widget.dart';
 import 'package:flutter/material.dart';
@@ -43,13 +44,14 @@ class ServiceDetailScreenWidget extends StatelessWidget {
                 'سوالات متدوال',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
+            const SizedBox(
+              height: 10,
+            ),
             if (serviceDetail.serviceFaqs.isNotEmpty)
               ...serviceDetail.serviceFaqs.map((faq) {
-                return Column(
-                  children: [
-                    Text(utf8.decode(faq.title.codeUnits)),
-                    Text(utf8.decode(faq.text.codeUnits)),
-                  ],
+                return FaqWidget(
+                  question: utf8.decode(faq.title.codeUnits),
+                  answer: utf8.decode(faq.text.codeUnits),
                 );
               }).toList()
           ],

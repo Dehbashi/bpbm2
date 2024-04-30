@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ServiceDetailScreen extends StatelessWidget {
   const ServiceDetailScreen({super.key});
 
+  static const routName = '/service-detail-screen';
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ServiceDetailBloc, ServiceDetailState>(

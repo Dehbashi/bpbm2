@@ -61,6 +61,7 @@ dependencies:
   location_picker_flutter_map: ^1.1.0
   device_info_plus: ^10.1.0
   latlng: ^2.0.7
+  url_launcher: ^6.2.6
 
 dev_dependencies:
   flutter_test:
