@@ -1,5 +1,5 @@
 import 'package:bpbm2/screens/faq_screen/faq_screen.dart';
-import 'package:bpbm2/screens/main_screen/rules_screen/rules_screen.dart';
+import 'package:bpbm2/screens/rules_screen/rules_screen.dart';
 import 'package:bpbm2/screens/support_screen/support_screen.dart';
 import 'package:bpbm2/screens/technician_guide_screen/technician_guide_screen.dart';
 import 'package:flutter/material.dart';
@@ -49,19 +49,20 @@ class MainScreenDrawerQuickLink extends StatelessWidget {
                 } else {
                   throw 'عدم دسترسی به $url';
                 }
+                scaffoldKey.currentState!.closeDrawer();
               }
             },
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(0,0,15,10),
+              padding: const EdgeInsets.fromLTRB(0, 0, 15, 10),
               child: Container(
                 alignment: Alignment.centerRight,
                 child: Text(
                   quickLink.keys.first,
                   textAlign: TextAlign.right,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
             ),
