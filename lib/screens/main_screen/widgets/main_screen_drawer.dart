@@ -28,6 +28,11 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<ServiceListBloc>(context).add(
+      ServiceListStarted(
+        context: context,
+      ),
+    );
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       _animationController = AnimationController(
         duration: const Duration(milliseconds: 300),
@@ -44,11 +49,11 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<ServiceListBloc>(context).add(
-      ServiceListStarted(
-        context: context,
-      ),
-    );
+    // BlocProvider.of<ServiceListBloc>(context).add(
+    //   ServiceListStarted(
+    //     context: context,
+    //   ),
+    // );
     return SizedBox(
       // width: MediaQuery.of(context).size.width * 0.85,
       child: Drawer(
