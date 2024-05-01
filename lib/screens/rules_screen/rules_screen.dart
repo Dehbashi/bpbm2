@@ -2,6 +2,7 @@ import 'package:bpbm2/common/screen_texts_images/rules_screen_content.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/screens/privacy_screen/privacy_screen.dart';
 import 'package:bpbm2/screens/rules_screen/widgets/rules_screen_list_of_rules.dart';
+import 'package:bpbm2/screens/widgets/screen_container_widget.dart';
 import 'package:flutter/material.dart';
 
 class RulesScreen extends StatelessWidget {
@@ -42,36 +43,53 @@ class RulesScreen extends StatelessWidget {
                       );
                     }
                   } else {
-                    return Container(
-                      margin: const EdgeInsets.fromLTRB(10, 15, 10, 50),
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(5),
+                    return ScreenContainerWidget(
+                      textWidget: const Text(
+                        rulesFooterText,
+                        textAlign: TextAlign.justify,
                       ),
-                      child: Column(
-                        children: [
-                          const Text(
-                            rulesFooterText,
-                            textAlign: TextAlign.justify,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          ButtonWidget(
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const PrivacyScreen(),
-                                ),
-                              );
-                            },
-                            text: 'حریم خصوصی کاربران',
-                            buttonWidth: 200,
-                          ),
-                        ],
+                      button: ButtonWidget(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const PrivacyScreen(),
+                            ),
+                          );
+                        },
+                        text: 'حریم خصوصی کاربران',
+                        buttonWidth: 200,
                       ),
                     );
+                    // Container(
+                    //   margin: const EdgeInsets.fromLTRB(10, 15, 10, 50),
+                    //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    //   decoration: BoxDecoration(
+                    //     color: Theme.of(context).colorScheme.primary,
+                    //     borderRadius: BorderRadius.circular(5),
+                    //   ),
+                    //   child: Column(
+                    //     children: [
+                    //       const Text(
+                    //         rulesFooterText,
+                    //         textAlign: TextAlign.justify,
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       ButtonWidget(
+                    //         onPressed: () {
+                    //           Navigator.of(context).push(
+                    //             MaterialPageRoute(
+                    //               builder: (context) => const PrivacyScreen(),
+                    //             ),
+                    //           );
+                    //         },
+                    //         text: 'حریم خصوصی کاربران',
+                    //         buttonWidth: 200,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // );
                   }
                 },
               ),

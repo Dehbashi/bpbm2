@@ -4,6 +4,7 @@ import 'package:bpbm2/common/screen_texts_images/faq_screen_content.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/common/widgets/faq_widget.dart';
 import 'package:bpbm2/screens/contact_screen/contact_screen.dart';
+import 'package:bpbm2/screens/widgets/screen_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,57 +15,38 @@ class FaqScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<FaqBloc>(context).add(FaqStarted(context: context));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: SingleChildScrollView(
         physics: defaultScrollPhysics,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'سوالات پرتکرار',
-              style: Theme.of(context).textTheme.titleSmall,
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Text(
+                'سوالات پرتکرار',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Theme.of(context).colorScheme.primary,
+            ScreenContainerWidget(
+              textWidget: const Text(
+                faqText1,
+                textAlign: TextAlign.justify,
               ),
-              child: Column(
-                children: [
-                  Image.network(faqImage1),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text(
-                          faqText1,
-                          textAlign: TextAlign.justify,
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ButtonWidget(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ContactScreen(),
-                              ),
-                            );
-                          },
-                          text: 'تماس با ما',
-                        ),
-                      ],
+              button: ButtonWidget(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const ContactScreen(),
                     ),
-                  ),
-                ],
+                  );
+                },
+                text: 'تماس با ما',
               ),
+              image: Image.network(faqImage1),
             ),
             BlocBuilder<FaqBloc, FaqState>(
               builder: (context, state) {
@@ -76,7 +58,7 @@ class FaqScreen extends StatelessWidget {
                   final faqs = state.faqs;
                   if (faqs.isNotEmpty) {
                     return Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 10, 5, 5),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
                       child: Column(
                         children: faqs.map((faq) {
                           return FaqWidget(

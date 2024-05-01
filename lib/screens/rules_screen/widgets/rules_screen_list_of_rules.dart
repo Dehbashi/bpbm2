@@ -40,9 +40,11 @@ class RulesScreenListOfRules extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                    Text(
-                      rule.keys.first,
-                      style: Theme.of(context).textTheme.titleSmall,
+                    Expanded(
+                      child: Text(
+                        rule.keys.first,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                     ),
                   ],
                 ),
