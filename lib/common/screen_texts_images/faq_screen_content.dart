@@ -1,4 +1,6 @@
-const String text1 =
+import 'package:bpbm2/common/constants.dart';
+
+const String faqText1 =
     'کاربر گرامی ما در این صفحه سعی کردیم به تمامی پرشسهایی که تا به حال از ما پرسیده شده و ممکنه برای شما هم سوال پیش اومده باشه پاسخ بدیم ، در صورتی که پاسخ سوالات خودتون رو تو این بخش پیدا نکردید می تونید از طریق تکمیل فرم تماس در صفحه تماس با ما یا تماس با شماره های بخش پشتیبانی، پاسخ پرسشهای خودتون رو دریافت کنید ، همکاران ما پاسخگوی شما هستند.';
 
-const String headerImage = 'https://bespareshbema.com/assets/images/faq.png';
+const String faqImage1 = '$baseAssetUrl/images/faq.png';

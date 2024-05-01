@@ -34,7 +34,7 @@ class FaqScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Image.network(headerImage),
+                  Image.network(faqImage1),
                   const SizedBox(
                     height: 20,
                   ),
@@ -44,7 +44,7 @@ class FaqScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         const Text(
-                          text1,
+                          faqText1,
                           textAlign: TextAlign.justify,
                         ),
                         const SizedBox(

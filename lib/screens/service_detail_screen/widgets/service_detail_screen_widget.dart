@@ -30,7 +30,7 @@ class ServiceDetailScreenWidget extends StatelessWidget {
               height: 10,
             ),
             Image.network(
-              '$baseAssetUrl/${serviceDetail.serviceExp.id}/header.png',
+              '$baseAssetUrl/services/${serviceDetail.serviceExp.id}/header.png',
             ),
             const SizedBox(
               height: 10,

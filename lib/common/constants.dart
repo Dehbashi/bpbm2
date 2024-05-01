@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const baseUrl = 'https://s1.lianerp.com/api/public';
 
-const baseAssetUrl = 'https://bespareshbema.com/assets/services';
+const baseAssetUrl = 'https://bespareshbema.com/assets';
 
 const defaultScrollPhysics = BouncingScrollPhysics();
 
