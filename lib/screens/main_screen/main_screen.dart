@@ -1,5 +1,5 @@
 import 'package:bpbm2/common/constants.dart';
-import 'package:bpbm2/screens/collaboration_screen/collaboration_screen.dart';
+import 'package:bpbm2/screens/about_us_screen/about_us_screen.dart';
 import 'package:bpbm2/screens/contact_screen/contact_screen.dart';
 import 'package:bpbm2/screens/faq_screen/faq_screen.dart';
 import 'package:bpbm2/screens/home_screen/home_screen.dart';
@@ -20,20 +20,25 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
   final List<int> _history = [];
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
+  final ScrollController _homeScrollController = ScrollController();
+  // final ScrollController _contactScrollController = ScrollController();
+  final ScrollController _aboutUsScrollController = ScrollController();
+  final ScrollController _faqScrollController = ScrollController();
+  // final ScrollController _profileScrollController = ScrollController();
 
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
   GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
   GlobalKey<NavigatorState> _homeKey = GlobalKey();
   GlobalKey<NavigatorState> _contactKey = GlobalKey();
-  GlobalKey<NavigatorState> _collaborationKey = GlobalKey();
+  GlobalKey<NavigatorState> _aboutUsKey = GlobalKey();
   GlobalKey<NavigatorState> _faqKey = GlobalKey();
   GlobalKey<NavigatorState> _profileKey = GlobalKey();
 
   late final map = {
     0: _homeKey,
     1: _contactKey,
-    2: _collaborationKey,
+    2: _aboutUsKey,
     3: _faqKey,
     4: _profileKey,
   };
@@ -67,6 +72,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
+    _homeScrollController.dispose();
+    // _contactScrollController.dispose();
+    _aboutUsScrollController.dispose();
+    _faqScrollController.dispose();
+    // _profileScrollController.dispose();
     super.dispose();
   }
 
@@ -78,8 +88,42 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+  void onFaqTapped() {
+    if (currentIndex != 3) {
+      setState(() {
+        currentIndex = 3;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    switch (currentIndex) {
+      case 0:
+        _navigatorKey = _homeKey;
+        _scrollController = _homeScrollController;
+        break;
+      case 1:
+        _navigatorKey = _contactKey;
+        // _scrollController = _contactScrollController;
+        break;
+      case 2:
+        _navigatorKey = _aboutUsKey;
+        _scrollController = _aboutUsScrollController;
+        break;
+      case 3:
+        _navigatorKey = _faqKey;
+        _scrollController = _faqScrollController;
+        break;
+      case 4:
+        _navigatorKey = _profileKey;
+        // _scrollController = _profileScrollController;
+        break;
+      default:
+        _navigatorKey = _homeKey;
+        _scrollController = _homeScrollController;
+    }
+
     final List<Widget> screens = [
       navigatorMethod(
         key: _homeKey,
@@ -96,16 +140,20 @@ class _MainScreenState extends State<MainScreen> {
         child: const ContactScreen(),
       ),
       navigatorMethod(
-        key: _collaborationKey,
+        key: _aboutUsKey,
         index: 2,
         currentIndex: currentIndex,
-        child: const CollaborationScreen(),
+        child: AboutUsScreen(
+          scrollController: _scrollController,
+        ),
       ),
       navigatorMethod(
         key: _faqKey,
         index: 3,
         currentIndex: currentIndex,
-        child: const FaqScreen(),
+        child: FaqScreen(
+          scrollController: _scrollController,
+        ),
       ),
       navigatorMethod(
         key: _profileKey,
@@ -114,26 +162,6 @@ class _MainScreenState extends State<MainScreen> {
         child: const ProfileScreen(),
       ),
     ];
-
-    switch (currentIndex) {
-      case 0:
-        _navigatorKey = _homeKey;
-        break;
-      case 1:
-        _navigatorKey = _contactKey;
-        break;
-      case 2:
-        _navigatorKey = _collaborationKey;
-        break;
-      case 3:
-        _navigatorKey = _faqKey;
-        break;
-      case 4:
-        _navigatorKey = _profileKey;
-        break;
-      default:
-        _navigatorKey = _homeKey;
-    }
 
     return PopScope(
       canPop: false,
@@ -144,6 +172,7 @@ class _MainScreenState extends State<MainScreen> {
         drawer: MainScreenDrawer(
           navKey: _navigatorKey,
           scaffoldKey: _scaffoldKey,
+          onFaqTapped: onFaqTapped,
         ),
         body: IndexedStack(
           index: currentIndex,

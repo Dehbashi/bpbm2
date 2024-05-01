@@ -8,11 +8,13 @@ import 'package:url_launcher/url_launcher.dart';
 class MainScreenDrawerQuickLink extends StatelessWidget {
   final GlobalKey<NavigatorState> navKey;
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final Function onFaqTapped;
 
   const MainScreenDrawerQuickLink({
     super.key,
     required this.navKey,
     required this.scaffoldKey,
+    required this.onFaqTapped,
   });
 
   @override
@@ -26,16 +28,19 @@ class MainScreenDrawerQuickLink extends StatelessWidget {
     ];
 
     return SizedBox(
-      height: 200,
+      height: 220,
       child: ListView.builder(
-        shrinkWrap: true,
+        shrinkWrap: false,
         controller: ScrollController(),
         itemCount: quickLinks.length,
         itemBuilder: (context, index) {
           final quickLink = quickLinks[index];
           return InkWell(
             onTap: () async {
-              if (index != 4) {
+              if (index == 0) {
+                onFaqTapped();
+                scaffoldKey.currentState!.closeDrawer();
+              } else if (index != 4) {
                 navKey.currentState!.push(
                   MaterialPageRoute(
                     builder: (context) => quickLink.values.first,

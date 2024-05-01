@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FaqScreen extends StatelessWidget {
-  const FaqScreen({super.key});
+  final ScrollController? scrollController;
+  const FaqScreen({super.key, this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class FaqScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
       child: SingleChildScrollView(
+        controller: scrollController,
         physics: defaultScrollPhysics,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

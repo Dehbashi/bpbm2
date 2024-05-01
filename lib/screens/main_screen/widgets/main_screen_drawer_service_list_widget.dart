@@ -37,7 +37,7 @@ class MainScreenDrawerServiceListWidget extends StatelessWidget {
         scaffoldKey.currentState!.closeDrawer();
       },
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
         child: Row(
           children: [
             Image.asset(

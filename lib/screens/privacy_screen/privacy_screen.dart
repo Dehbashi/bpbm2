@@ -30,7 +30,7 @@ class PrivacyScreen extends StatelessWidget {
                     Expanded(
                       child: Text(
                         privacyHeaderText,
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(height: 2),
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
                   ],

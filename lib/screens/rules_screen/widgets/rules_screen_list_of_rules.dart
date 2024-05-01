@@ -53,9 +53,6 @@ class RulesScreenListOfRules extends StatelessWidget {
                 ),
                 Text(
                   rule.values.first.keys.first,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        height: 1.5,
-                      ),
                   textAlign: TextAlign.justify,
                 ),
               ],

@@ -175,6 +175,7 @@ class AppTheme {
         bodyMedium: TextStyle(
           fontSize: 16,
           color: onBackground,
+          height: 1.7,
         ),
         // body 3
         bodySmall: TextStyle(

@@ -49,9 +49,11 @@ class HomeScreenServiceList extends StatelessWidget {
                 width: 50,
                 height: 50,
               ),
-              Text(
-                service.title,
-                textAlign: TextAlign.center,
+              Expanded(
+                child: Text(
+                  service.title,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

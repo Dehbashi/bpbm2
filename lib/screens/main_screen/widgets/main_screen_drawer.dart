@@ -10,10 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainScreenDrawer extends StatefulWidget {
   final GlobalKey<NavigatorState> navKey;
   final GlobalKey<ScaffoldState> scaffoldKey;
+  final Function onFaqTapped;
   const MainScreenDrawer({
     super.key,
     required this.navKey,
     required this.scaffoldKey,
+    required this.onFaqTapped,
   });
 
   @override
@@ -73,7 +75,7 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                       final serviceList = state.serviceList;
                       return AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
-                        height: showAllItems ? 400 : 270,
+                        height: showAllItems ? 400 : 260,
                         child: Scrollbar(
                           controller: scrollController,
                           thumbVisibility: true,
@@ -123,6 +125,7 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                 MainScreenDrawerQuickLink(
                   navKey: widget.navKey,
                   scaffoldKey: widget.scaffoldKey,
+                  onFaqTapped: widget.onFaqTapped,
                 ),
                 MainScreenDrawerSocialMediaLink(
                   scaffoldKey: widget.scaffoldKey,
