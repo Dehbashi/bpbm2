@@ -27,7 +27,7 @@ class RulesScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   if (index <= rules.length - 1) {
                     final rule = rules[index];
-                    if (index != 1) {
+                    if (index != 0) {
                       return RulesScreenListOfRules(rule: rule);
                     } else {
                       return Column(
@@ -36,6 +36,7 @@ class RulesScreen extends StatelessWidget {
                           RulesScreenListOfRules(
                             rule: rule,
                             generalRulesHeader: 'قواعد عمومی',
+                            icon: Icons.security_rounded,
                           ),
                         ],
                       );
