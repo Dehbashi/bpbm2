@@ -90,7 +90,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    void onDrawerQuickLinkTapped(int newIndex) {
+    void onInsideLinkTapped(int newIndex) {
       if (currentIndex != newIndex) {
         setState(() {
           _history.remove(currentIndex);
@@ -155,7 +155,7 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: currentIndex,
         child: FaqScreen(
           scrollController: _scrollController,
-          onAboutUsTapped: onDrawerQuickLinkTapped,
+          onAboutUsTapped: onInsideLinkTapped,
         ),
       ),
       navigatorMethod(
@@ -175,7 +175,7 @@ class _MainScreenState extends State<MainScreen> {
         drawer: MainScreenDrawer(
           navKey: _navigatorKey,
           scaffoldKey: _scaffoldKey,
-          onDrawerQuickLinkTapped: onDrawerQuickLinkTapped,
+          onDrawerQuickLinkTapped: onInsideLinkTapped,
         ),
         body: IndexedStack(
           index: currentIndex,
