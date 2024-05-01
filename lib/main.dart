@@ -1,5 +1,6 @@
 import 'package:bpbm2/app_theme/app_theme.dart';
 import 'package:bpbm2/blocs/app_theme_bloc/app_theme_bloc.dart';
+import 'package:bpbm2/blocs/faq_bloc/faq_bloc.dart';
 import 'package:bpbm2/blocs/open_app_bloc/open_app_bloc.dart';
 import 'package:bpbm2/blocs/service_detail_bloc/service_detail_bloc.dart';
 import 'package:bpbm2/blocs/service_list_bloc/service_list_bloc.dart';
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (context) => ServiceListBloc()),
         BlocProvider(create: (context) => ServiceDetailBloc()),
+        BlocProvider(create: (context) => FaqBloc()),
       ],
       child: BlocBuilder<AppThemeBloc, AppThemeState>(
         builder: (context, state) {

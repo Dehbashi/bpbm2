@@ -1,9 +1,9 @@
+import 'package:bpbm2/data/models/faq_list/faq_model.dart';
 import 'package:bpbm2/data/models/service_list/service_exp_model.dart';
-import 'package:bpbm2/data/models/service_list/service_faq_model.dart';
 
 class ServiceDetailModel {
   final ServiceExpModel serviceExp;
-  final List<ServiceFaqModel> serviceFaqs;
+  final List<FaqModel> serviceFaqs;
 
   const ServiceDetailModel({
     required this.serviceExp,
@@ -13,6 +13,6 @@ class ServiceDetailModel {
   ServiceDetailModel.fromJson(Map<String, dynamic> json)
       : serviceExp = json['data'],
         serviceFaqs = (json['faq'] as List<dynamic>).map((serviceFaq) {
-          return ServiceFaqModel.fromJson(json['faq']);
+          return FaqModel.fromJson(json['faq']);
         }).toList();
 }

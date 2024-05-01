@@ -1,4 +1,6 @@
+import 'package:bpbm2/blocs/faq_bloc/faq_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FaqWidget extends StatelessWidget {
   final String question;
@@ -62,7 +64,7 @@ class FaqWidget extends StatelessWidget {
                   child: Text(
                     answer,
                     style: Theme.of(context).textTheme.bodyMedium,
-                    // textAlign: TextAlign.justify,
+                    textAlign: TextAlign.justify,
                   ),
                 ),
               ],

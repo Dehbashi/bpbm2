@@ -1,11 +1,11 @@
 import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/screens/collaboration_screen/collaboration_screen.dart';
 import 'package:bpbm2/screens/contact_screen/contact_screen.dart';
+import 'package:bpbm2/screens/faq_screen/faq_screen.dart';
 import 'package:bpbm2/screens/home_screen/home_screen.dart';
 import 'package:bpbm2/screens/main_screen/methods/navigator_method.dart';
 import 'package:bpbm2/screens/main_screen/widgets/main_screen_app_bar.dart';
 import 'package:bpbm2/screens/main_screen/widgets/main_screen_drawer.dart';
-import 'package:bpbm2/screens/message_screen/message_screen.dart';
 import 'package:bpbm2/screens/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,14 +27,14 @@ class _MainScreenState extends State<MainScreen> {
   GlobalKey<NavigatorState> _homeKey = GlobalKey();
   GlobalKey<NavigatorState> _contactKey = GlobalKey();
   GlobalKey<NavigatorState> _collaborationKey = GlobalKey();
-  GlobalKey<NavigatorState> _messageKey = GlobalKey();
+  GlobalKey<NavigatorState> _faqKey = GlobalKey();
   GlobalKey<NavigatorState> _profileKey = GlobalKey();
 
   late final map = {
     0: _homeKey,
     1: _contactKey,
     2: _collaborationKey,
-    3: _messageKey,
+    3: _faqKey,
     4: _profileKey,
   };
 
@@ -102,10 +102,10 @@ class _MainScreenState extends State<MainScreen> {
         child: const CollaborationScreen(),
       ),
       navigatorMethod(
-        key: _messageKey,
+        key: _faqKey,
         index: 3,
         currentIndex: currentIndex,
-        child: const MessageScreen(),
+        child: const FaqScreen(),
       ),
       navigatorMethod(
         key: _profileKey,
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
         _navigatorKey = _collaborationKey;
         break;
       case 3:
-        _navigatorKey = _messageKey;
+        _navigatorKey = _faqKey;
         break;
       case 4:
         _navigatorKey = _profileKey;

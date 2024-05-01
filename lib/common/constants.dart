@@ -4,7 +4,7 @@ const baseUrl = 'https://s1.lianerp.com/api/public';
 
 const baseAssetUrl = 'https://bespareshbema.com/assets/services';
 
-const scrollPhysics = BouncingScrollPhysics();
+const defaultScrollPhysics = BouncingScrollPhysics();
 
 const List<BottomNavigationBarItem> bottomNavBarItem = [
   BottomNavigationBarItem(

@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:bpbm2/common/constants.dart';
+import 'package:bpbm2/data/models/faq_list/faq_model.dart';
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
 import 'package:bpbm2/data/models/service_list/service_exp_model.dart';
-import 'package:bpbm2/data/models/service_list/service_faq_model.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IFetchServiceDetailDataSource {
@@ -30,9 +28,9 @@ class FetchServiceDetailRemoteDataSource
           data['pageProps']['service']['data'] as Map<String, dynamic>;
       final mainDataQuestions = mainData['faq'] as List<dynamic>;
       final serviceExp = ServiceExpModel.fromJson(mainData['data']);
-      final List<ServiceFaqModel> serviceFaqs = [];
+      final List<FaqModel> serviceFaqs = [];
       for (var question in mainDataQuestions) {
-        serviceFaqs.add(ServiceFaqModel.fromJson(question));
+        serviceFaqs.add(FaqModel.fromJson(question));
       }
       return ServiceDetailModel(
         serviceExp: serviceExp,

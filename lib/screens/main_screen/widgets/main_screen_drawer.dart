@@ -24,6 +24,7 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
     with SingleTickerProviderStateMixin {
   bool showAllItems = false;
   late AnimationController _animationController;
+  final scrollController = ScrollController();
 
   @override
   void initState() {
@@ -49,25 +50,19 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
 
   @override
   Widget build(BuildContext context) {
-    // BlocProvider.of<ServiceListBloc>(context).add(
-    //   ServiceListStarted(
-    //     context: context,
-    //   ),
-    // );
     return SizedBox(
       // width: MediaQuery.of(context).size.width * 0.85,
       child: Drawer(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(15, 40, 15, 0),
           child: SingleChildScrollView(
-            controller: ScrollController(),
+            controller: scrollController,
+            physics: defaultScrollPhysics,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const MainScreenDrawerHeader(),
-                Divider(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                const Divider(),
                 BlocBuilder<ServiceListBloc, ServiceListState>(
                   builder: (context, state) {
                     if (state is ServiceListFailed) {
@@ -76,12 +71,15 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                       );
                     } else if (state is ServiceListSuccessful) {
                       final serviceList = state.serviceList;
-                      return SizedBox(
-                        height: 270,
+                      return AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        height: showAllItems ? 400 : 270,
                         child: Scrollbar(
+                          controller: scrollController,
                           thumbVisibility: true,
                           child: ListView.builder(
-                            physics: scrollPhysics,
+                            controller: ScrollController(),
+                            physics: defaultScrollPhysics,
                             itemCount: serviceList.length,
                             itemBuilder: (context, index) {
                               final service = serviceList[index];
@@ -118,11 +116,10 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                   },
                   child: Text(
                     showAllItems ? 'موارد کمتر' : 'موارد بیشتر ...',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),
-                Divider(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+                const Divider(),
                 MainScreenDrawerQuickLink(
                   navKey: widget.navKey,
                   scaffoldKey: widget.scaffoldKey,

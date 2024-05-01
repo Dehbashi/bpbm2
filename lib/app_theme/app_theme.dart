@@ -21,7 +21,7 @@ class AppTheme {
   final Color shadowColor;
 
   AppTheme.light()
-      : primary = const Color(0xff04A8B2),
+      : primary = const Color(0xFFCDEEF0),
         onPrimary = const Color(0xff04A8B2),
         secondary = const Color(0xffFF0D55),
         onSecodary = const Color(0xffFF0D55),
@@ -33,7 +33,7 @@ class AppTheme {
         error = const Color(0xffB10606),
         onError = const Color(0xffB10606),
         background = const Color(0xffF5F7F7),
-        onBackground = const Color(0xffF5F7F7),
+        onBackground = const Color(0xff025459),
         surface = const Color(0xffF5F7F7),
         onSurface = const Color(0xffF5F7F7),
         deepYellow = const Color(0xffFFB800),
@@ -63,6 +63,7 @@ class AppTheme {
   ThemeData getTheme() {
     const String defaultFontFamily = 'iransans';
     return ThemeData(
+      dividerColor: onPrimary,
       fontFamily: defaultFontFamily,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: background,
@@ -88,17 +89,15 @@ class AppTheme {
       //   ),
       // ),
       textTheme: faPrimaryTextTheme,
-      // elevatedButtonTheme: ElevatedButtonThemeData(
-      //   style: ButtonStyle(
-      //     backgroundColor: MaterialStateProperty.all(primary),
-      //     foregroundColor: MaterialStateProperty.all(onPrimary),
-      //     shape: MaterialStateProperty.all(
-      //       RoundedRectangleBorder(
-      //         borderRadius: BorderRadius.circular(10),
-      //       ),
-      //     ),
-      //   ),
-      // ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+      ),
       // appBarTheme: AppBarTheme(
       //   backgroundColor: primary,
       //   titleTextStyle: TextStyle(
@@ -159,24 +158,28 @@ class AppTheme {
         // title 2
         titleMedium: TextStyle(
           fontSize: 24,
-          color: primary,
+          color: onBackground,
           fontWeight: FontWeight.bold,
         ),
         // title 3
         titleSmall: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,
-          color: primary,
+          color: onBackground,
         ),
         // body 1
         bodyLarge: const TextStyle(
           fontSize: 18,
         ),
         // body 2
-        bodyMedium: TextStyle(fontSize: 16, color: primary),
+        bodyMedium: TextStyle(
+          fontSize: 16,
+          color: onBackground,
+        ),
         // body 3
-        bodySmall: const TextStyle(
+        bodySmall: TextStyle(
           fontSize: 14,
+          color: onBackground
         ),
         // caption 1
         labelLarge: const TextStyle(
