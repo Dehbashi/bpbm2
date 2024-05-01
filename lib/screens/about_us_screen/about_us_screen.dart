@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class AboutUsScreen extends StatelessWidget {
   final ScrollController scrollController;
 
-  const AboutUsScreen({super.key, required this.scrollController});
+  const AboutUsScreen(
+      {super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
+    
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
       child: ListView.builder(

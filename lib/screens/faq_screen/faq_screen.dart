@@ -10,7 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FaqScreen extends StatelessWidget {
   final ScrollController? scrollController;
-  const FaqScreen({super.key, this.scrollController});
+  final Function onAboutUsTapped;
+  const FaqScreen({
+    super.key,
+    this.scrollController,
+    required this.onAboutUsTapped,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +45,12 @@ class FaqScreen extends StatelessWidget {
               ),
               button: ButtonWidget(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const ContactScreen(),
-                    ),
-                  );
+                  onAboutUsTapped(1);
+                  // Navigator.of(context).push(
+                  //   MaterialPageRoute(
+                  //     builder: (context) => const ContactScreen(),
+                  //   ),
+                  // );
                 },
                 text: 'تماس با ما',
               ),

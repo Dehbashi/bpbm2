@@ -88,16 +88,18 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  void onFaqTapped() {
-    if (currentIndex != 3) {
-      setState(() {
-        currentIndex = 3;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    void onDrawerQuickLinkTapped(int newIndex) {
+      if (currentIndex != newIndex) {
+        setState(() {
+          _history.remove(currentIndex);
+          _history.add(currentIndex);
+          currentIndex = newIndex;
+        });
+      }
+    }
+
     switch (currentIndex) {
       case 0:
         _navigatorKey = _homeKey;
@@ -153,6 +155,7 @@ class _MainScreenState extends State<MainScreen> {
         currentIndex: currentIndex,
         child: FaqScreen(
           scrollController: _scrollController,
+          onAboutUsTapped: onDrawerQuickLinkTapped,
         ),
       ),
       navigatorMethod(
@@ -172,7 +175,7 @@ class _MainScreenState extends State<MainScreen> {
         drawer: MainScreenDrawer(
           navKey: _navigatorKey,
           scaffoldKey: _scaffoldKey,
-          onFaqTapped: onFaqTapped,
+          onDrawerQuickLinkTapped: onDrawerQuickLinkTapped,
         ),
         body: IndexedStack(
           index: currentIndex,

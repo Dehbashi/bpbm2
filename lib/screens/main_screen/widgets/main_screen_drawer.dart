@@ -10,12 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainScreenDrawer extends StatefulWidget {
   final GlobalKey<NavigatorState> navKey;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  final Function onFaqTapped;
+  final Function onDrawerQuickLinkTapped;
   const MainScreenDrawer({
     super.key,
     required this.navKey,
     required this.scaffoldKey,
-    required this.onFaqTapped,
+    required this.onDrawerQuickLinkTapped,
   });
 
   @override
@@ -125,7 +125,7 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                 MainScreenDrawerQuickLink(
                   navKey: widget.navKey,
                   scaffoldKey: widget.scaffoldKey,
-                  onFaqTapped: widget.onFaqTapped,
+                  onDrawerQuickLinkTapped: widget.onDrawerQuickLinkTapped,
                 ),
                 MainScreenDrawerSocialMediaLink(
                   scaffoldKey: widget.scaffoldKey,

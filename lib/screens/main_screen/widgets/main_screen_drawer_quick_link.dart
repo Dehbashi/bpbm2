@@ -8,19 +8,23 @@ import 'package:url_launcher/url_launcher.dart';
 class MainScreenDrawerQuickLink extends StatelessWidget {
   final GlobalKey<NavigatorState> navKey;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  final Function onFaqTapped;
+  final Function onDrawerQuickLinkTapped;
 
   const MainScreenDrawerQuickLink({
     super.key,
     required this.navKey,
     required this.scaffoldKey,
-    required this.onFaqTapped,
+    required this.onDrawerQuickLinkTapped,
   });
 
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> quickLinks = [
-      {'پرسش های پرتکرار': const FaqScreen()},
+      {
+        'پرسش های پرتکرار': FaqScreen(
+          onAboutUsTapped: onDrawerQuickLinkTapped,
+        )
+      },
       {'درخواست همکاری': const TechnicianGuideScreen()},
       {'پشتیبانی': const SupportScreen()},
       {'قوانین و مقررات': const RulesScreen()},
@@ -38,7 +42,7 @@ class MainScreenDrawerQuickLink extends StatelessWidget {
           return InkWell(
             onTap: () async {
               if (index == 0) {
-                onFaqTapped();
+                onDrawerQuickLinkTapped(3);
                 scaffoldKey.currentState!.closeDrawer();
               } else if (index != 4) {
                 navKey.currentState!.push(
