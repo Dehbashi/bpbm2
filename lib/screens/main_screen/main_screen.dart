@@ -6,6 +6,7 @@ import 'package:bpbm2/screens/home_screen/home_screen.dart';
 import 'package:bpbm2/screens/main_screen/methods/navigator_method.dart';
 import 'package:bpbm2/screens/main_screen/widgets/main_screen_app_bar.dart';
 import 'package:bpbm2/screens/main_screen/widgets/main_screen_drawer.dart';
+import 'package:bpbm2/screens/profile_screen/profile_drawer/profile_drawer_screen.dart';
 import 'package:bpbm2/screens/profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,7 +51,10 @@ class _MainScreenState extends State<MainScreen> {
         map[currentIndex]!.currentState!;
     if (_scaffoldKey.currentState!.isDrawerOpen) {
       _scaffoldKey.currentState!.closeDrawer();
-    } else {
+    } else if (_scaffoldKey.currentState!.isEndDrawerOpen) {
+      _scaffoldKey.currentState!.closeEndDrawer();
+    } 
+    else {
       if (currentSelectedTabNavigatorState.canPop()) {
         appClose = false;
         currentSelectedTabNavigatorState.pop();
@@ -180,6 +184,7 @@ class _MainScreenState extends State<MainScreen> {
           scaffoldKey: _scaffoldKey,
           onDrawerQuickLinkTapped: onInsideLinkTapped,
         ),
+        endDrawer: const ProfileDrawerScreen(),
         body: IndexedStack(
           index: currentIndex,
           children: screens,
@@ -188,23 +193,27 @@ class _MainScreenState extends State<MainScreen> {
           currentIndex: currentIndex,
           items: bottomNavBarItem,
           onTap: (index) {
-            final NavigatorState currentSelectedTabNavigatorState =
-                map[currentIndex]!.currentState!;
-            if (index == currentIndex) {
-              if (currentSelectedTabNavigatorState.canPop()) {
-                currentSelectedTabNavigatorState.popUntil((_) {
-                  return !currentSelectedTabNavigatorState.canPop();
-                });
-              } else {
-                scrollToTop();
+            if (index != 4) {
+              final NavigatorState currentSelectedTabNavigatorState =
+                  map[currentIndex]!.currentState!;
+              if (index == currentIndex) {
+                if (currentSelectedTabNavigatorState.canPop()) {
+                  currentSelectedTabNavigatorState.popUntil((_) {
+                    return !currentSelectedTabNavigatorState.canPop();
+                  });
+                } else {
+                  scrollToTop();
+                }
+                return;
               }
-              return;
+              setState(() {
+                _history.remove(currentIndex);
+                _history.add(currentIndex);
+                currentIndex = index;
+              });
+            } else {
+              _scaffoldKey.currentState!.openEndDrawer();
             }
-            setState(() {
-              _history.remove(currentIndex);
-              _history.add(currentIndex);
-              currentIndex = index;
-            });
           },
         ),
       ),
