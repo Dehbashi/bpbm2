@@ -31,7 +31,7 @@ class AppTheme {
         information2 = const Color(0xff0066FF),
         warning = const Color(0xffFFA14A),
         error = const Color(0xffB10606),
-        onError = const Color(0xffB10606),
+        onError = Colors.white,
         background = const Color(0xffF5F7F7),
         onBackground = const Color(0xff025459),
         surface = const Color(0xffF5F7F7),
@@ -51,7 +51,7 @@ class AppTheme {
         information2 = const Color(0xff0066FF),
         warning = const Color(0xffFFA14A),
         error = const Color(0xffB10606),
-        onError = const Color(0xffB10606),
+        onError = Colors.white,
         background = const Color(0xffF5F7F7),
         onBackground = const Color(0xffF5F7F7),
         surface = const Color(0xffF5F7F7),
@@ -169,8 +169,9 @@ class AppTheme {
           color: onBackground,
         ),
         // body 1
-        bodyLarge: const TextStyle(
+        bodyLarge: TextStyle(
           fontSize: 18,
+          color: onBackground,
         ),
         // body 2
         bodyMedium: TextStyle(

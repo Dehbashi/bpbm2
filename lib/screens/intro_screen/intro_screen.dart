@@ -5,10 +5,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-class IntroScreen extends StatelessWidget {
+class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
 
   static const size = Size(25, 25);
+
+  @override
+  State<IntroScreen> createState() => _IntroScreenState();
+}
+
+class _IntroScreenState extends State<IntroScreen> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +83,8 @@ class IntroScreen extends StatelessWidget {
             ),
       ),
       dotsDecorator: DotsDecorator(
-        size: size,
-        activeSize: size,
+        size: IntroScreen.size,
+        activeSize: IntroScreen.size,
         shape:
             ContinuousRectangleBorder(borderRadius: BorderRadius.circular(15)),
         activeShape:

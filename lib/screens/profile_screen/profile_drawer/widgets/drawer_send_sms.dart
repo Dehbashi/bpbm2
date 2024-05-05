@@ -1,6 +1,7 @@
 import 'package:bpbm2/blocs/auth_bloc/auth_bloc.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/common/widgets/text_field_widget.dart';
+import 'package:bpbm2/screens/profile_screen/profile_drawer/widgets/profile_drawer_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,35 +29,25 @@ class _DrawerSendSmsScreenState extends State<DrawerSendSmsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/images/logo.png',
-            width: 150,
+          const ProfileDrawerHeader(
+            icon: Icons.lock,
+            text: 'ورود کاربر',
           ),
           const SizedBox(
-            height: 15,
+            height: 40,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.lock,
-                size: 30,
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-              Text(
-                'ورود کاربر',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ],
+          const Padding(
+            padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+            child: Text(
+              'کاربر گرامی!\n'
+              'به سامانه بسپارش به ما خوش آمدید!\n'
+              'شماره تلفن همراه خود را با قرار دادن صفحه کلید روی زبان انگلیسی وارد کنید.',
+              textAlign: TextAlign.justify,
+            ),
           ),
-          const SizedBox(height: 40,),
-          const Text(
-            'کاربر گرامی!\n'
-            'به سامانه بسپارش به ما خوش آمدید!\n'
-            'شماره تلفن همراه خود را با قرار دادن صفحه کلید روی زبان انگلیسی وارد کنید.',
-            textAlign: TextAlign.justify,
+          const SizedBox(
+            height: 40,
           ),
-          const SizedBox(height: 40,),
           Form(
             key: _formKey,
             child: Column(
@@ -78,20 +69,31 @@ class _DrawerSendSmsScreenState extends State<DrawerSendSmsScreen> {
                   },
                   hintText: 'شماره تلفن همراه',
                 ),
-                const SizedBox(height: 40,),
-                ButtonWidget(
-                  buttonWidth: 200,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      BlocProvider.of<AuthBloc>(context).add(
-                        AuthSendSms(
-                          context,
-                          cellNumber: smsController.text,
-                        ),
+                const SizedBox(
+                  height: 40,
+                ),
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    if (state is AuthInitial) {
+                      return ButtonWidget(
+                        isLoading: state.isLoading,
+                        buttonWidth: 200,
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            BlocProvider.of<AuthBloc>(context).add(
+                              AuthSendSms(
+                                context,
+                                cellNumber: smsController.text,
+                              ),
+                            );
+                          }
+                        },
+                        text: 'ارسال کد فعالسازی',
                       );
+                    } else {
+                      return Container();
                     }
                   },
-                  text: 'ارسال کد فعالسازی',
                 ),
               ],
             ),

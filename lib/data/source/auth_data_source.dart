@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/data/models/auth_model/auth_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IAuthDataSource {
   Future<void> sendSms({required String cellNumber});
@@ -26,6 +27,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
+      saveCellNumber(cellNumber);
     } else {
       throw Exception(response.statusCode);
     }
@@ -38,7 +40,7 @@ class AuthRemoteDataSource implements IAuthDataSource {
   }) async {
     final url = Uri.parse('$baseUrl/auth/otp-provider/verify');
     final headers = {
-      'Tokenpublic': tokenPublic,
+      'Tokenpublic': 'bpbm',
       'Content-Type': 'application/json',
     };
     final body = jsonEncode({
@@ -55,5 +57,10 @@ class AuthRemoteDataSource implements IAuthDataSource {
     } else {
       throw Exception(response.statusCode);
     }
+  }
+
+  Future<void> saveCellNumber(String cellNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('cellNumber', cellNumber);
   }
 }

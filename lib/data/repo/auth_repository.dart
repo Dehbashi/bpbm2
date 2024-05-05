@@ -67,7 +67,10 @@ class AuthRepository implements IAuthRepository {
   @override
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.clear();
+    prefs.remove('token');
+    prefs.remove('userId');
+    prefs.remove('cellNumber');
+    // prefs.clear();
     authChangeNotifier.value = null;
   }
 }

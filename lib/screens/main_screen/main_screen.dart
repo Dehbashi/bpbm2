@@ -53,8 +53,7 @@ class _MainScreenState extends State<MainScreen> {
       _scaffoldKey.currentState!.closeDrawer();
     } else if (_scaffoldKey.currentState!.isEndDrawerOpen) {
       _scaffoldKey.currentState!.closeEndDrawer();
-    } 
-    else {
+    } else {
       if (currentSelectedTabNavigatorState.canPop()) {
         appClose = false;
         currentSelectedTabNavigatorState.pop();
@@ -73,6 +72,14 @@ class _MainScreenState extends State<MainScreen> {
     }
   }
 
+  void scrollToTop() {
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
+  }
+
   @override
   void dispose() {
     _scrollController.dispose();
@@ -82,14 +89,6 @@ class _MainScreenState extends State<MainScreen> {
     _faqScrollController.dispose();
     // _profileScrollController.dispose();
     super.dispose();
-  }
-
-  void scrollToTop() {
-    _scrollController.animateTo(
-      0,
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-    );
   }
 
   @override
