@@ -43,21 +43,24 @@ class RulesScreen extends StatelessWidget {
                       );
                     }
                   } else {
-                    return ScreenContainerWidget(
-                      textWidget: const Text(
-                        rulesFooterText,
-                        textAlign: TextAlign.justify,
-                      ),
-                      button: ButtonWidget(
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => const PrivacyScreen(),
-                            ),
-                          );
-                        },
-                        text: 'حریم خصوصی کاربران',
-                        buttonWidth: 200,
+                    return Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: ScreenContainerWidget(
+                        textWidget: const Text(
+                          rulesFooterText,
+                          textAlign: TextAlign.justify,
+                        ),
+                        button: ButtonWidget(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const PrivacyScreen(),
+                              ),
+                            );
+                          },
+                          text: 'حریم خصوصی کاربران',
+                          buttonWidth: 200,
+                        ),
                       ),
                     );
                     // Container(

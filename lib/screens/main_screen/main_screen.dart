@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
   final List<int> _history = [];
   ScrollController _scrollController = ScrollController();
   final ScrollController _homeScrollController = ScrollController();
-  // final ScrollController _contactScrollController = ScrollController();
+  final ScrollController _contactScrollController = ScrollController();
   final ScrollController _aboutUsScrollController = ScrollController();
   final ScrollController _faqScrollController = ScrollController();
   // final ScrollController _profileScrollController = ScrollController();
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
   void dispose() {
     _scrollController.dispose();
     _homeScrollController.dispose();
-    // _contactScrollController.dispose();
+    _contactScrollController.dispose();
     _aboutUsScrollController.dispose();
     _faqScrollController.dispose();
     // _profileScrollController.dispose();
@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
         break;
       case 1:
         _navigatorKey = _contactKey;
-        // _scrollController = _contactScrollController;
+        _scrollController = _contactScrollController;
         break;
       case 2:
         _navigatorKey = _aboutUsKey;
@@ -139,7 +139,10 @@ class _MainScreenState extends State<MainScreen> {
         key: _contactKey,
         index: 1,
         currentIndex: currentIndex,
-        child: const ContactScreen(),
+        child: ContactScreen(
+          scrollController: _contactScrollController,
+          onFaqTapped: onInsideLinkTapped,
+        ),
       ),
       navigatorMethod(
         key: _aboutUsKey,

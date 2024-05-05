@@ -3,7 +3,6 @@ import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/common/screen_texts_images/faq_screen_content.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/common/widgets/faq_widget.dart';
-import 'package:bpbm2/screens/contact_screen/contact_screen.dart';
 import 'package:bpbm2/screens/widgets/screen_container_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

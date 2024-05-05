@@ -14,7 +14,7 @@ class ScreenContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(10, 15, 10, 50),
+      margin: const EdgeInsets.fromLTRB(0, 15, 0, 50),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).colorScheme.primary,
