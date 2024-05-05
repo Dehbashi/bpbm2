@@ -8,6 +8,9 @@ class MainScreenAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       elevation: 2,
+      actions: [
+        Container(),
+      ],
       shadowColor: Theme.of(context).colorScheme.shadow,
       title: Padding(
         padding: const EdgeInsets.only(right: 30),

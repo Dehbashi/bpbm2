@@ -80,29 +80,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _homeScrollController.dispose();
-    _contactScrollController.dispose();
-    _aboutUsScrollController.dispose();
-    _faqScrollController.dispose();
-    // _profileScrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    void onInsideLinkTapped(int newIndex) {
-      if (currentIndex != newIndex) {
-        setState(() {
-          _history.remove(currentIndex);
-          _history.add(currentIndex);
-          currentIndex = newIndex;
-        });
-      }
-    }
-
+  void switchIndex() {
     switch (currentIndex) {
       case 0:
         _navigatorKey = _homeKey;
@@ -128,6 +106,27 @@ class _MainScreenState extends State<MainScreen> {
         _navigatorKey = _homeKey;
         _scrollController = _homeScrollController;
     }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    void onInsideLinkTapped(int newIndex) {
+      if (currentIndex != newIndex) {
+        setState(() {
+          _history.remove(currentIndex);
+          _history.add(currentIndex);
+          currentIndex = newIndex;
+        });
+      }
+    }
+
+    switchIndex();
 
     final List<Widget> screens = [
       navigatorMethod(
