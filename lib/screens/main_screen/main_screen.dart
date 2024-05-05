@@ -182,7 +182,10 @@ class _MainScreenState extends State<MainScreen> {
           scaffoldKey: _scaffoldKey,
           onDrawerQuickLinkTapped: onInsideLinkTapped,
         ),
-        endDrawer: const ProfileDrawerScreen(),
+        endDrawer: ProfileDrawerScreen(
+          navKey: _navigatorKey,
+          scaffoldKey: _scaffoldKey,
+        ),
         body: IndexedStack(
           index: currentIndex,
           children: screens,

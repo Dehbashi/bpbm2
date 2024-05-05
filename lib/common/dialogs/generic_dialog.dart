@@ -13,8 +13,17 @@ Future<T?> showGenericDialog<T>({
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(title),
-        content: Text(content),
+        title: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ),
+        content: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Text(content),
+        ),
         actions: options.keys.map(
           (optionTitle) {
             final value = options[optionTitle];
@@ -26,7 +35,10 @@ Future<T?> showGenericDialog<T>({
                   Navigator.of(context).pop();
                 }
               },
-              child: Text(optionTitle),
+              child: Text(
+                optionTitle,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
             );
           },
         ).toList(),
