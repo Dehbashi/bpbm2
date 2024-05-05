@@ -134,6 +134,7 @@ class AppTheme {
         onBackground: onBackground,
         surface: surface,
         onSurface: onSurface,
+        onPrimaryContainer: neutral,
       ),
     );
   }
@@ -180,7 +181,7 @@ class AppTheme {
         // body 3
         bodySmall: TextStyle(
           fontSize: 14,
-          color: onBackground
+          color: onBackground,
         ),
         // caption 1
         labelLarge: const TextStyle(

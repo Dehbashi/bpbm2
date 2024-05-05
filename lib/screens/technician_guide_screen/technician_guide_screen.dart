@@ -1,4 +1,7 @@
 import 'package:bpbm2/common/screen_texts_images/technician_guide_screen_content.dart';
+import 'package:bpbm2/common/widgets/button_widget.dart';
+import 'package:bpbm2/common/widgets/text_field_widget.dart';
+import 'package:bpbm2/screens/technician_guide_screen/widgets/tg_form_widget.dart';
 import 'package:bpbm2/screens/technician_guide_screen/widgets/tg_header_title.dart';
 import 'package:bpbm2/screens/technician_guide_screen/widgets/tg_item_widget.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +41,15 @@ class TechnicianGuideScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            ...tgItems.map((tgItem) {
-              return TgItemWidget(tgItem: tgItem);
-            }),
+            ...tgItems.map(
+              (tgItem) {
+                return TgItemWidget(tgItem: tgItem);
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const TgFormWidget(),
           ],
         ),
       ),
