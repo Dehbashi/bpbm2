@@ -1,6 +1,7 @@
 import 'package:bpbm2/blocs/service_detail_bloc/service_detail_bloc.dart';
 import 'package:bpbm2/data/models/service_list/service_list_model.dart';
 import 'package:bpbm2/screens/service_detail_screen/detail_screens/service_detail_screen.dart';
+import 'package:bpbm2/screens/stepper_screen/stepper_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,15 +31,12 @@ class HomeScreenServiceList extends StatelessWidget {
         return InkWell(
           borderRadius: BorderRadius.circular(10),
           onTap: () {
-            BlocProvider.of<ServiceDetailBloc>(context).add(
-              ServiceDetailStarted(
-                context: context,
-                serviceId: service.id,
-              ),
-            );
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const ServiceDetailScreen(),
+                builder: (context) => StepperScreen(
+                  serviceTitle: service.title,
+                  serviceId: service.id,
+                ),
               ),
             );
           },

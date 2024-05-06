@@ -6,6 +6,8 @@ const tokenPrefix = 'Bearer';
 
 const tokenPublic = 'bpbm';
 
+const contentType = 'application/json';
+
 const baseAssetUrl = 'https://bespareshbema.com/assets';
 
 const defaultScrollPhysics = BouncingScrollPhysics();

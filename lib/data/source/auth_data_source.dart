@@ -18,8 +18,8 @@ class AuthRemoteDataSource implements IAuthDataSource {
   Future<void> sendSms({required String cellNumber}) async {
     final url = Uri.parse('$baseUrl/auth/otp-provider/send');
     final headers = {
-      'Tokenpublic': 'bpbm',
-      'Content-Type': 'application/json',
+      'Tokenpublic': tokenPublic,
+      'Content-Type': contentType,
     };
     final body = jsonEncode({
       'phone_number': cellNumber,
@@ -40,8 +40,8 @@ class AuthRemoteDataSource implements IAuthDataSource {
   }) async {
     final url = Uri.parse('$baseUrl/auth/otp-provider/verify');
     final headers = {
-      'Tokenpublic': 'bpbm',
-      'Content-Type': 'application/json',
+      'Tokenpublic': tokenPublic,
+      'Content-Type': contentType,
     };
     final body = jsonEncode({
       'phone_number': cellNumber,
