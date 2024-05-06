@@ -24,7 +24,9 @@ class ElevatedIconWidget extends StatelessWidget {
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
             color != null
-                ? color
+                ? isActive
+                    ? color
+                    : Theme.of(context).colorScheme.onPrimaryContainer
                 : isActive
                     ? Theme.of(context).colorScheme.onBackground
                     : Theme.of(context).colorScheme.onPrimaryContainer,

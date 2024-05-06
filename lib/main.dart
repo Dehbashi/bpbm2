@@ -5,6 +5,7 @@ import 'package:bpbm2/blocs/faq_bloc/faq_bloc.dart';
 import 'package:bpbm2/blocs/open_app_bloc/open_app_bloc.dart';
 import 'package:bpbm2/blocs/service_detail_bloc/service_detail_bloc.dart';
 import 'package:bpbm2/blocs/service_list_bloc/service_list_bloc.dart';
+import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/data/repo/auth_repository.dart';
 import 'package:bpbm2/screens/intro_screen/intro_screen.dart';
 import 'package:bpbm2/screens/main_screen/main_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ServiceDetailBloc()),
         BlocProvider(create: (context) => FaqBloc()),
         BlocProvider(create: (context) => AuthBloc()),
+        BlocProvider(create: (context) => StepperBloc()),
       ],
       child: BlocBuilder<AppThemeBloc, AppThemeState>(
         builder: (context, state) {

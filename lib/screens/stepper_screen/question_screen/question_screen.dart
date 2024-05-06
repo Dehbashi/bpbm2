@@ -1,7 +1,9 @@
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
+import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/elevated_icon_widget.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_header.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_list.dart';
+import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,10 +21,12 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionScreen> {
+  late QuestionBloc bloc;
   int selectedAnswerId = -1;
   int nextRelationId = -1;
-  late QuestionBloc bloc;
+  int relationNow = -1;
   List<TextEditingController> textEditingControllers = [];
+  List<int> relationIdHistory = [];
 
   @override
   void initState() {
@@ -57,6 +61,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             builder: (context, state) {
               if (state is QuestionSuccess) {
                 final question = state.questionService.question;
+                relationNow = state.questionService.relation.now;
                 return QuestionScreenList(
                   question: question,
                   selectedAnswerId: selectedAnswerId,
@@ -87,20 +92,46 @@ class _QuestionScreenState extends State<QuestionScreen> {
             },
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedIconWidget(
-              onPressed: () {
+        QuestionScreenButtons(context),
+        const PriceContainer(price: 2000),
+      ],
+    );
+  }
+
+  Widget QuestionScreenButtons(BuildContext context) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          ElevatedIconWidget(
+            onPressed: () {
+              if (relationIdHistory.isNotEmpty) {
+                bloc.add(
+                  NextQuestionRequest(
+                    serviceId: widget.serviceId,
+                    nextRelation: relationIdHistory.last,
+                    context: context,
+                  ),
+                );
+                setState(() {
+                  selectedAnswerId = -1;
+                  relationIdHistory.removeLast();
+                });
                 textEditingControllers.clear();
-              },
-              icon: Icons.arrow_back,
-              tooltip: 'پیام قبل',
-              isActive: true,
-              color: Theme.of(context).colorScheme.inversePrimary,
-            ),
-            ElevatedIconWidget(
-              onPressed: () {
+              } else {
+                return null;
+              }
+            },
+            icon: Icons.arrow_back,
+            tooltip: 'پیام قبل',
+            isActive: relationIdHistory.isNotEmpty,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
+          ElevatedIconWidget(
+            onPressed: () {
+              if (nextRelationId != 0) {
+                setState(() {
+                  relationIdHistory.add(relationNow);
+                });
                 bloc.add(
                   NextQuestionRequest(
                     serviceId: widget.serviceId,
@@ -112,14 +143,17 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   selectedAnswerId = -1;
                 });
                 textEditingControllers.clear();
-              },
-              icon: Icons.arrow_forward,
-              tooltip: 'پیام بعد',
-              isActive: nextRelationId > -1,
-            ),
-          ],
-        ),
-      ],
-    );
+              } else {
+                BlocProvider.of<StepperBloc>(context).add(NextStep());
+              }
+            },
+            icon: Icons.arrow_forward,
+            tooltip: 'پیام بعد',
+            isActive: selectedAnswerId > -1 ||
+                textEditingControllers.isNotEmpty ||
+                nextRelationId == 0,
+          ),
+        ],
+      );
   }
 }
