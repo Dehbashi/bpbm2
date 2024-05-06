@@ -1,6 +1,8 @@
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/elevated_icon_widget.dart';
+import 'package:bpbm2/data/models/question_model/question_item_model.dart';
+import 'package:bpbm2/data/models/question_model/question_model.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_header.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_list.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
@@ -27,6 +29,9 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int relationNow = -1;
   List<TextEditingController> textEditingControllers = [];
   List<int> relationIdHistory = [];
+  late QuestionModel question;
+  List<QuestionModel> selectedQuestions = [];
+  List<int> userInputs = [];
 
   @override
   void initState() {
@@ -48,8 +53,51 @@ class _QuestionScreenState extends State<QuestionScreen> {
     super.dispose();
   }
 
+  void saveSelectedQuestion({
+    required QuestionModel question,
+    required int answerId,
+    required List<TextEditingController> textEditingControllers,
+  }) {
+    if (question.type == 'radio') {
+      final items = question.items
+          .where((element) => int.parse(element.id) == answerId)
+          .toList();
+      selectedQuestions.add(
+        QuestionModel(
+          id: question.id,
+          title: question.title,
+          type: question.type,
+          list: question.list,
+          items: items,
+        ),
+      );
+    } else if (question.type == 'textbox') {
+      final length = question.items.length;
+      List<QuestionItemModel> items = [];
+      for (int i = 0; i < length; i++) {
+        if (textEditingControllers[i].text.isNotEmpty) {
+          userInputs.add(int.parse(textEditingControllers[i].text));
+          final item = question.items.firstWhere(
+            (element) => int.parse(element.id) == i + 1,
+          );
+          items.add(item);
+        }
+      }
+      selectedQuestions.add(
+        QuestionModel(
+          id: question.id,
+          title: question.title,
+          type: question.type,
+          list: question.list,
+          items: items,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(userInputs.length);
     return Column(
       children: [
         QuestionScreenHeader(serviceTitle: widget.serviceTitle),
@@ -60,7 +108,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           child: BlocBuilder<QuestionBloc, QuestionState>(
             builder: (context, state) {
               if (state is QuestionSuccess) {
-                final question = state.questionService.question;
+                question = state.questionService.question;
                 relationNow = state.questionService.relation.now;
                 return QuestionScreenList(
                   question: question,
@@ -100,60 +148,74 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   Widget QuestionScreenButtons(BuildContext context) {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          ElevatedIconWidget(
-            onPressed: () {
-              if (relationIdHistory.isNotEmpty) {
-                bloc.add(
-                  NextQuestionRequest(
-                    serviceId: widget.serviceId,
-                    nextRelation: relationIdHistory.last,
-                    context: context,
-                  ),
-                );
-                setState(() {
-                  selectedAnswerId = -1;
-                  relationIdHistory.removeLast();
-                });
-                textEditingControllers.clear();
-              } else {
-                return null;
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        ElevatedIconWidget(
+          onPressed: () {
+            if (relationIdHistory.isNotEmpty) {
+              final lastQuestion = selectedQuestions.last;
+              if (lastQuestion.type == 'textbox') {
+                for (int i = 0; i < lastQuestion.items.length; i++) {
+                  if (userInputs.isNotEmpty) {
+                    userInputs.removeLast();
+                  }
+                }
               }
-            },
-            icon: Icons.arrow_back,
-            tooltip: 'پیام قبل',
-            isActive: relationIdHistory.isNotEmpty,
-            color: Theme.of(context).colorScheme.inversePrimary,
-          ),
-          ElevatedIconWidget(
-            onPressed: () {
-              if (nextRelationId != 0) {
-                setState(() {
-                  relationIdHistory.add(relationNow);
-                });
-                bloc.add(
-                  NextQuestionRequest(
-                    serviceId: widget.serviceId,
-                    nextRelation: nextRelationId,
-                    context: context,
-                  ),
-                );
-                setState(() {
-                  selectedAnswerId = -1;
-                });
-                textEditingControllers.clear();
-              } else {
-                BlocProvider.of<StepperBloc>(context).add(NextStep());
-              }
-            },
-            icon: Icons.arrow_forward,
-            tooltip: 'پیام بعد',
-            isActive: selectedAnswerId > -1 ||
-                textEditingControllers.isNotEmpty ||
-                nextRelationId == 0,
-          ),
-        ],
-      );
+              selectedQuestions.removeLast();
+              bloc.add(
+                NextQuestionRequest(
+                  serviceId: widget.serviceId,
+                  nextRelation: relationIdHistory.last,
+                  context: context,
+                ),
+              );
+              setState(() {
+                selectedAnswerId = -1;
+                relationIdHistory.removeLast();
+              });
+              textEditingControllers.clear();
+            } else {
+              return null;
+            }
+          },
+          icon: Icons.arrow_back,
+          tooltip: 'پیام قبل',
+          isActive: relationIdHistory.isNotEmpty,
+          color: Theme.of(context).colorScheme.inversePrimary,
+        ),
+        ElevatedIconWidget(
+          onPressed: () {
+            saveSelectedQuestion(
+              question: question,
+              answerId: selectedAnswerId,
+              textEditingControllers: textEditingControllers,
+            );
+            if (nextRelationId != 0) {
+              setState(() {
+                relationIdHistory.add(relationNow);
+              });
+              bloc.add(
+                NextQuestionRequest(
+                  serviceId: widget.serviceId,
+                  nextRelation: nextRelationId,
+                  context: context,
+                ),
+              );
+              setState(() {
+                selectedAnswerId = -1;
+              });
+              textEditingControllers.clear();
+            } else {
+              BlocProvider.of<StepperBloc>(context).add(NextStep());
+            }
+          },
+          icon: Icons.arrow_forward,
+          tooltip: 'پیام بعد',
+          isActive: selectedAnswerId > -1 ||
+              textEditingControllers.isNotEmpty ||
+              nextRelationId == 0,
+        ),
+      ],
+    );
   }
 }
