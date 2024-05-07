@@ -6,7 +6,7 @@ import 'package:bpbm2/screens/stepper_screen/widgets/transportation_price_contai
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as lat_lng;
-import 'package:map_location_picker/map_location_picker.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
 class NewAddressScreen extends StatelessWidget {
   final AddressBloc bloc;
@@ -48,17 +48,33 @@ class NewAddressScreen extends StatelessWidget {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: FlutterMap(
-              options: const MapOptions(
+              options: MapOptions(
                 initialZoom: 15,
                 initialCenter: lat_lng.LatLng(
-                  35.7006381,
-                  51.4089094,
+                  state.lat,
+                  state.lng,
                 ),
               ),
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                ),
+                FlutterLocationPicker(
+                  searchbarInputBorder: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  searchbarInputFocusBorderp: const OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                  ),
+                  mapLanguage: 'fa',
+                  searchBarHintText: 'جستجو ...',
+                  searchBarTextColor:
+                      Theme.of(context).colorScheme.onBackground,
+                  initPosition: LatLong(state.lat, state.lng),
+                  onPicked: (value) {
+                    print(value.latLong);
+                  },
                 ),
               ],
             ),

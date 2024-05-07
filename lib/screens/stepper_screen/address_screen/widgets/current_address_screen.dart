@@ -28,7 +28,7 @@ class CurrentAddressScreeen extends StatelessWidget {
         ButtonWidget(
           buttonWidth: double.infinity,
           onPressed: () {
-            bloc.add(NewAddress(context: context, lat: 0, lng: 0));
+            bloc.add(NewAddressStarted(context: context));
           },
           text: 'افزدون نشانی جدید',
           icon: const Icon(

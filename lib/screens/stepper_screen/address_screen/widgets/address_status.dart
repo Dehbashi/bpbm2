@@ -26,7 +26,7 @@ class AddressStatus extends StatelessWidget {
           isCurrentAddressScreen: !isCurrentAddressScreen,
           onTap: () {
             BlocProvider.of<AddressBloc>(context).add(
-              NewAddress(context: context, lat: 0, lng: 0),
+              NewAddressStarted(context: context),
             );
           },
         )

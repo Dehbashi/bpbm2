@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
+import 'package:bpbm2/common/methods/device_info.dart';
 import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
@@ -77,21 +78,28 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         );
       }
 
-      if (event is NewAddress) {
+      if (event is NewAddressStarted) {
+        final deviceInfo = DeviceInfo();
         LoadingScreen.instance().show(
           context: event.context,
           text: 'در حال بارگذاری',
         );
-        await addressRepository
-            .fetchLocationFromMap(lat: event.lat, lng: event.lng)
-            .then((location) {
-          emit(
-            NewAddressSuccess(
-              transportationCost: transportationCost,
-              currentAddressScreen: false,
-              location: location,
-            ),
-          );
+        await deviceInfo.determinePosition().then((position) async {
+          await addressRepository
+              .fetchLocationFromMap(
+                  lat: position.latitude, lng: position.longitude)
+              .then((location) {
+            emit(
+              NewAddressSuccess(
+                transportationCost: transportationCost,
+                currentAddressScreen: false,
+                location: location,
+                lat: position.latitude,
+                lng: position.longitude,
+              ),
+            );
+          });
+
           LoadingScreen.instance().hide();
         }).catchError((e) {
           LoadingScreen.instance().hide();
