@@ -1,5 +1,6 @@
 import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
+import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_screen_map_widget.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_status.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/transportation_price_container.dart';
@@ -43,42 +44,11 @@ class NewAddressScreen extends StatelessWidget {
           'موقعیت مکانی نشانی را مشخص کنید',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
-        SizedBox(
-          height: 300,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: FlutterMap(
-              options: MapOptions(
-                initialZoom: 15,
-                initialCenter: lat_lng.LatLng(
-                  state.lat,
-                  state.lng,
-                ),
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                ),
-                FlutterLocationPicker(
-                  searchbarInputBorder: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  searchbarInputFocusBorderp: const OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  mapLanguage: 'fa',
-                  searchBarHintText: 'جستجو ...',
-                  searchBarTextColor:
-                      Theme.of(context).colorScheme.onBackground,
-                  initPosition: LatLong(state.lat, state.lng),
-                  onPicked: (value) {
-                    print(value.latLong);
-                  },
-                ),
-              ],
-            ),
-          ),
+        AddressScreenMapWidget(
+          state: state,
+          onPicked: (value) {
+            print(value.latLong.latitude);
+          },
         ),
         const SizedBox(
           height: 10,
