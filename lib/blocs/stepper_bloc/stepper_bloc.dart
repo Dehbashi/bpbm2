@@ -9,6 +9,7 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
     int step = 1;
     on<StepperEvent>((event, emit) async {
       if (event is StepperStarted) {
+        step = 1;
         emit(QuestionScreenSuccess());
       }
 
