@@ -30,12 +30,14 @@ class CurrentAddressSuccess extends AddressState {
 class NewAddressSuccess extends AddressState {
   final int transportationCost;
   final bool currentAddressScreen;
+  final MapModel location;
 
-  const NewAddressSuccess({
-    required this.transportationCost,
-    required this.currentAddressScreen,
-  });
+  const NewAddressSuccess(
+      {required this.transportationCost,
+      required this.currentAddressScreen,
+      required this.location});
 
   @override
-  List<Object> get props => [transportationCost, currentAddressScreen];
+  List<Object> get props =>
+      [transportationCost, currentAddressScreen, location];
 }

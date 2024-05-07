@@ -3,6 +3,7 @@ import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
 import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
+import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/repo/address_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -29,20 +30,18 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               // );
               emit(
                 CurrentAddressSuccess(
-                  addresses: addresses,
-                  transportationCost: transportationCost,
-                  currentAddressScreen: true
-                ),
+                    addresses: addresses,
+                    transportationCost: transportationCost,
+                    currentAddressScreen: true),
               );
               LoadingScreen.instance().hide();
             } else {
               emit(
                 CurrentAddressSuccess(
-                  addresses: addresses,
-                  transportationCost: transportationCost,
-                  emptyMessage: 'آدرسی وجودد ندارد',
-                  currentAddressScreen: true
-                ),
+                    addresses: addresses,
+                    transportationCost: transportationCost,
+                    emptyMessage: 'آدرسی وجودد ندارد',
+                    currentAddressScreen: true),
               );
               LoadingScreen.instance().hide();
             }
@@ -56,11 +55,10 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         } else {
           emit(
             const CurrentAddressSuccess(
-              addresses: [],
-              transportationCost: 0,
-              emptyMessage: 'شما وارد سامانه نشده اید',
-              currentAddressScreen: true
-            ),
+                addresses: [],
+                transportationCost: 0,
+                emptyMessage: 'شما وارد سامانه نشده اید',
+                currentAddressScreen: true),
           );
           LoadingScreen.instance().hide();
         }
@@ -80,10 +78,28 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is NewAddress) {
-        emit(const NewAddressSuccess(
-          transportationCost: 0,
-          currentAddressScreen: false,
-        ));
+        LoadingScreen.instance().show(
+          context: event.context,
+          text: 'در حال بارگذاری',
+        );
+        await addressRepository
+            .fetchLocationFromMap(lat: event.lat, lng: event.lng)
+            .then((location) {
+          emit(
+            NewAddressSuccess(
+              transportationCost: transportationCost,
+              currentAddressScreen: false,
+              location: location,
+            ),
+          );
+          LoadingScreen.instance().hide();
+        }).catchError((e) {
+          LoadingScreen.instance().hide();
+          customErrorMessenger(
+            context: event.context,
+            message: 'خطای نامشخص',
+          );
+        });
       }
     });
   }

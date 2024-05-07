@@ -55,6 +55,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   isCurrentAddressScreen = false;
                   return NewAddressScreen(
                     state: state,
+                    bloc: bloc,
                   );
                 } else {
                   return Container();

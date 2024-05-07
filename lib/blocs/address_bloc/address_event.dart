@@ -20,11 +20,17 @@ class AddressStarted extends AddressEvent {
 
 class NewAddress extends AddressEvent {
   final BuildContext context;
+  final double lat;
+  final double lng;
 
-  const NewAddress({required this.context});
+  const NewAddress({
+    required this.context,
+    required this.lat,
+    required this.lng,
+  });
 
   @override
-  List<Object> get props => [context];
+  List<Object> get props => [context, lat, lng];
 }
 
 class RegisterNewAddress extends AddressEvent {

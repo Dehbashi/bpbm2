@@ -22,14 +22,14 @@ class CurrentAddressScreeen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const PriceContainer(price: 10000),
-        TransportationPriceContainer(
-            transportationPrice: state.transportationCost),
         ButtonWidget(
           buttonWidth: double.infinity,
-          onPressed: () {},
+          onPressed: () {
+            bloc.add(NewAddress(context: context, lat: 0, lng: 0));
+          },
           text: 'افزدون نشانی جدید',
           icon: const Icon(
             Icons.add_location,
@@ -38,6 +38,9 @@ class CurrentAddressScreeen extends StatelessWidget {
         ),
         const SizedBox(
           height: 10,
+        ),
+        TransportationPriceContainer(
+          transportationPrice: state.transportationCost,
         ),
         Text(
           'نشانی های ثبت شده قبلی',
@@ -101,8 +104,10 @@ class CurrentAddressScreeen extends StatelessWidget {
               );
             },
           ),
-          const SizedBox(height: 20,),
-          AddressStatus(
+        const SizedBox(
+          height: 20,
+        ),
+        AddressStatus(
           isCurrentAddressScreen: state.currentAddressScreen,
         ),
       ],
