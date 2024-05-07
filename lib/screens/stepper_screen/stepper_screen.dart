@@ -3,6 +3,7 @@ import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/address_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/question_screen.dart';
+import 'package:bpbm2/screens/stepper_screen/time_screen/time_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,6 +35,8 @@ class StepperScreen extends StatelessWidget {
               );
             } else if (state is AddressScreenSuccess) {
               return const AddressScreen();
+            } else if (state is TimeScreenSuccess) {
+              return const TimeScreen();
             } else {
               return Container();
             }

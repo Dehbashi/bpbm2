@@ -17,6 +17,8 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
         step++;
         if (step == 2) {
           emit(AddressScreenSuccess());
+        } else if (step == 3) {
+          emit(TimeScreenSuccess());
         }
       }
 
@@ -24,6 +26,8 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
         step--;
         if (step == 1) {
           emit(QuestionScreenSuccess());
+        } else if (step == 2) {
+          emit(AddressScreenSuccess());
         }
       }
     });

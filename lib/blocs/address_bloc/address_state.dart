@@ -13,24 +13,18 @@ class CurrentAddressSuccess extends AddressState {
   final List<AddressModel> addresses;
   final int transportationCost;
   final bool currentAddressScreen;
+  final String? emptyMessage;
 
   const CurrentAddressSuccess({
     required this.addresses,
     required this.transportationCost,
     required this.currentAddressScreen,
+    this.emptyMessage,
   });
 
   @override
-  List<Object> get props => [addresses, transportationCost, currentAddressScreen];
-}
-
-class CurrentAddressEmpty extends AddressState {
-  final String message;
-
-  const CurrentAddressEmpty({required this.message});
-
-  @override
-  List<Object> get props => [message];
+  List<Object> get props =>
+      [addresses, transportationCost, currentAddressScreen];
 }
 
 class NewAddressSuccess extends AddressState {

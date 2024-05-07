@@ -12,3 +12,5 @@ final class StepperInitial extends StepperState {}
 class QuestionScreenSuccess extends StepperState {}
 
 class AddressScreenSuccess extends StepperState {}
+
+class TimeScreenSuccess extends StepperState {}
