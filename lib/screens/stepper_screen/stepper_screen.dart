@@ -1,3 +1,4 @@
+import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/address_screen.dart';
@@ -19,9 +20,8 @@ class StepperScreen extends StatelessWidget {
     BlocProvider.of<StepperBloc>(context).add(StepperStarted());
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => QuestionBloc(),
-        ),
+        BlocProvider(create: (context) => QuestionBloc()),
+        BlocProvider(create: (context) => AddressBloc()),
       ],
       child: Padding(
         padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),

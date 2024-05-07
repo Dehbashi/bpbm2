@@ -136,6 +136,7 @@ class AppTheme {
         onSurface: onSurface,
         onPrimaryContainer: neutral,
         inversePrimary: warning,
+        secondaryContainer: success,
       ),
     );
   }
@@ -194,9 +195,6 @@ class AppTheme {
           fontSize: 11,
         ),
         // caption 3
-        labelSmall: TextStyle(
-          fontSize: 10,
-          color: onBackground
-        ),
+        labelSmall: TextStyle(fontSize: 10, color: onBackground),
       );
 }

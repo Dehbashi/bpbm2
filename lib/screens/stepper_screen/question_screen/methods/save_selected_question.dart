@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bpbm2/data/models/question_model/question_item_model.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void saveSelectedQuestion({
   required QuestionModel question,
@@ -8,7 +11,9 @@ void saveSelectedQuestion({
   required List<TextEditingController> textEditingControllers,
   required List<QuestionModel> selectedQuestions,
   required List<int> userInputs,
-}) {
+}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
   if (question.type == 'radio') {
     final items = question.items
         .where((element) => int.parse(element.id) == answerId)
@@ -44,4 +49,13 @@ void saveSelectedQuestion({
       ),
     );
   }
+
+  List<String> selectedQuestionsJson = selectedQuestions
+      .map((question) => json.encode(question.toJson()))
+      .toList();
+  List<String> userInputsJson =
+      userInputs.map((input) => json.encode(input)).toList();
+
+  await prefs.setStringList('selectedQuestions', selectedQuestionsJson);
+  await prefs.setStringList('userInputs', userInputsJson);
 }

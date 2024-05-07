@@ -15,6 +15,16 @@ class QuestionModel {
     required this.items,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'type': type,
+      'list': list,
+      'items': items.map((item) => item.toJson()).toList(),
+    };
+  }
+
   QuestionModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],

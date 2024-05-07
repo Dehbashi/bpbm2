@@ -13,6 +13,15 @@ class QuestionItemModel {
     required this.nextRelation,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      'nextRelation': nextRelation,
+    };
+  }
+
   QuestionItemModel.fromJson(Map<String, dynamic> json)
       // : pattern = json['pattern'] ?? null,
       : id = (json['id'] is String) ? json['id'] : json['id'].toString(),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/elevated_icon_widget.dart';
@@ -5,6 +7,7 @@ import 'package:bpbm2/data/models/question_model/question_model.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/methods/save_selected_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuestionScreenButtons extends StatefulWidget {
   final List<int> relationIdHistory;
@@ -84,6 +87,7 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
               selectedQuestions: widget.selectedQuestions,
               userInputs: widget.userInputs,
             );
+
             if (widget.nextRelationId != 0) {
               setState(() {
                 widget.relationIdHistory.add(widget.relationNow);
