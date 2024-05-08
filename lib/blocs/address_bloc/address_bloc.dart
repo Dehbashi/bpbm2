@@ -7,8 +7,10 @@ import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/repo/address_repository.dart';
 import 'package:bpbm2/data/repo/auth_repository.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 part 'address_event.dart';
 part 'address_state.dart';
@@ -16,6 +18,7 @@ part 'address_state.dart';
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   AddressBloc() : super(AddressInitial()) {
     int transportationCost = 0;
+    List<int> transportationCosts = [];
     on<AddressEvent>((event, emit) async {
       if (event is AddressStarted) {
         String token = await loadToken();
@@ -32,9 +35,10 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               // );
               emit(
                 CurrentAddressSuccess(
-                    addresses: addresses,
-                    transportationCost: transportationCost,
-                    currentAddressScreen: true),
+                  addresses: addresses,
+                  transportationCost: transportationCost,
+                  currentAddressScreen: true,
+                ),
               );
               LoadingScreen.instance().hide();
             } else {
@@ -57,19 +61,28 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         } else {
           emit(
             const CurrentAddressSuccess(
-                addresses: [],
-                transportationCost: 0,
-                emptyMessage: 'شما وارد سامانه نشده اید',
-                currentAddressScreen: true),
+              addresses: [],
+              transportationCost: 0,
+              emptyMessage: 'شما وارد سامانه نشده اید',
+              currentAddressScreen: true,
+            ),
           );
           LoadingScreen.instance().hide();
         }
       }
 
       if (event is CurrentAddressSelected) {
+        final provider =
+            Provider.of<PriceProvider>(event.context, listen: false);
+        if (transportationCosts.isNotEmpty) {
+          provider.removeItem(price: transportationCosts.last);
+          transportationCosts.removeLast();
+        }
         transportationCost = await addressRepository.fetchTransportationPrice(
           municipalityZone: event.address.municipalityZone,
         );
+        transportationCosts.add(transportationCost);
+        provider.addItem(price: transportationCost);
         emit(
           CurrentAddressSuccess(
             addresses: event.addresses,
@@ -107,6 +120,37 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           customErrorMessenger(
             context: event.context,
             message: 'خطای نامشخص',
+          );
+        });
+      }
+
+      if (event is RegisterNewAddress) {
+        final provider =
+            Provider.of<PriceProvider>(event.context, listen: false);
+        if (transportationCosts.isNotEmpty) {
+          provider.removeItem(price: transportationCosts.last);
+          transportationCosts.removeLast();
+        }
+        await addressRepository
+            .fetchLocationFromMap(
+          lat: event.lat,
+          lng: event.lng,
+        )
+            .then((location) async {
+          final transportationCost =
+              await addressRepository.fetchTransportationPrice(
+            municipalityZone: int.parse(location.municipalityZone),
+          );
+          transportationCosts.add(transportationCost);
+          provider.addItem(price: transportationCost);
+          emit(
+            NewAddressSuccess(
+              transportationCost: transportationCost,
+              currentAddressScreen: false,
+              location: location,
+              lat: event.lat,
+              lng: event.lng,
+            ),
           );
         });
       }

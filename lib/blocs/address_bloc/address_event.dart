@@ -31,13 +31,15 @@ class NewAddressStarted extends AddressEvent {
 
 class RegisterNewAddress extends AddressEvent {
   final BuildContext context;
-  final String address;
+  final double lat;
+  final double lng;
   final String houseNumber;
   final String unit;
 
   const RegisterNewAddress({
     required this.context,
-    required this.address,
+    required this.lat,
+    required this.lng,
     required this.houseNumber,
     required this.unit,
   });
@@ -45,7 +47,8 @@ class RegisterNewAddress extends AddressEvent {
   @override
   List<Object> get props => [
         context,
-        address,
+        lat,
+        lng,
         houseNumber,
         unit,
       ];
@@ -78,8 +81,11 @@ class CurrentAddressSelected extends AddressEvent {
   final AddressModel address;
   final List<AddressModel> addresses;
 
-  const CurrentAddressSelected(
-      {required this.context, required this.address, required this.addresses});
+  const CurrentAddressSelected({
+    required this.context,
+    required this.address,
+    required this.addresses,
+  });
 
   @override
   List<Object> get props => [

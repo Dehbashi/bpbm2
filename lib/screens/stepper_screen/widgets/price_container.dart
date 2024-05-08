@@ -1,6 +1,8 @@
+import 'package:bpbm2/common/dialogs/generic_dialog.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PriceContainer extends StatelessWidget {
   const PriceContainer({super.key});
@@ -38,8 +40,26 @@ class PriceContainer extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  final provider = Provider.of<PriceProvider>(context, listen: false);
-                  provider.clearPrice();
+                  showGenericDialog(
+                    context: context,
+                    title: 'حذف اطلاعات سفارش',
+                    content: 'آیا از از حذف اطلاعات سفارش اطمینان دارید؟',
+                    optionsBuilder: () => {
+                      'خیر': false,
+                      'بله': true,
+                    },
+                  ).then((response) async {
+                    if (response != null && response) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          prefs.remove('selectedQuestions');
+                          prefs.remove('userInputs');
+                      final provider =
+                          Provider.of<PriceProvider>(context, listen: false);
+                      provider.clearPrice();
+                      Navigator.of(context).pop();
+                    }
+                  });
                 },
                 icon: Icon(
                   Icons.refresh,

@@ -1,6 +1,6 @@
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
-import 'package:bpbm2/screens/stepper_screen/question_screen/methods/question_screen_buttons.dart';
+import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_buttons.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_header.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_list.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';

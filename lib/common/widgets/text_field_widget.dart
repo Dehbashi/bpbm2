@@ -5,6 +5,7 @@ class TextFieldWidget extends StatelessWidget {
   final String? Function(String?)? validator;
   final String hintText;
   final double? height;
+  final double? width;
   final TextInputType? textInputType;
   final TextEditingController? controller;
 
@@ -14,6 +15,7 @@ class TextFieldWidget extends StatelessWidget {
     required this.validator,
     required this.hintText,
     this.height = 35,
+    this.width = double.infinity,
     this.textInputType,
     this.controller,
   });
@@ -22,7 +24,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-      width: double.infinity,
+      width: width,
       // height: height,
       // width: double.infinity,
       child: TextFormField(
