@@ -26,9 +26,6 @@ class CurrentAddressScreeen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final token = AuthRepository.authChangeNotifier.value != null
-    //     ? AuthRepository.authChangeNotifier.value!.token
-    //     : '';
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -81,7 +78,7 @@ class CurrentAddressScreeen extends StatelessWidget {
                       blurRadius: 1,
                       color: Theme.of(context).colorScheme.shadow,
                       spreadRadius: 1,
-                      offset: Offset(0, 1.5),
+                      offset: const Offset(0, 1.5),
                     )
                   ],
                 ),

@@ -1,15 +1,8 @@
 import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
-import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
-import 'package:bpbm2/common/widgets/button_widget.dart';
-import 'package:bpbm2/providers/price_provider.dart';
-import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_status.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/current_address_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/new_address_screen.dart';
-import 'package:bpbm2/screens/stepper_screen/widgets/stepper_button.dart';
-import 'package:bpbm2/screens/stepper_screen/widgets/stepper_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
 class AddressScreen extends StatefulWidget {
   const AddressScreen({super.key});
@@ -66,10 +59,6 @@ class _AddressScreenState extends State<AddressScreen> {
             ),
           ),
         ),
-        // const SizedBox(
-        //   height: 10,
-        // ),
-        // const StepperButtons(),
       ],
     );
   }

@@ -13,6 +13,7 @@ import 'package:bpbm2/providers/price_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'address_event.dart';
 part 'address_state.dart';
@@ -31,10 +32,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         if (token.isNotEmpty) {
           await addressRepository.fetchAddress().then((addresses) async {
             if (addresses.isNotEmpty) {
-              // transportationCost =
-              //     await addressRepository.fetchTransportationPrice(
-              //   municipalityZone: event.address.municipalityZone,
-              // );
               emit(
                 CurrentAddressSuccess(
                   addresses: addresses,
@@ -84,7 +81,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           municipalityZone: event.address.municipalityZone,
         );
         transportationCosts.add(transportationCost);
-        provider.addItem(price: transportationCost);
+        provider.addItem(price: transportationCosts.last);
+        await saveCurrentAddress(
+            transportationCost: transportationCost, address: event.address);
         emit(
           CurrentAddressSuccess(
             addresses: event.addresses,
@@ -95,11 +94,16 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is NewAddressStarted) {
+        // final provider =
+        //     Provider.of<PriceProvider>(event.context, listen: false);
         final deviceInfo = DeviceInfo();
         LoadingScreen.instance().show(
           context: event.context,
           text: 'در حال بارگذاری',
         );
+        // if (transportationCosts.isNotEmpty) {
+        //   provider.removeItem(price: transportationCosts.last);
+        // }
         await deviceInfo.determinePosition().then((position) async {
           await addressRepository
               .fetchLocationFromMap(
@@ -157,5 +161,20 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         });
       }
     });
+  }
+
+  Future<void> saveCurrentAddress({
+    required int transportationCost,
+    required AddressModel address,
+  }) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('selectedAddress', jsonEncode(address.toJson()));
+    prefs.setInt('transportationCost', transportationCost);
+
+    // final selectedAddressJson = prefs.getString('selectedAddress');
+    // if (selectedAddressJson != null) {
+    //   final Map<String, dynamic> jsonData = jsonDecode(selectedAddressJson);
+    //   final address = AddressModel.fromJson(jsonData);
+    // }
   }
 }
