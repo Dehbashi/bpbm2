@@ -24,7 +24,7 @@ class CurrentAddressScreeen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const PriceContainer(price: 10000),
+        const PriceContainer(),
         ButtonWidget(
           buttonWidth: double.infinity,
           onPressed: () {

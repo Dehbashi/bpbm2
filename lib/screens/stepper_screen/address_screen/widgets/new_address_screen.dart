@@ -5,9 +5,6 @@ import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_stat
 import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/transportation_price_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart' as lat_lng;
-import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 
 class NewAddressScreen extends StatelessWidget {
   final AddressBloc bloc;
@@ -22,7 +19,7 @@ class NewAddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const PriceContainer(price: 10000),
+        const PriceContainer(),
         ButtonWidget(
           buttonWidth: double.infinity,
           onPressed: () {

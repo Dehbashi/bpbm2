@@ -57,8 +57,12 @@ class _QuestionScreenListState extends State<QuestionScreenList> {
                 shrinkWrap: true,
                 itemCount: widget.question.items.length,
                 itemBuilder: (context, index) {
-                  for (var item in widget.question.items) {
-                    widget.textEditingControllers!.add(TextEditingController());
+                  for (int i = 0; i < widget.question.items.length; i++) {
+                    if (widget.textEditingControllers!.length <
+                        widget.question.items.length) {
+                      widget.textEditingControllers!
+                          .add(TextEditingController());
+                    }
                   }
                   final answer = widget.question.items[index];
                   return TextField(

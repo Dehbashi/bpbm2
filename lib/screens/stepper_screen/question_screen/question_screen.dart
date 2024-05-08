@@ -40,6 +40,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
 
   @override
   void initState() {
+    super.initState();
     bloc = BlocProvider.of<QuestionBloc>(context);
     bloc.add(
       QuestionStarted(
@@ -47,7 +48,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
         serviceId: widget.serviceId,
       ),
     );
-    super.initState();
   }
 
   @override
@@ -129,7 +129,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
           nextRelationId: nextRelationId,
           relationNow: relationNow,
         ),
-        const PriceContainer(price: 2000),
+        const PriceContainer(),
       ],
     );
   }

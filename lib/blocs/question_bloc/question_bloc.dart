@@ -3,8 +3,10 @@ import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
 import 'package:bpbm2/data/models/question_model/question_service.dart';
 import 'package:bpbm2/data/repo/question_repository.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 part 'question_event.dart';
 part 'question_state.dart';
@@ -13,6 +15,9 @@ class QuestionBloc extends Bloc<QuestionEvent, QuestionState> {
   QuestionBloc() : super(QuestionInitial()) {
     on<QuestionEvent>((event, emit) async {
       if (event is QuestionStarted) {
+        final provider =
+            Provider.of<PriceProvider>(event.context, listen: false);
+        provider.clearPrice();
         LoadingScreen.instance().show(
           context: event.context,
           text: 'در حال بارگذاری',

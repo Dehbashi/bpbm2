@@ -1,13 +1,12 @@
-import 'dart:convert';
-
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/elevated_icon_widget.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/methods/save_selected_question.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class QuestionScreenButtons extends StatefulWidget {
   final List<int> relationIdHistory;
@@ -51,13 +50,20 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
         ElevatedIconWidget(
           onPressed: () {
             if (widget.relationIdHistory.isNotEmpty) {
+              final provider =
+                  Provider.of<PriceProvider>(context, listen: false);
               final lastQuestion = widget.selectedQuestions.last;
               if (lastQuestion.type == 'textbox') {
                 for (int i = 0; i < lastQuestion.items.length; i++) {
                   if (widget.userInputs.isNotEmpty) {
+                    provider.removeItem(
+                        price: widget.userInputs.last *
+                            lastQuestion.items[i].price);
                     widget.userInputs.removeLast();
                   }
                 }
+              } else if (lastQuestion.type == 'radio') {
+                provider.removeItem(price: lastQuestion.items[0].price);
               }
               widget.selectedQuestions.removeLast();
               widget.bloc.add(
@@ -79,8 +85,9 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
           color: Theme.of(context).colorScheme.inversePrimary,
         ),
         ElevatedIconWidget(
-          onPressed: () {
-            saveSelectedQuestion(
+          onPressed: () async {
+            await saveSelectedQuestion(
+              context: context,
               question: widget.question,
               answerId: widget.selectedAnswerId,
               textEditingControllers: widget.textEditingControllers,

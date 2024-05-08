@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:bpbm2/data/models/question_model/question_item_model.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void saveSelectedQuestion({
+Future<void> saveSelectedQuestion({
+  required BuildContext context,
   required QuestionModel question,
   required int answerId,
   required List<TextEditingController> textEditingControllers,
@@ -13,6 +16,7 @@ void saveSelectedQuestion({
   required List<int> userInputs,
 }) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
+  final provider = Provider.of<PriceProvider>(context, listen: false);
 
   if (question.type == 'radio') {
     final items = question.items
@@ -27,12 +31,15 @@ void saveSelectedQuestion({
         items: items,
       ),
     );
+    provider.addItem(price: items[0].price);
   } else if (question.type == 'textbox') {
     final length = question.items.length;
+    List<int> inputs = [];
     List<QuestionItemModel> items = [];
     for (int i = 0; i < length; i++) {
       if (textEditingControllers[i].text.isNotEmpty) {
         userInputs.add(int.parse(textEditingControllers[i].text));
+        inputs.add(int.parse(textEditingControllers[i].text));
         final item = question.items.firstWhere(
           (element) => int.parse(element.id) == int.parse(question.items[i].id),
         );
@@ -48,6 +55,12 @@ void saveSelectedQuestion({
         items: items,
       ),
     );
+    print(inputs);
+    int textBoxPrice = 0;
+    for (int i = 0; i < items.length; i++) {
+      textBoxPrice = textBoxPrice + items[i].price * inputs[i];
+    }
+    provider.addItem(price: textBoxPrice);
   }
 
   List<String> selectedQuestionsJson = selectedQuestions
