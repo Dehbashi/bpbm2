@@ -26,6 +26,7 @@ class CurrentAddressScreeen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int selectedOption = state.isFirstTime ? -1 : selectedAddress;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -94,7 +95,7 @@ class CurrentAddressScreeen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   value: address.id,
-                  groupValue: selectedAddress,
+                  groupValue: selectedOption,
                   onChanged: (value) {
                     bloc.add(
                       CurrentAddressSelected(

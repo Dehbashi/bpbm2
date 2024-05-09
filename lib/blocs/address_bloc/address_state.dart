@@ -14,12 +14,14 @@ class CurrentAddressSuccess extends AddressState {
   final int transportationCost;
   final bool currentAddressScreen;
   final String? emptyMessage;
+  final bool isFirstTime;
 
   const CurrentAddressSuccess({
     required this.addresses,
     required this.transportationCost,
     required this.currentAddressScreen,
     this.emptyMessage,
+    required this.isFirstTime,
   });
 
   @override

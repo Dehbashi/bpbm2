@@ -21,14 +21,14 @@ class StepperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<StepperBloc>(context).add(StepperStarted());
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider(create: (context) => QuestionBloc()),
-        BlocProvider(create: (context) => AddressBloc()),
+        ChangeNotifierProvider(create: (context) => PriceProvider()),
       ],
-      child: MultiProvider(
+      child: MultiBlocProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => PriceProvider()),
+          BlocProvider(create: (context) => QuestionBloc()),
+          BlocProvider(create: (context) => AddressBloc(context)),
         ],
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),

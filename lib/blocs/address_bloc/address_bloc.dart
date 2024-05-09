@@ -19,14 +19,18 @@ part 'address_event.dart';
 part 'address_state.dart';
 
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
-  AddressBloc() : super(AddressInitial()) {
+  final BuildContext context;
+  AddressBloc(this.context) : super(AddressInitial()) {
+    final provider = Provider.of<PriceProvider>(context, listen: false);
     int transportationCost = 0;
     List<int> transportationCosts = [];
     on<AddressEvent>((event, emit) async {
       if (event is AddressStarted) {
+        transportationCost = 0;
+        transportationCosts = [];
         String token = await loadToken();
         LoadingScreen.instance().show(
-          context: event.context,
+          context: context,
           text: 'در حال بارگذاری',
         );
         if (token.isNotEmpty) {
@@ -37,23 +41,26 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
                   addresses: addresses,
                   transportationCost: transportationCost,
                   currentAddressScreen: true,
+                  isFirstTime: true,
                 ),
               );
               LoadingScreen.instance().hide();
             } else {
               emit(
                 CurrentAddressSuccess(
-                    addresses: addresses,
-                    transportationCost: transportationCost,
-                    emptyMessage: 'آدرسی وجودد ندارد',
-                    currentAddressScreen: true),
+                  addresses: addresses,
+                  transportationCost: transportationCost,
+                  emptyMessage: 'آدرسی وجودد ندارد',
+                  currentAddressScreen: true,
+                  isFirstTime: true,
+                ),
               );
               LoadingScreen.instance().hide();
             }
           }).catchError((e) {
             LoadingScreen.instance().hide();
             customErrorMessenger(
-              context: event.context,
+              context: context,
               message: 'خطای نامشخص',
             );
           });
@@ -64,6 +71,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               transportationCost: 0,
               emptyMessage: 'شما وارد سامانه نشده اید',
               currentAddressScreen: true,
+              isFirstTime: true,
             ),
           );
           LoadingScreen.instance().hide();
@@ -71,34 +79,40 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is CurrentAddressSelected) {
-        final provider =
-            Provider.of<PriceProvider>(event.context, listen: false);
+        transportationCost = await addressRepository.fetchTransportationPrice(
+          municipalityZone: event.address.municipalityZone,
+        );
         if (transportationCosts.isNotEmpty) {
           provider.removeItem(price: transportationCosts.last);
           transportationCosts.removeLast();
         }
-        transportationCost = await addressRepository.fetchTransportationPrice(
-          municipalityZone: event.address.municipalityZone,
-        );
         transportationCosts.add(transportationCost);
-        provider.addItem(price: transportationCosts.last);
-        await saveCurrentAddress(
-            transportationCost: transportationCost, address: event.address);
+        provider.addItem(price: transportationCost);
         emit(
           CurrentAddressSuccess(
             addresses: event.addresses,
             transportationCost: transportationCost,
             currentAddressScreen: true,
+            isFirstTime: false,
           ),
+        );
+        await saveCurrentAddress(
+          transportationCost: transportationCost,
+          address: event.address,
         );
       }
 
       if (event is NewAddressStarted) {
+        if (transportationCosts.isNotEmpty) {
+          provider.removeItem(price: transportationCosts.last);
+          transportationCosts.clear();
+        }
+        transportationCost = 0;
         // final provider =
         //     Provider.of<PriceProvider>(event.context, listen: false);
         final deviceInfo = DeviceInfo();
         LoadingScreen.instance().show(
-          context: event.context,
+          context: context,
           text: 'در حال بارگذاری',
         );
         // if (transportationCosts.isNotEmpty) {
