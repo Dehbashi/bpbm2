@@ -8,11 +8,8 @@ import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/repo/address_repository.dart';
-import 'package:bpbm2/data/repo/auth_repository.dart';
-import 'package:bpbm2/providers/price_provider.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'address_event.dart';
@@ -21,13 +18,10 @@ part 'address_state.dart';
 class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final BuildContext context;
   AddressBloc(this.context) : super(AddressInitial()) {
-    final provider = Provider.of<PriceProvider>(context, listen: false);
     int transportationCost = 0;
-    List<int> transportationCosts = [];
     on<AddressEvent>((event, emit) async {
       if (event is AddressStarted) {
         transportationCost = 0;
-        transportationCosts = [];
         String token = await loadToken();
         LoadingScreen.instance().show(
           context: context,
@@ -82,12 +76,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         transportationCost = await addressRepository.fetchTransportationPrice(
           municipalityZone: event.address.municipalityZone,
         );
-        if (transportationCosts.isNotEmpty) {
-          provider.removeItem(price: transportationCosts.last);
-          transportationCosts.removeLast();
-        }
-        transportationCosts.add(transportationCost);
-        provider.addItem(price: transportationCost);
         emit(
           CurrentAddressSuccess(
             addresses: event.addresses,
@@ -103,37 +91,33 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is NewAddressStarted) {
-        if (transportationCosts.isNotEmpty) {
-          provider.removeItem(price: transportationCosts.last);
-          transportationCosts.clear();
-        }
         transportationCost = 0;
-        // final provider =
-        //     Provider.of<PriceProvider>(event.context, listen: false);
         final deviceInfo = DeviceInfo();
         LoadingScreen.instance().show(
           context: context,
           text: 'در حال بارگذاری',
         );
-        // if (transportationCosts.isNotEmpty) {
-        //   provider.removeItem(price: transportationCosts.last);
-        // }
         await deviceInfo.determinePosition().then((position) async {
           await addressRepository
               .fetchLocationFromMap(
                   lat: position.latitude, lng: position.longitude)
-              .then((location) {
-            emit(
-              NewAddressSuccess(
-                transportationCost: transportationCost,
-                currentAddressScreen: false,
-                location: location,
-                lat: position.latitude,
-                lng: position.longitude,
-              ),
-            );
+              .then((location) async {
+            await addressRepository
+                .fetchTransportationPrice(
+              municipalityZone: int.parse(location.municipalityZone),
+            )
+                .then((transportationCost) {
+              emit(
+                NewAddressSuccess(
+                  transportationCost: transportationCost,
+                  currentAddressScreen: false,
+                  location: location,
+                  lat: position.latitude,
+                  lng: position.longitude,
+                ),
+              );
+            });
           });
-
           LoadingScreen.instance().hide();
         }).catchError((e) {
           LoadingScreen.instance().hide();
@@ -145,12 +129,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is RegisterNewAddress) {
-        final provider =
-            Provider.of<PriceProvider>(event.context, listen: false);
-        if (transportationCosts.isNotEmpty) {
-          provider.removeItem(price: transportationCosts.last);
-          transportationCosts.removeLast();
-        }
         await addressRepository
             .fetchLocationFromMap(
           lat: event.lat,
@@ -161,8 +139,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               await addressRepository.fetchTransportationPrice(
             municipalityZone: int.parse(location.municipalityZone),
           );
-          transportationCosts.add(transportationCost);
-          provider.addItem(price: transportationCost);
           emit(
             NewAddressSuccess(
               transportationCost: transportationCost,

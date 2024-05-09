@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_screen_map_widget.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_status.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/new_address_screen_form.dart';
@@ -11,6 +12,7 @@ import 'package:bpbm2/screens/stepper_screen/widgets/stepper_buttons.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/transportation_price_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class NewAddressScreen extends StatefulWidget {
   final AddressBloc bloc;
@@ -41,6 +43,7 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<PriceProvider>(context, listen: false);
     fullAddressController.text =
         utf8.decode(widget.state.location.formattedAddress.codeUnits);
     return SingleChildScrollView(
@@ -111,6 +114,7 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
           StepperButtons(
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
+                provider.addItem(price: widget.state.transportationCost);
                 BlocProvider.of<StepperBloc>(context).add(NextStep());
               }
             },

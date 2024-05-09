@@ -1,3 +1,5 @@
+import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
+import 'package:bpbm2/screens/stepper_screen/widgets/stepper_buttons.dart';
 import 'package:flutter/material.dart';
 
 class TimeScreen extends StatelessWidget {
@@ -5,8 +7,13 @@ class TimeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Time Screen'),
+    return Column(
+      children: [
+        const PriceContainer(),
+        StepperButtons(
+          onNextPressed: () {},
+        ),
+      ],
     );
   }
 }

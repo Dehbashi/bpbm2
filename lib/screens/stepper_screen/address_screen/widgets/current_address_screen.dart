@@ -4,12 +4,14 @@ import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/data/repo/auth_repository.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/widgets/address_status.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/price_container.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/stepper_buttons.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/transportation_price_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class CurrentAddressScreeen extends StatelessWidget {
   final AddressBloc bloc;
@@ -27,6 +29,7 @@ class CurrentAddressScreeen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int selectedOption = state.isFirstTime ? -1 : selectedAddress;
+    final provider = Provider.of<PriceProvider>(context, listen: false);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -123,6 +126,7 @@ class CurrentAddressScreeen extends StatelessWidget {
           onNextPressed: () {
             if (AuthRepository.authChangeNotifier.value != null) {
               if (selectedAddress != -1) {
+                provider.addItem(price: state.transportationCost);
                 BlocProvider.of<StepperBloc>(context).add(NextStep());
               } else {
                 customErrorMessenger(

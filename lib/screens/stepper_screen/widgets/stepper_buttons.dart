@@ -1,7 +1,9 @@
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
+import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/widgets/stepper_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class StepperButtons extends StatelessWidget {
   final Function() onNextPressed;
@@ -9,11 +11,13 @@ class StepperButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<PriceProvider>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         StepperButton(
           onPressed: () {
+            provider.backButtonClicked();
             BlocProvider.of<StepperBloc>(context).add(PreviousStep());
           },
           text: 'بازگشت به مرحله قبل',
