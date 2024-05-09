@@ -33,15 +33,11 @@ class RegisterNewAddress extends AddressEvent {
   final BuildContext context;
   final double lat;
   final double lng;
-  final String houseNumber;
-  final String unit;
 
   const RegisterNewAddress({
     required this.context,
     required this.lat,
     required this.lng,
-    required this.houseNumber,
-    required this.unit,
   });
 
   @override
@@ -49,8 +45,27 @@ class RegisterNewAddress extends AddressEvent {
         context,
         lat,
         lng,
+      ];
+}
+
+class SaveNewAddress extends AddressEvent {
+  final MapModel address;
+  final String fullAddress;
+  final String houseNumber;
+  final String unitNumber;
+
+  const SaveNewAddress({
+    required this.address,
+    required this.fullAddress,
+    required this.houseNumber,
+    required this.unitNumber,
+  });
+
+  @override
+  List<Object> get props => [
+        address,
         houseNumber,
-        unit,
+        unitNumber,
       ];
 }
 

@@ -83,8 +83,6 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
                   context: context,
                   lat: value.latLong.latitude,
                   lng: value.latLong.longitude,
-                  houseNumber: '0',
-                  unit: '0',
                 ),
               );
             },
@@ -115,6 +113,14 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 provider.addItem(price: widget.state.transportationCost);
+                widget.bloc.add(
+                  SaveNewAddress(
+                    address: widget.state.location,
+                    fullAddress: fullAddressController.text,
+                    houseNumber: houseNumberController.text,
+                    unitNumber: unitNumberController.text,
+                  ),
+                );
                 BlocProvider.of<StepperBloc>(context).add(NextStep());
               }
             },

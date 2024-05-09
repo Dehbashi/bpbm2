@@ -148,7 +148,58 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               lng: event.lng,
             ),
           );
+          // AddressModel address = AddressModel(
+          //   id: 0,
+          //   title: '-',
+          //   text: utf8.decode(location.formattedAddress.codeUnits),
+          //   lat: event.lat.toString(),
+          //   lng: event.lng.toString(),
+          //   city: location.city ?? '',
+          //   district: location.district ?? '',
+          //   municipalityZone: int.parse(location.municipalityZone),
+          //   houseNumber: event.houseNumber,
+          //   unit: event.unit,
+          //   status: int.parse(location.state ?? '0'),
+          // );
+          // saveCurrentAddress(
+          //   transportationCost: transportationCost,
+          //   address: address,
+          // );
         });
+      }
+
+      if (event is SaveNewAddress) {
+        // AddressModel address = AddressModel(
+        //   id: 0,
+        //   title: '-',
+        //   text: utf8.decode(event.address.formattedAddress.codeUnits),
+        //   lat: 'event.lat.toString()',
+        //   lng: 'event.lng.toString()',
+        //   city: utf8.decode((event.address.city ?? '').codeUnits),
+        //   district: utf8.decode((event.address.district ?? '').codeUnits),
+        //   municipalityZone: int.parse(event.address.municipalityZone),
+        //   houseNumber: event.houseNumber,
+        //   unit: event.unitNumber,
+        //   status: int.parse(event.address.state ?? '0'),
+        // );
+        AddressModel address = AddressModel(
+          id: 0,
+          title: '-',
+          // text: utf8.decode(event.address.formattedAddress.codeUnits),
+          text: event.fullAddress,
+          lat: 'event.lat.toString()',
+          lng: 'event.lng.toString()',
+          city: utf8.decode((event.address.city ?? '').codeUnits),
+          district: utf8.decode((event.address.district ?? '').codeUnits),
+          municipalityZone: int.parse(event.address.municipalityZone),
+          houseNumber: event.houseNumber,
+          unit: event.unitNumber,
+          status: 0,
+        );
+        saveCurrentAddress(
+          transportationCost: transportationCost,
+          address: address,
+        );
       }
     });
   }

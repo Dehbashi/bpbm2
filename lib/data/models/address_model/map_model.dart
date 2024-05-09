@@ -1,3 +1,5 @@
+import 'package:bpbm2/data/models/address_model/address_model.dart';
+
 class MapModel {
   final String status;
   final String formattedAddress;
