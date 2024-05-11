@@ -1,10 +1,12 @@
 import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
+import 'package:bpbm2/blocs/time_bloc/time_bloc.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/address_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/question_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/time_screen/time_screen.dart';
+import 'package:bpbm2/screens/stepper_screen/user_screen/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,7 @@ class StepperScreen extends StatelessWidget {
         providers: [
           BlocProvider(create: (context) => QuestionBloc()),
           BlocProvider(create: (context) => AddressBloc(context)),
+          BlocProvider(create: (context) => TimeBloc(context)),
         ],
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
@@ -43,6 +46,8 @@ class StepperScreen extends StatelessWidget {
                 return const AddressScreen();
               } else if (state is TimeScreenSuccess) {
                 return const TimeScreen();
+              } else if (state is UserScreenSuccess) {
+                return const UserScreen();
               } else {
                 return Container();
               }

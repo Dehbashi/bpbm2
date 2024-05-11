@@ -7,7 +7,12 @@ import 'package:provider/provider.dart';
 
 class StepperButtons extends StatelessWidget {
   final Function() onNextPressed;
-  const StepperButtons({super.key, required this.onNextPressed});
+  final Function() onBackPressed;
+  const StepperButtons({
+    super.key,
+    required this.onNextPressed,
+    required this.onBackPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,10 +21,7 @@ class StepperButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         StepperButton(
-          onPressed: () {
-            provider.backButtonClicked();
-            BlocProvider.of<StepperBloc>(context).add(PreviousStep());
-          },
+          onPressed: onBackPressed,
           text: 'بازگشت به مرحله قبل',
           isNextStep: false,
         ),

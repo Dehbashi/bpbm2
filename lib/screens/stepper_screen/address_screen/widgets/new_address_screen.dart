@@ -110,6 +110,10 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
             height: 10,
           ),
           StepperButtons(
+            onBackPressed: () {
+              provider.backButtonClicked();
+              BlocProvider.of<StepperBloc>(context).add(PreviousStep());
+            },
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
                 provider.addItem(price: widget.state.transportationCost);

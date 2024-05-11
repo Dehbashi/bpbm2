@@ -123,6 +123,10 @@ class CurrentAddressScreeen extends StatelessWidget {
           height: 10,
         ),
         StepperButtons(
+          onBackPressed: () {
+            provider.backButtonClicked();
+            BlocProvider.of<StepperBloc>(context).add(PreviousStep());
+          },
           onNextPressed: () {
             if (AuthRepository.authChangeNotifier.value != null) {
               if (selectedAddress != -1) {
