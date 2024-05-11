@@ -63,6 +63,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   latlong2: ^0.9.1
   location_picker_flutter_map: ^3.0.1
+  persian_number_utility: ^1.1.4
 
 dev_dependencies:
   flutter_test:

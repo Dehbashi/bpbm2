@@ -1,6 +1,7 @@
 import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class QuestionScreenList extends StatefulWidget {
   final QuestionModel question;
@@ -68,7 +69,8 @@ class _QuestionScreenListState extends State<QuestionScreenList> {
                   return TextField(
                     controller: widget.textEditingControllers![index],
                     decoration: InputDecoration(
-                      label: Text('${answer.title} (${answer.price} تومان)'),
+                      label: Text(
+                          '${answer.title} (${answer.price.toString().toPersianDigit().seRagham()} ریال)'),
                       labelStyle: Theme.of(context).textTheme.labelSmall,
                     ),
                     onChanged: widget.onTextBoxChanged,

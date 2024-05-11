@@ -6,6 +6,7 @@ import 'package:bpbm2/providers/price_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 Future<void> saveSelectedQuestion({
   required BuildContext context,
@@ -38,8 +39,8 @@ Future<void> saveSelectedQuestion({
     List<QuestionItemModel> items = [];
     for (int i = 0; i < length; i++) {
       if (textEditingControllers[i].text.isNotEmpty) {
-        userInputs.add(int.parse(textEditingControllers[i].text));
-        inputs.add(int.parse(textEditingControllers[i].text));
+        userInputs.add(int.parse(textEditingControllers[i].text.toEnglishDigit()));
+        inputs.add(int.parse(textEditingControllers[i].text.toEnglishDigit()));
         final item = question.items.firstWhere(
           (element) => int.parse(element.id) == int.parse(question.items[i].id),
         );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 class TransportationPriceContainer extends StatelessWidget {
   final int transportationPrice;
@@ -31,7 +32,7 @@ class TransportationPriceContainer extends StatelessWidget {
             width: 10,
           ),
           Text(
-            '${transportationPrice.toString()} ریال',
+            '${transportationPrice.toString().toPersianDigit().seRagham()} ریال',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: Theme.of(context).colorScheme.secondaryContainer,
                   fontWeight: FontWeight.bold,

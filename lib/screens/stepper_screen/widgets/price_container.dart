@@ -1,8 +1,10 @@
 import 'package:bpbm2/common/dialogs/generic_dialog.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:persian/persian.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 
 class PriceContainer extends StatelessWidget {
   const PriceContainer({super.key});
@@ -30,7 +32,7 @@ class PriceContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${value.newPrice} ریال',
+                      '${value.newPrice.toString().toPersianDigit().seRagham()} ریال',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.surface,
                       ),
