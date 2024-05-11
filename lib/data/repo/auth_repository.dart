@@ -16,8 +16,7 @@ abstract class IAuthRepository {
 }
 
 class AuthRepository implements IAuthRepository {
-  static final ValueNotifier<AuthModel?> authChangeNotifier =
-      ValueNotifier(null);
+  static ValueNotifier<AuthModel?> authChangeNotifier = ValueNotifier(null);
   final IAuthDataSource dataSouce;
 
   const AuthRepository({required this.dataSouce});
@@ -70,6 +69,8 @@ class AuthRepository implements IAuthRepository {
     prefs.remove('token');
     prefs.remove('userId');
     prefs.remove('cellNumber');
+    prefs.remove('firstName');
+    prefs.remove('lastName');
     // prefs.clear();
     authChangeNotifier.value = null;
   }

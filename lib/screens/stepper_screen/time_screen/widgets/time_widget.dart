@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class TimeWidget extends StatelessWidget {
   final String text;
   final bool morningSelected;
+  final Function() onTap;
   final TimeSuccess state;
   const TimeWidget({
     super.key,
     required this.text,
     required this.morningSelected,
+    required this.onTap,
     required this.state,
   });
 
@@ -18,9 +20,7 @@ class TimeWidget extends StatelessWidget {
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {
-          BlocProvider.of<TimeBloc>(context).add(TimeChanged());
-        },
+        onTap: onTap,
         child: Container(
           margin: const EdgeInsets.all(10),
           padding: const EdgeInsets.all(10),

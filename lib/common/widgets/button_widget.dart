@@ -55,6 +55,7 @@ class ButtonWidget extends StatelessWidget {
                 children: [
                   if (icon != null)
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         icon!,
                         const SizedBox(
@@ -62,8 +63,11 @@ class ButtonWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                  Text(
-                    text,
+                  Expanded(
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ],
               ),

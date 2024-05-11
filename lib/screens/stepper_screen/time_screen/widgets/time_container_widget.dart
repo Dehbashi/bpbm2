@@ -37,35 +37,38 @@ class TimeContainerWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              DropdownButton(
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-                padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                isExpanded: true,
-                borderRadius: BorderRadius.circular(10),
-                dropdownColor: Theme.of(context).colorScheme.primary,
-                focusColor: Theme.of(context).colorScheme.primary,
-                underline: Container(),
-                autofocus: true,
-                icon: const Icon(Icons.keyboard_arrow_down),
-                value: state.pickedDate,
-                items: state.dates.map((date) {
-                  final index = state.dates.indexOf(date);
-                  return DropdownMenuItem(
-                    value: date,
-                    child: Text(
-                      '${date.title} ${date.text}',
-                    ),
-                  );
-                }).toList(),
-                onChanged: (pickedDate) {
-                  BlocProvider.of<TimeBloc>(context).add(
-                    DateChanged(
-                      pickedDate: pickedDate!,
-                    ),
-                  );
-                },
+              Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButton(
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(10),
+                  underline: Container(),
+                  autofocus: true,
+                  icon: const Icon(Icons.keyboard_arrow_down),
+                  value: state.pickedDate,
+                  items: state.dates.map((date) {
+                    return DropdownMenuItem(
+                      value: date,
+                      child: Text(
+                        '${date.title} ${date.text}',
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (pickedDate) {
+                    BlocProvider.of<TimeBloc>(context).add(
+                      DateChanged(
+                        pickedDate: pickedDate!,
+                      ),
+                    );
+                  },
+                ),
               ),
               const SizedBox(
                 height: 10,
@@ -78,6 +81,12 @@ class TimeContainerWidget extends StatelessWidget {
                         '$endHourText $morningEndHour',
                     morningSelected: state.morningSelected,
                     state: state,
+                    onTap: () {
+                      state.morningSelected
+                          ? null
+                          : BlocProvider.of<TimeBloc>(context)
+                              .add(TimeChanged());
+                    },
                   ),
                   TimeWidget(
                     text: '$eveningText\n'
@@ -85,6 +94,12 @@ class TimeContainerWidget extends StatelessWidget {
                         '$endHourText $eveningEndHour',
                     morningSelected: !state.morningSelected,
                     state: state,
+                    onTap: () {
+                      !state.morningSelected
+                          ? null
+                          : BlocProvider.of<TimeBloc>(context)
+                              .add(TimeChanged());
+                    },
                   ),
                 ],
               ),

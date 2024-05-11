@@ -16,3 +16,5 @@ class AddressScreenSuccess extends StepperState {}
 class TimeScreenSuccess extends StepperState {}
 
 class UserScreenSuccess extends StepperState {}
+
+class OrderSummarySuccess extends StepperState {}

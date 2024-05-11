@@ -4,6 +4,7 @@ Future<String> loadToken() async {
   String token = '';
   SharedPreferences _prefs = await SharedPreferences.getInstance();
   token = _prefs.getString('token') ?? '';
+  _prefs.reload();
 
   return token;
 }

@@ -8,6 +8,7 @@ import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/repo/address_repository.dart';
+import 'package:bpbm2/data/repo/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,12 +23,12 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     on<AddressEvent>((event, emit) async {
       if (event is AddressStarted) {
         transportationCost = 0;
-        String token = await loadToken();
+        final token = AuthRepository.authChangeNotifier.value;
         LoadingScreen.instance().show(
           context: context,
           text: 'در حال بارگذاری',
         );
-        if (token.isNotEmpty) {
+        if (token != null) {
           await addressRepository.fetchAddress().then((addresses) async {
             if (addresses.isNotEmpty) {
               emit(
