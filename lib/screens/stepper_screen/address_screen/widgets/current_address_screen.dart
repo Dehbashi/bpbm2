@@ -130,7 +130,7 @@ class CurrentAddressScreeen extends StatelessWidget {
           onNextPressed: () {
             if (AuthRepository.authChangeNotifier.value != null) {
               if (selectedAddress != -1) {
-                provider.addItem(price: state.transportationCost);
+                provider.addItem(price: state.transportationCost.toDouble());
                 BlocProvider.of<StepperBloc>(context).add(NextStep());
               } else {
                 customErrorMessenger(

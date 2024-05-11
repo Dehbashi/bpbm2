@@ -116,7 +116,7 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
             },
             onNextPressed: () {
               if (_formKey.currentState!.validate()) {
-                provider.addItem(price: widget.state.transportationCost);
+                provider.addItem(price: widget.state.transportationCost.toDouble());
                 widget.bloc.add(
                   SaveNewAddress(
                     address: widget.state.location,

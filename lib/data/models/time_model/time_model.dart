@@ -9,6 +9,14 @@ class TimeModel {
     required this.text,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'text': text,
+    };
+  }
+
   TimeModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         title = json['title'],

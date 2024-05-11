@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
@@ -84,7 +86,9 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final day = date.title;
     final exactDate = date.text;
-    prefs.setString('selectedDate', '$day $exactDate $time');
+    prefs.setString('selectedDate', jsonEncode(date.toJson()));
+    prefs.setString('selectedTime', time);
+    // prefs.setString('selectedDate', '$day $exactDate $time');
 
     // final selectedDate = prefs.getString('selectedDate');
   }

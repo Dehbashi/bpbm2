@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 
 class PriceProvider with ChangeNotifier {
-  int newPrice = 0;
-  List<int> prices = [];
+  double newPrice = 0;
+  List<double> prices = [];
 
-  int addItem({required int price}) {
+  double addItem({required double price}) {
     prices.add(price);
     newPrice = newPrice + price;
     notifyListeners();
     return newPrice;
   }
 
-  int removeItem({required int price}) {
+  double removeItem({required double price}) {
     newPrice = newPrice - price;
     notifyListeners();
     return newPrice;
   }
 
-  int backButtonClicked() {
+  double backButtonClicked() {
     newPrice = newPrice - prices.last;
     notifyListeners();
     return newPrice;

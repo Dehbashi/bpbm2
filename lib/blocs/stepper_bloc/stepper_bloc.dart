@@ -26,12 +26,12 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
         } else if (step == 4) {
           if (token != '') {
             step++;
-            emit(OrderSummarySuccess());
+            emit(FinalOrderScreenSuccess());
           } else if (token == '') {
             emit(UserScreenSuccess());
           }
         } else if (step == 5) {
-          emit(OrderSummarySuccess());
+          emit(FinalOrderScreenSuccess());
         }
       }
 

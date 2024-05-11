@@ -14,7 +14,7 @@ Future<void> saveSelectedQuestion({
   required int answerId,
   required List<TextEditingController> textEditingControllers,
   required List<QuestionModel> selectedQuestions,
-  required List<int> userInputs,
+  required List<double> userInputs,
 }) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final provider = Provider.of<PriceProvider>(context, listen: false);
@@ -32,15 +32,15 @@ Future<void> saveSelectedQuestion({
         items: items,
       ),
     );
-    provider.addItem(price: items[0].price);
+    provider.addItem(price: items[0].price.toDouble());
   } else if (question.type == 'textbox') {
     final length = question.items.length;
-    List<int> inputs = [];
+    List<double> inputs = [];
     List<QuestionItemModel> items = [];
     for (int i = 0; i < length; i++) {
       if (textEditingControllers[i].text.isNotEmpty) {
-        userInputs.add(int.parse(textEditingControllers[i].text.toEnglishDigit()));
-        inputs.add(int.parse(textEditingControllers[i].text.toEnglishDigit()));
+        userInputs.add(double.parse(textEditingControllers[i].text.toEnglishDigit()));
+        inputs.add(double.parse(textEditingControllers[i].text.toEnglishDigit()));
         final item = question.items.firstWhere(
           (element) => int.parse(element.id) == int.parse(question.items[i].id),
         );
@@ -57,7 +57,7 @@ Future<void> saveSelectedQuestion({
       ),
     );
     print(inputs);
-    int textBoxPrice = 0;
+    double textBoxPrice = 0;
     for (int i = 0; i < items.length; i++) {
       textBoxPrice = textBoxPrice + items[i].price * inputs[i];
     }
