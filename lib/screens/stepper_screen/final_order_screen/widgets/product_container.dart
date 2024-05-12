@@ -1,6 +1,5 @@
 import 'package:bpbm2/blocs/final_order_bloc/final_order_bloc.dart';
 import 'package:bpbm2/data/models/question_model/question_item_model.dart';
-import 'package:bpbm2/data/models/question_model/question_model.dart';
 import 'package:bpbm2/data/models/question_model/user_input_model.dart';
 import 'package:bpbm2/screens/stepper_screen/final_order_screen/widgets/product_list_container.dart';
 import 'package:flutter/material.dart';

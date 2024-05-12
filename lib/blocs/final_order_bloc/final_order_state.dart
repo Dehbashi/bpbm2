@@ -19,6 +19,7 @@ class FinalOrderSuccess extends FinalOrderState {
   final int transportationCost;
   final AddressModel address;
   final List<UserInputModel> userInputs;
+  final bool isDiscountLoading;
 
   const FinalOrderSuccess({
     required this.products,
@@ -30,6 +31,7 @@ class FinalOrderSuccess extends FinalOrderState {
     required this.transportationCost,
     required this.address,
     required this.userInputs,
+    required this.isDiscountLoading,
   });
 
   @override
@@ -43,6 +45,7 @@ class FinalOrderSuccess extends FinalOrderState {
         transportationCost,
         address,
         userInputs,
+        isDiscountLoading,
       ];
 }
 

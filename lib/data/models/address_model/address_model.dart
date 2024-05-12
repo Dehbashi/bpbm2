@@ -53,4 +53,17 @@ class AddressModel {
         houseNumber = json['housenumber'] ?? '',
         unit = json['unit'] ?? '',
         status = json['status'] ?? 0;
+
+  AddressModel.empty()
+      : id = 0,
+        title = '',
+        text = '',
+        lat = '',
+        lng = '',
+        city = '',
+        district = '',
+        municipalityZone = 0,
+        houseNumber = '',
+        unit = '',
+        status = 0;
 }

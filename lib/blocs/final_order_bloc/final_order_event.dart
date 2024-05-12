@@ -10,10 +10,10 @@ sealed class FinalOrderEvent extends Equatable {
 class FinalOrderStarted extends FinalOrderEvent {}
 
 class RegisterDiscount extends FinalOrderEvent {
-  final String discountCode;
+  final String discount;
 
-  const RegisterDiscount({required this.discountCode});
+  const RegisterDiscount({required this.discount});
 
   @override
-  List<Object> get props => [discountCode];
+  List<Object> get props => [discount];
 }
