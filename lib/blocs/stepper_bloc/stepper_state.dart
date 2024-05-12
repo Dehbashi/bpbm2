@@ -18,3 +18,5 @@ class TimeScreenSuccess extends StepperState {}
 class UserScreenSuccess extends StepperState {}
 
 class FinalOrderScreenSuccess extends StepperState {}
+
+class FinalStepScreenSuccess extends StepperState {}

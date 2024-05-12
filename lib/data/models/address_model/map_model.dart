@@ -1,5 +1,3 @@
-import 'package:bpbm2/data/models/address_model/address_model.dart';
-
 class MapModel {
   final String status;
   final String formattedAddress;
@@ -11,7 +9,7 @@ class MapModel {
   final String? place;
   final String municipalityZone;
   final bool inTrafficZone;
-  final bool idOddEvenZone;
+  final bool inOddEvenZone;
   final String? village;
   final String? county;
   final String? district;
@@ -27,7 +25,7 @@ class MapModel {
     required this.place,
     required this.municipalityZone,
     required this.inTrafficZone,
-    required this.idOddEvenZone,
+    required this.inOddEvenZone,
     required this.village,
     required this.county,
     required this.district,
@@ -44,7 +42,7 @@ class MapModel {
         place = json['place'],
         municipalityZone = json['municipality_zone'],
         inTrafficZone = json['in_traffic_zone'],
-        idOddEvenZone = json['in_odd_even_zone'],
+        inOddEvenZone = json['in_odd_even_zone'],
         village = json['village'],
         county = json['county'],
         district = json['district'];

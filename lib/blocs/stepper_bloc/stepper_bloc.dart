@@ -32,6 +32,8 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
           }
         } else if (step == 5) {
           emit(FinalOrderScreenSuccess());
+        } else if (step == 6) {
+          emit(FinalStepScreenSuccess());
         }
       }
 
@@ -51,13 +53,6 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
           } else {
             emit(UserScreenSuccess());
           }
-        } else if (step == 5) {
-          // if (token != null) {
-          //   step--;
-          //   emit(TimeScreenSuccess());
-          // } else {
-          //   emit(UserScreenSuccess());
-          // }
         }
       }
     });

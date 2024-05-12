@@ -133,6 +133,15 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           );
         });
       }
+
+      if (event is RegisterFinalOrder) {
+        LoadingScreen.instance().show(
+          context: context,
+          text: 'در حال بارگذاری',
+        );
+        final orderData = await fetchFinalOrderData();
+        LoadingScreen.instance().hide();
+      }
     });
   }
 

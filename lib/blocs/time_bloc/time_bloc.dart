@@ -75,6 +75,8 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
         await saveTimeAndDate(
           date: event.pickedDate,
           time: event.pickedTime,
+          dates: dates,
+          morningSelected: morningSelected,
         );
       }
     });
@@ -82,12 +84,26 @@ class TimeBloc extends Bloc<TimeEvent, TimeState> {
   Future<void> saveTimeAndDate({
     required TimeModel date,
     required String time,
+    required List<TimeModel> dates,
+    required bool morningSelected,
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    String timeValue = '';
+    int timeId = 0;
     final day = date.title;
     final exactDate = date.text;
     prefs.setString('selectedDate', jsonEncode(date.toJson()));
     prefs.setString('selectedTime', time);
+
+    if (morningSelected) {
+      timeValue = '08-13';
+      timeId = 1;
+    } else {
+      timeValue = '13-18';
+      timeId = 2;
+    }
+    prefs.setString('timeValue', timeValue);
+    prefs.setInt('timeId', timeId);
     // prefs.setString('selectedDate', '$day $exactDate $time');
 
     // final selectedDate = prefs.getString('selectedDate');

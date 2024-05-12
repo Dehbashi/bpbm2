@@ -17,3 +17,12 @@ class RegisterDiscount extends FinalOrderEvent {
   @override
   List<Object> get props => [discount];
 }
+
+class RegisterFinalOrder extends FinalOrderEvent {
+  final String discription;
+
+  const RegisterFinalOrder({required this.discription});
+
+  @override
+  List<Object> get props => [discription];
+}

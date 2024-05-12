@@ -7,6 +7,7 @@ import 'package:bpbm2/blocs/user_bloc/user_bloc.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/address_screen/address_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/final_order_screen/final_order_screen.dart';
+import 'package:bpbm2/screens/stepper_screen/final_step_screen/final_step_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/question_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/time_screen/time_screen.dart';
 import 'package:bpbm2/screens/stepper_screen/user_screen/user_screen.dart';
@@ -57,6 +58,8 @@ class StepperScreen extends StatelessWidget {
                 return FinalOrderScreen(
                   serviceTitle: serviceTitle,
                 );
+              } else if (state is FinalStepScreenSuccess) {
+                return const FinalStepScreen();
               } else {
                 return Container();
               }

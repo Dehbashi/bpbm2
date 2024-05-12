@@ -38,8 +38,13 @@ Future<FinalOrderData> fetchFinalOrderData() async {
   final selectedDateJson = prefs.getString('selectedDate') ?? '';
   final Map<String, dynamic> dateJsonData = jsonDecode(selectedDateJson);
   final selectedDate = TimeModel.fromJson(dateJsonData);
-
   final selectedTime = prefs.getString('selectedTime') ?? '';
+  final timeValue = prefs.getString('timeValue') ?? '';
+  final timeId = prefs.getInt('timeId') ?? 0;
+
+  final cellNumber = prefs.getString('cellNumber') ?? '';
+  final String firstName = prefs.getString('firstName') ?? '';
+  final String lastName = prefs.getString('lastName') ?? '';
 
   final finalOrderData = FinalOrderData(
     selectedQuestions: questions,
@@ -48,6 +53,11 @@ Future<FinalOrderData> fetchFinalOrderData() async {
     transportationCost: transportationCost,
     selectedDate: selectedDate,
     selectedTime: selectedTime,
+    timeId: timeId,
+    timeValue: timeValue,
+    cellNumber: cellNumber,
+    firstName: firstName,
+    lastName: lastName,
   );
 
   return finalOrderData;

@@ -9,6 +9,11 @@ class FinalOrderData {
   final int transportationCost;
   final TimeModel selectedDate;
   final String selectedTime;
+  final String timeValue;
+  final int timeId;
+  final String cellNumber;
+  final String firstName;
+  final String lastName;
 
   const FinalOrderData({
     required this.selectedQuestions,
@@ -17,5 +22,10 @@ class FinalOrderData {
     required this.transportationCost,
     required this.selectedDate,
     required this.selectedTime,
+    required this.timeId,
+    required this.timeValue,
+    required this.cellNumber,
+    required this.firstName,
+    required this.lastName,
   });
 }
