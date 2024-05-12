@@ -9,23 +9,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<FinalOrderData> fetchFinalOrderData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
+  List<QuestionModel> questions = [];
   List<String> selectedQuestionsJson =
       prefs.getStringList('selectedQuestions') ?? [];
-  List<QuestionModel> selectedQuestions =
-      selectedQuestionsJson.map((jsonString) {
-    final data = json.decode(jsonString) as Map<String, dynamic>;
-    final question = QuestionModel.fromJson(data);
-    print(question);
-    return QuestionModel.fromJson(json.decode(jsonString));
-  }).toList();
+  for (var item in selectedQuestionsJson) {
+    try {
+      final data = json.decode(item) as Map<String, dynamic>;
+      questions.add(QuestionModel.fromJson(data));
+    } catch (e) {
+      print('Error decoding JSON: $e');
+    }
+  }
 
   List<String> userInputsJson = prefs.getStringList('userInputs') ?? [];
-  List<double> userInputs = userInputsJson
+  List<int> userInputs = userInputsJson
       .map((jsonString) {
         return json.decode(jsonString);
       })
       .toList()
-      .cast<double>();
+      .cast<int>();
 
   final selectedAddressJson = prefs.getString('selectedAddress') ?? '';
   final Map<String, dynamic> addressJsonData = jsonDecode(selectedAddressJson);
@@ -40,7 +42,7 @@ Future<FinalOrderData> fetchFinalOrderData() async {
   final selectedTime = prefs.getString('selectedTime') ?? '';
 
   final finalOrderData = FinalOrderData(
-    selectedQuestions: selectedQuestions,
+    selectedQuestions: questions,
     userInputs: userInputs,
     selectedAddress: selectedAddress,
     transportationCost: transportationCost,

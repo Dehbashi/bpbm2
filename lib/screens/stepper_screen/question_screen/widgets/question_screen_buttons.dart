@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class QuestionScreenButtons extends StatefulWidget {
   final List<int> relationIdHistory;
   final List<QuestionModel> selectedQuestions;
-  final List<double> userInputs;
+  final List<int> userInputs;
   final QuestionBloc bloc;
   final int serviceId;
   final int selectedAnswerId;
@@ -63,8 +63,7 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
                   }
                 }
               } else if (lastQuestion.type == 'radio') {
-                provider.removeItem(
-                    price: lastQuestion.items[0].price.toDouble());
+                provider.removeItem(price: lastQuestion.items[0].price);
               }
               widget.selectedQuestions.removeLast();
               widget.bloc.add(

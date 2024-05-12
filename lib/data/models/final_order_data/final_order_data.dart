@@ -4,7 +4,7 @@ import 'package:bpbm2/data/models/time_model/time_model.dart';
 
 class FinalOrderData {
   final List<QuestionModel> selectedQuestions;
-  final List<double> userInputs;
+  final List<int> userInputs;
   final AddressModel selectedAddress;
   final int transportationCost;
   final TimeModel selectedDate;

@@ -27,9 +27,9 @@ class QuestionModel {
 
   QuestionModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        title = json['title'],
-        type = json['type'],
-        list = json['list'],
+        title = json['title'] ?? '',
+        type = json['type'] ?? '',
+        list = json['list'] ?? '',
         items = (json['items'] as List<dynamic>).map((item) {
           return QuestionItemModel.fromJson(item);
         }).toList();

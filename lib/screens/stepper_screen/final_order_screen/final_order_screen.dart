@@ -11,32 +11,34 @@ class FinalOrderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<FinalOrderBloc>(context).add(FinalOrderStarted());
 
-    return Column(
-      children: [
-        Text(
-          'بررسی و تأیید سفارش',
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        BlocBuilder<FinalOrderBloc, FinalOrderState>(
-          builder: (context, state) {
-            if (state is FinalOrderFailed) {
-              return const Center(
-                child: Text('خطای نامشخص'),
-              );
-            } else if (state is FinalOrderSuccess) {
-              return ServiceContainer(
-                state: state,
-                serviceTitle: serviceTitle,
-              );
-            } else {
-              return Container();
-            }
-          },
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Text(
+            'بررسی و تأیید سفارش',
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          BlocBuilder<FinalOrderBloc, FinalOrderState>(
+            builder: (context, state) {
+              if (state is FinalOrderFailed) {
+                return const Center(
+                  child: Text('خطای نامشخص'),
+                );
+              } else if (state is FinalOrderSuccess) {
+                return ServiceContainer(
+                  state: state,
+                  serviceTitle: serviceTitle,
+                );
+              } else {
+                return Container();
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 }

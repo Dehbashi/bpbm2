@@ -25,9 +25,9 @@ class QuestionItemModel {
   QuestionItemModel.fromJson(Map<String, dynamic> json)
       // : pattern = json['pattern'] ?? null,
       : id = (json['id'] is String) ? json['id'] : json['id'].toString(),
-        title = json['title'],
+        title = json['title'] ?? '',
         price = (json['price'] is String)
             ? int.parse(json['price'])
             : json['price'],
-        nextRelation = json['next_relation'];
+        nextRelation = json['next_relation'] ?? '';
 }

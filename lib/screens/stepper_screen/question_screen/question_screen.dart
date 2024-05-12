@@ -36,7 +36,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
     items: [],
   );
   List<QuestionModel> selectedQuestions = [];
-  List<double> userInputs = [];
+  List<int> userInputs = [];
 
   @override
   void initState() {

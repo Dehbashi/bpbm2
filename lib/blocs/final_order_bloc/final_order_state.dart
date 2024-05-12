@@ -11,12 +11,14 @@ final class FinalOrderInitial extends FinalOrderState {}
 
 class FinalOrderSuccess extends FinalOrderState {
   final List<QuestionModel> products;
-  final double priceOfProducts;
+  final int priceOfProducts;
   final List<QuestionModel> services;
-  final double priceOfServices;
+  final int priceOfServices;
   final String discount;
-  final double totalPrice;
+  final int totalPrice;
+  final int transportationCost;
   final AddressModel address;
+  final List<UserInputModel> userInputs;
 
   const FinalOrderSuccess({
     required this.products,
@@ -25,7 +27,9 @@ class FinalOrderSuccess extends FinalOrderState {
     required this.priceOfServices,
     required this.discount,
     required this.totalPrice,
+    required this.transportationCost,
     required this.address,
+    required this.userInputs,
   });
 
   @override
@@ -36,7 +40,9 @@ class FinalOrderSuccess extends FinalOrderState {
         priceOfServices,
         discount,
         totalPrice,
+        transportationCost,
         address,
+        userInputs,
       ];
 }
 
