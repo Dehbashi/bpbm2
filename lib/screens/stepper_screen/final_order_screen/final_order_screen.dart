@@ -1,4 +1,5 @@
 import 'package:bpbm2/blocs/final_order_bloc/final_order_bloc.dart';
+import 'package:bpbm2/screens/stepper_screen/final_order_screen/widgets/order_screen_widget.dart';
 import 'package:bpbm2/screens/stepper_screen/final_order_screen/widgets/service_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class FinalOrderScreen extends StatelessWidget {
                   child: Text('خطای نامشخص'),
                 );
               } else if (state is FinalOrderSuccess) {
-                return ServiceContainer(
+                return OrderScreenWidget(
                   state: state,
                   serviceTitle: serviceTitle,
                 );

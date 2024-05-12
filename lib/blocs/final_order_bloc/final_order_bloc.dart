@@ -105,6 +105,9 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           for (var item in question.items) {
             priceOfProducts =
                 priceOfProducts + item.price * userInputs[userInputIndex];
+            final userInputModel = UserInputModel(
+                item: item, userInput: userInputs[userInputIndex]);
+            itemsWithInputs.add(userInputModel);
             userInputIndex++;
           }
         }

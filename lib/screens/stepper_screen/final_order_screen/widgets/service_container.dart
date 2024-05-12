@@ -6,8 +6,11 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 class ServiceContainer extends StatelessWidget {
   final FinalOrderSuccess state;
   final String serviceTitle;
-  const ServiceContainer(
-      {super.key, required this.state, required this.serviceTitle});
+  const ServiceContainer({
+    super.key,
+    required this.state,
+    required this.serviceTitle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,9 @@ class ServiceContainer extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 15,),
+          const SizedBox(
+            height: 15,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
