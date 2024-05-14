@@ -25,7 +25,9 @@ class UserOrderBloc extends Bloc<UserOrderEvent, UserOrderState> {
               const UserOrderEmpty(message: 'سفارشی وجود ندارد'),
             );
           } else {
-            emit(UserOrderSuccess(userOrders: userOrders));
+            emit(UserOrderSuccess(
+              userOrders: userOrders,
+            ));
           }
           LoadingScreen.instance().hide();
         }).catchError((e) {

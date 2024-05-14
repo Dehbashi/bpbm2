@@ -11,7 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserOrderList extends StatelessWidget {
   final List<UserOrderModel> userOrders;
-  const UserOrderList({super.key, required this.userOrders});
+  const UserOrderList({
+    super.key,
+    required this.userOrders,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +72,6 @@ class UserOrderList extends StatelessWidget {
                   ButtonWidget(
                     buttonWidth: 160,
                     onPressed: () {
-                      // BlocProvider.of<UserOrderBloc>(context).add(
-                      //   UserOrderDetail(orderId: userOrder.id),
-                      // );
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => BlocProvider(
