@@ -1,4 +1,5 @@
 import 'package:bpbm2/blocs/auth_bloc/auth_bloc.dart';
+import 'package:bpbm2/blocs/user_order_bloc/user_order_bloc.dart';
 import 'package:bpbm2/common/dialogs/generic_dialog.dart';
 import 'package:bpbm2/screens/profile_screen/profile_drawer/widgets/drawer_user_screen_item.dart';
 import 'package:bpbm2/screens/profile_screen/profile_drawer/widgets/profile_drawer_header.dart';
@@ -27,7 +28,12 @@ class DrawerUserScreen extends StatelessWidget {
         'داشبورد': {const UserDashboardScreen(): Icons.bar_chart}
       },
       {
-        'سفارش های من': {const UserOrderScreen(): Icons.view_list}
+        'سفارش های من': {
+          BlocProvider(
+            create: (context) => UserOrderBloc(context),
+            child: const UserOrderScreen(),
+          ): Icons.view_list
+        }
       },
       {
         'آدرس های من': {const UserAddressScreen(): Icons.location_on}

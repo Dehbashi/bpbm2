@@ -20,11 +20,11 @@ class ServicerModel {
   });
 
   ServicerModel.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        orderId = json['order_id'],
-        providerId = json['provider_id'],
-        status = json['status'],
-        createdAt = json['created_at'],
-        updatedAt = json['updated_at'],
+      : id = json['id'] ?? 0,
+        orderId = json['order_id'] ?? 0,
+        providerId = json['provider_id'] ?? 0,
+        status = json['status'] ?? 0,
+        createdAt = json['created_at'] ?? '',
+        updatedAt = json['updated_at'] ?? '',
         user = UserProfileModel.fromJson(json['user']);
 }

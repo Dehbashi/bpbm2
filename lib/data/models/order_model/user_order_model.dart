@@ -8,7 +8,7 @@ class UserOrderModel {
   final int orderStatus;
   final String date;
   final UserAddressModel address;
-  final ServicerModel servicer;
+  final ServicerModel? servicer;
   final OrderModel order;
 
   const UserOrderModel({
@@ -27,6 +27,8 @@ class UserOrderModel {
         orderStatus = json['order_status'],
         date = json['date'],
         address = UserAddressModel.fromJson(json['address']),
-        servicer = ServicerModel.fromJson(json['servicer']),
+        servicer = json['servicer'] == null
+            ? null
+            : ServicerModel.fromJson(json['servicer']),
         order = OrderModel.fromJson(json['order']);
 }

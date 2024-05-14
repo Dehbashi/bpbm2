@@ -1,8 +1,9 @@
 import 'package:bpbm2/data/models/address_model/user_address_model.dart';
+import 'package:bpbm2/data/models/order_model/invoice_model.dart';
+import 'package:bpbm2/data/models/order_model/order_detail_item_model.dart';
 import 'package:bpbm2/data/models/order_model/service_model.dart';
-import 'package:bpbm2/data/models/order_model/servicer_model.dart';
 
-class OrderModel {
+class OrderDetailModel {
   final int id;
   final int orderDataId;
   final int serviceId;
@@ -16,18 +17,19 @@ class OrderModel {
   final int addressId;
   final String date;
   final String time;
-  final String text;
+  final String? text;
   final int status;
   final int orderStatus;
   final int pull;
   final String? createdAt;
   final String? updatedAt;
   final String? deletedAt;
+  final List<OrderDetailItemModel> items;
   final UserAddressModel address;
+  final InvoiceModel? factor;
   final ServiceModel service;
-  final ServicerModel? servicer;
 
-  const OrderModel({
+  const OrderDetailModel({
     required this.id,
     required this.orderDataId,
     required this.serviceId,
@@ -48,12 +50,13 @@ class OrderModel {
     required this.createdAt,
     required this.updatedAt,
     required this.deletedAt,
+    required this.items,
     required this.address,
+    required this.factor,
     required this.service,
-    required this.servicer,
   });
 
-  OrderModel.fromJson(Map<String, dynamic> json)
+  OrderDetailModel.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         orderDataId = json['order_data_id'],
         serviceId = json['service_id'],
@@ -74,9 +77,12 @@ class OrderModel {
         createdAt = json['created_at'],
         updatedAt = json['updated_at'],
         deletedAt = json['deleted_at'],
+        items = (json['items'] as List<dynamic>).map((item) {
+          return OrderDetailItemModel.fromJson(item);
+        }).toList(),
         address = UserAddressModel.fromJson(json['address']),
-        service = ServiceModel.fromJson(json['service']),
-        servicer = json['servicer'] == null
+        factor = json['factor'] == null
             ? null
-            : ServicerModel.fromJson(json['servicer']);
+            : InvoiceModel.fromJson(json['factor']),
+        service = ServiceModel.fromJson(json['service']);
 }
