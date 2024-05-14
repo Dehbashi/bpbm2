@@ -186,7 +186,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         AddressModel address = AddressModel(
           id: 0,
           title: '-',
-          // text: utf8.decode(event.address.formattedAddress.codeUnits),
           text: event.fullAddress,
           lat: 'event.lat.toString()',
           lng: 'event.lng.toString()',

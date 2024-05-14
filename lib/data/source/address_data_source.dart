@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bpbm2/common/constants.dart';
 import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
+import 'package:bpbm2/data/models/address_model/full_address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,7 @@ abstract class IAddressDataSource {
     required double lat,
     required double lng,
   });
+  Future<void> createAddress({required FullAddressModel address});
 }
 
 class AddressRemoteDataSource implements IAddressDataSource {
@@ -76,6 +78,25 @@ class AddressRemoteDataSource implements IAddressDataSource {
       final data = jsonDecode(response.body) as Map<String, dynamic>;
       final fetchedLocation = MapModel.fromJson(data);
       return fetchedLocation;
+    } else {
+      throw Exception(response.statusCode);
+    }
+  }
+
+  @override
+  Future<void> createAddress({required FullAddressModel address}) async {
+    final url = Uri.parse('$baseUrl/user/address/create');
+    final token = await loadToken();
+    final headers = {
+      'Content-Type': contentType,
+      'Tokenpublic': tokenPublic,
+      'Authorization': '$tokenPrefix $token',
+    };
+    final body = jsonEncode({address.toJson()});
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      print('create address successful');
     } else {
       throw Exception(response.statusCode);
     }

@@ -1,4 +1,5 @@
 import 'package:bpbm2/data/models/address_model/address_model.dart';
+import 'package:bpbm2/data/models/address_model/full_address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/source/address_data_source.dart';
 
@@ -12,6 +13,7 @@ abstract class IAddressRepository {
     required double lat,
     required double lng,
   });
+  Future<void> createAddress({required FullAddressModel address});
 }
 
 class AddressRepository implements IAddressRepository {
@@ -36,5 +38,10 @@ class AddressRepository implements IAddressRepository {
     required double lng,
   }) async {
     return dataSource.fetchLocationFromMap(lat: lat, lng: lng);
+  }
+
+  @override
+  Future<void> createAddress({required FullAddressModel address}) async {
+    return dataSource.createAddress(address: address);
   }
 }

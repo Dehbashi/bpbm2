@@ -47,7 +47,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => FaqBloc()),
         BlocProvider(create: (context) => AuthBloc()),
         BlocProvider(create: (context) => StepperBloc()),
-        // BlocProvider(create: (context) => UserOrderBloc(context)),
       ],
       child: BlocBuilder<AppThemeBloc, AppThemeState>(
         builder: (context, state) {

@@ -1,3 +1,4 @@
+import 'package:bpbm2/blocs/address_bloc/address_bloc.dart';
 import 'package:bpbm2/blocs/auth_bloc/auth_bloc.dart';
 import 'package:bpbm2/blocs/user_order_bloc/user_order_bloc.dart';
 import 'package:bpbm2/common/dialogs/generic_dialog.dart';
@@ -36,7 +37,12 @@ class DrawerUserScreen extends StatelessWidget {
         }
       },
       {
-        'آدرس های من': {const UserAddressScreen(): Icons.location_on}
+        'آدرس های من': {
+          BlocProvider(
+            create: (context) => AddressBloc(context),
+            child: const UserAddressScreen(),
+          ): Icons.location_on
+        }
       },
       {
         'مشخصات کاربری': {const UserProfileScreen(): Icons.person}
