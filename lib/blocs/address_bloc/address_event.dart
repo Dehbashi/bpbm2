@@ -79,16 +79,29 @@ class SelectPreviousAddress extends AddressEvent {
 }
 
 class EditCurrentAddress extends AddressEvent {
-  final BuildContext context;
   final AddressModel address;
+  final double lat;
+  final double lng;
 
   const EditCurrentAddress({
-    required this.context,
+    required this.address,
+    required this.lat,
+    required this.lng,
+  });
+
+  @override
+  List<Object> get props => [address];
+}
+
+class EditAddressStarted extends AddressEvent {
+  final AddressModel address;
+
+  const EditAddressStarted({
     required this.address,
   });
 
   @override
-  List<Object> get props => [context, address];
+  List<Object> get props => [address];
 }
 
 class CurrentAddressSelected extends AddressEvent {

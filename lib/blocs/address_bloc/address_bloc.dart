@@ -169,6 +169,31 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         });
       }
 
+      if (event is EditAddressStarted) {
+        emit(
+          EditAddressSuccess(address: event.address),
+        );
+      }
+
+      if (event is EditCurrentAddress) {
+        await addressRepository
+            .fetchLocationFromMap(lat: event.lat, lng: event.lng)
+            .then((location) async {
+          final transportationCost =
+              await addressRepository.fetchTransportationPrice(
+            municipalityZone: int.parse(location.municipalityZone),
+          );
+          emit(
+            NewAddressSuccess(
+                transportationCost: transportationCost,
+                currentAddressScreen: false,
+                location: location,
+                lat: event.lat,
+                lng: event.lng),
+          );
+        });
+      }
+
       if (event is SaveNewAddress) {
         // AddressModel address = AddressModel(
         //   id: 0,

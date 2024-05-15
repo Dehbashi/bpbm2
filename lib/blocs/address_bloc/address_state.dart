@@ -53,3 +53,12 @@ class NewAddressSuccess extends AddressState {
         lng,
       ];
 }
+
+class EditAddressSuccess extends AddressState {
+  final AddressModel address;
+
+  const EditAddressSuccess({required this.address});
+
+  @override
+  List<Object> get props => [address];
+}
