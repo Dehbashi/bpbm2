@@ -32,6 +32,15 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
   TextEditingController fullAddressController = TextEditingController();
   TextEditingController houseNumberController = TextEditingController();
   TextEditingController unitNumberController = TextEditingController();
+  late double newLat;
+  late double newLng;
+
+  @override
+  void initState() {
+    super.initState();
+    newLat = widget.state.lat;
+    newLng = widget.state.lng;
+  }
 
   @override
   void dispose() {
@@ -46,6 +55,7 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
     final provider = Provider.of<PriceProvider>(context, listen: false);
     fullAddressController.text =
         utf8.decode(widget.state.location.formattedAddress.codeUnits);
+
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,11 +88,13 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
           AddressScreenMapWidget(
             state: widget.state,
             onPicked: (value) {
+              newLat = value.latLong.latitude;
+              newLng = value.latLong.longitude;
               widget.bloc.add(
                 RegisterNewAddress(
                   context: context,
-                  lat: value.latLong.latitude,
-                  lng: value.latLong.longitude,
+                  lat: newLat,
+                  lng: newLng,
                 ),
               );
             },
@@ -123,6 +135,8 @@ class _NewAddressScreenState extends State<NewAddressScreen> {
                     fullAddress: fullAddressController.text,
                     houseNumber: houseNumberController.text,
                     unitNumber: unitNumberController.text,
+                    lat: newLat,
+                    lng: newLng,
                   ),
                 );
                 BlocProvider.of<StepperBloc>(context).add(NextStep());

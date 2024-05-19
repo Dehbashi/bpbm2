@@ -20,6 +20,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   final BuildContext context;
   AddressBloc(this.context) : super(AddressInitial()) {
     int transportationCost = 0;
+    bool newAddress = false;
     on<AddressEvent>((event, emit) async {
       if (event is AddressStarted) {
         transportationCost = 0;
@@ -74,6 +75,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       }
 
       if (event is CurrentAddressSelected) {
+        newAddress = false;
         transportationCost = await addressRepository.fetchTransportationPrice(
           municipalityZone: event.address.municipalityZone,
         );
@@ -88,6 +90,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         await saveCurrentAddress(
           transportationCost: transportationCost,
           address: event.address,
+          newAddress: newAddress,
         );
       }
 
@@ -140,6 +143,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               await addressRepository.fetchTransportationPrice(
             municipalityZone: int.parse(location.municipalityZone),
           );
+          newAddress = true;
           emit(
             NewAddressSuccess(
               transportationCost: transportationCost,
@@ -149,23 +153,6 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
               lng: event.lng,
             ),
           );
-          // AddressModel address = AddressModel(
-          //   id: 0,
-          //   title: '-',
-          //   text: utf8.decode(location.formattedAddress.codeUnits),
-          //   lat: event.lat.toString(),
-          //   lng: event.lng.toString(),
-          //   city: location.city ?? '',
-          //   district: location.district ?? '',
-          //   municipalityZone: int.parse(location.municipalityZone),
-          //   houseNumber: event.houseNumber,
-          //   unit: event.unit,
-          //   status: int.parse(location.state ?? '0'),
-          // );
-          // saveCurrentAddress(
-          //   transportationCost: transportationCost,
-          //   address: address,
-          // );
         });
       }
 
@@ -185,35 +172,23 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
           );
           emit(
             NewAddressSuccess(
-                transportationCost: transportationCost,
-                currentAddressScreen: false,
-                location: location,
-                lat: event.lat,
-                lng: event.lng),
+              transportationCost: transportationCost,
+              currentAddressScreen: false,
+              location: location,
+              lat: event.lat,
+              lng: event.lng,
+            ),
           );
         });
       }
 
       if (event is SaveNewAddress) {
-        // AddressModel address = AddressModel(
-        //   id: 0,
-        //   title: '-',
-        //   text: utf8.decode(event.address.formattedAddress.codeUnits),
-        //   lat: 'event.lat.toString()',
-        //   lng: 'event.lng.toString()',
-        //   city: utf8.decode((event.address.city ?? '').codeUnits),
-        //   district: utf8.decode((event.address.district ?? '').codeUnits),
-        //   municipalityZone: int.parse(event.address.municipalityZone),
-        //   houseNumber: event.houseNumber,
-        //   unit: event.unitNumber,
-        //   status: int.parse(event.address.state ?? '0'),
-        // );
         AddressModel address = AddressModel(
           id: 0,
           title: '-',
           text: event.fullAddress,
-          lat: 'event.lat.toString()',
-          lng: 'event.lng.toString()',
+          lat: event.lat.toString(),
+          lng: event.lng.toString(),
           city: utf8.decode((event.address.city ?? '').codeUnits),
           district: utf8.decode((event.address.district ?? '').codeUnits),
           municipalityZone: int.parse(event.address.municipalityZone),
@@ -224,6 +199,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
         saveCurrentAddress(
           transportationCost: transportationCost,
           address: address,
+          newAddress: newAddress,
         );
       }
     });
@@ -232,10 +208,12 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
   Future<void> saveCurrentAddress({
     required int transportationCost,
     required AddressModel address,
+    required bool newAddress,
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('selectedAddress', jsonEncode(address.toJson()));
     prefs.setInt('transportationCost', transportationCost);
+    prefs.setBool('newAddress', newAddress);
 
     // final selectedAddressJson = prefs.getString('selectedAddress');
     // if (selectedAddressJson != null) {

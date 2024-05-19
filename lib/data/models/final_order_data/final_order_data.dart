@@ -8,6 +8,7 @@ class FinalOrderData {
   final List<QuestionService> selectedQuestionServices;
   final List<int> userInputs;
   final AddressModel selectedAddress;
+  final bool newAddress;
   final int transportationCost;
   final TimeModel selectedDate;
   final String selectedTime;
@@ -22,6 +23,7 @@ class FinalOrderData {
     required this.selectedQuestionServices,
     required this.userInputs,
     required this.selectedAddress,
+    required this.newAddress,
     required this.transportationCost,
     required this.selectedDate,
     required this.selectedTime,

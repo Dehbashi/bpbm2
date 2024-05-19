@@ -45,6 +45,9 @@ Future<FinalOrderData> fetchFinalOrderData() async {
   final selectedAddressJson = prefs.getString('selectedAddress') ?? '';
   final Map<String, dynamic> addressJsonData = jsonDecode(selectedAddressJson);
   final selectedAddress = AddressModel.fromJson(addressJsonData);
+  print(selectedAddress.lat);
+
+  final newAddress = prefs.getBool('newAddress') ?? false;
 
   final transportationCost = prefs.getInt('transportationCost') ?? 0;
 
@@ -64,6 +67,7 @@ Future<FinalOrderData> fetchFinalOrderData() async {
     selectedQuestionServices: selectedQuestionServices,
     userInputs: userInputs,
     selectedAddress: selectedAddress,
+    newAddress: newAddress,
     transportationCost: transportationCost,
     selectedDate: selectedDate,
     selectedTime: selectedTime,

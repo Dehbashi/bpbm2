@@ -53,12 +53,16 @@ class SaveNewAddress extends AddressEvent {
   final String fullAddress;
   final String houseNumber;
   final String unitNumber;
+  final double lat;
+  final double lng;
 
   const SaveNewAddress({
     required this.address,
     required this.fullAddress,
     required this.houseNumber,
     required this.unitNumber,
+    required this.lat,
+    required this.lng,
   });
 
   @override

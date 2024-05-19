@@ -169,6 +169,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
         //   timeId: orderData.timeId,
         //   transportationcost: orderData.transportationCost,
         // );
+        final addressType = orderData.newAddress ? '' : 'select';
         final savedAddress = RegisterAddressModel(
           city: neshanAddress.city,
           county: neshanAddress.county,
@@ -187,7 +188,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           state: neshanAddress.state,
           status: neshanAddress.status,
           transportationCost: transportationCost,
-          type: 'select',
+          type: addressType,
           unit: orderData.selectedAddress.unit,
           village: neshanAddress.village,
         );
