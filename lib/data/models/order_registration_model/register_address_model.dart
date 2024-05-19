@@ -2,7 +2,7 @@ class RegisterAddressModel {
   final String? city;
   final String? county;
   final String? district;
-  final String formattedAddress;
+  final String? formattedAddress;
   final String? houseNumber;
   final bool inOddEvenZone;
   final bool inTrafficZone;

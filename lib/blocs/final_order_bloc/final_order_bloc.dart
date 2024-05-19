@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
@@ -150,42 +152,40 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           text: 'در حال بارگذاری',
         );
         final orderData = await fetchFinalOrderData();
-        print(orderData.selectedAddress.lat);
         final neshanAddress = await addressRepository.fetchLocationFromMap(
           lat: double.parse(orderData.selectedAddress.lat),
           lng: double.parse(orderData.selectedAddress.lng),
         );
-        // final order = RegisterModel(
-        //   address: orderData.selectedAddress,
-        //   newAddress: false,
-        //   cellNumber: orderData.cellNumber,
-        //   dateId: orderData.selectedDate.id,
-        //   description: event.discription,
-        //   discount: discount,
-        //   firstName: orderData.firstName,
-        //   lastName: orderData.lastName,
-        //   selectedQuestions: orderData.selectedQuestions,
-        //   serviceId: event.serviceId,
-        //   timeId: orderData.timeId,
-        //   transportationcost: orderData.transportationCost,
-        // );
-        final addressType = orderData.newAddress ? '' : 'select';
+        final addressType = orderData.newAddress ? 'mark' : 'select';
         final savedAddress = RegisterAddressModel(
-          city: neshanAddress.city,
-          county: neshanAddress.county,
-          district: neshanAddress.district,
-          formattedAddress: neshanAddress.formattedAddress,
+          city: neshanAddress.city != null
+              ? utf8.decode(neshanAddress.city!.codeUnits)
+              : '',
+          county: neshanAddress.county != null
+              ? utf8.decode(neshanAddress.county!.codeUnits)
+              : '',
+          district: neshanAddress.district != null
+              ? utf8.decode(neshanAddress.district!.codeUnits)
+              : '',
+          formattedAddress:
+              utf8.decode(neshanAddress.formattedAddress.codeUnits),
           houseNumber: orderData.selectedAddress.houseNumber,
           inOddEvenZone: neshanAddress.inOddEvenZone,
           inTrafficZone: neshanAddress.inTrafficZone,
           lat: orderData.selectedAddress.lat,
           lng: orderData.selectedAddress.lng,
           municipalityZone: neshanAddress.municipalityZone,
-          neighbourhood: neshanAddress.neighborhood,
-          place: neshanAddress.place,
-          routeName: neshanAddress.routeName,
+          neighbourhood: utf8.decode(neshanAddress.neighborhood.codeUnits),
+          place: neshanAddress.place != null
+              ? utf8.decode(neshanAddress.place!.codeUnits)
+              : '',
+          routeName: neshanAddress.routeName != null
+              ? utf8.decode(neshanAddress.routeName!.codeUnits)
+              : '',
           routeType: neshanAddress.routeType,
-          state: neshanAddress.state,
+          state: neshanAddress.state != null
+              ? utf8.decode(neshanAddress.state!.codeUnits)
+              : '',
           status: neshanAddress.status,
           transportationCost: transportationCost,
           type: addressType,
@@ -249,6 +249,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           service: savedService,
           time: savedTime,
         );
+
         await registerOrderRepository.registerOrder(order: order).then((order) {
           emit(
             FinalStep(

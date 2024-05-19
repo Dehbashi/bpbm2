@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:bpbm2/common/custom_error_messenger.dart';
 import 'package:bpbm2/common/dialogs/loading_screen.dart';
 import 'package:bpbm2/common/methods/device_info.dart';
-import 'package:bpbm2/common/methods/load_token.dart';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/address_model/map_model.dart';
 import 'package:bpbm2/data/repo/address_repository.dart';

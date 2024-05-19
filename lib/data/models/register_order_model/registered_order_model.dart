@@ -11,7 +11,7 @@ class RegisteredOrderModel {
   final String text;
   final String time;
   final int totalPrice;
-  final int transportationCostl;
+  final int transportationCost;
   final String? updatedAt;
   final int userId;
 
@@ -28,7 +28,7 @@ class RegisteredOrderModel {
     required this.text,
     required this.time,
     required this.totalPrice,
-    required this.transportationCostl,
+    required this.transportationCost,
     required this.updatedAt,
     required this.userId,
   });
@@ -46,7 +46,7 @@ class RegisteredOrderModel {
         text = json['text'],
         time = json['time'],
         totalPrice = json['totalprice'],
-        transportationCostl = json['transportationcost'],
+        transportationCost = json['transportationcost'],
         updatedAt = json['updated_at'],
         userId = json['user_id'];
 }

@@ -16,29 +16,15 @@ class RegisterOrderRemoteDataSource implements IRegisterOrderDataSource {
   Future<RegisteredOrderModel> registerOrder(
       {required OrderRegistrationModel order}) async {
     final token = await loadToken();
-    final url = Uri.parse('$baseUrl/calculation/submitv2');
+    final url = Uri.parse('$baseUrl/calculation/submitv2-app');
     final headers = {
       'Tokenpublic': tokenPublic,
       'Content-Type': contentType,
       'Authorization': '$tokenPrefix $token',
     };
-    // final body = jsonEncode({
-    //   'address': order.address,
-    //   'newAddress': order.newAddress,
-    //   'transportationCost': order.transportationcost,
-    //   'phoneNumber': order.cellNumber,
-    //   'date': order.dateId,
-    //   'firstName': order.firstName,
-    //   'lastName': order.lastName,
-    //   'details': order.description,
-    //   'discount': order.discount,
-    //   'question': order.selectedQuestions,
-    //   'service': order.serviceId,
-    //   'time': order.timeId,
-    // });
     final body = jsonEncode(order.toJson());
     final response = await http.post(url, headers: headers, body: body);
-    
+    print(response.body);
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
