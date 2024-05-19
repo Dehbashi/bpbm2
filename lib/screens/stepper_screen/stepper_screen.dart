@@ -57,6 +57,7 @@ class StepperScreen extends StatelessWidget {
               } else if (state is FinalOrderScreenSuccess) {
                 return FinalOrderScreen(
                   serviceTitle: serviceTitle,
+                  serviceId: serviceId,
                 );
               } else if (state is FinalStepScreenSuccess) {
                 return const FinalStepScreen();

@@ -1,4 +1,5 @@
 class FullAddressModel {
+  final int? id;
   final String? city;
   final String? county;
   final String? district;
@@ -19,6 +20,7 @@ class FullAddressModel {
   final String? village;
 
   const FullAddressModel({
+    required this.id,
     required this.city,
     required this.county,
     required this.district,
@@ -39,8 +41,32 @@ class FullAddressModel {
     required this.village,
   });
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toCreateJson() {
     return {
+      'city': city,
+      'county': county,
+      'district': district,
+      'formatted_address': formattedAddress,
+      'housenumber': houseNumber,
+      'in_odd_even_zone': inOddEvenZone,
+      'in_traffic_zone': inTrafficZone,
+      'lat': lat,
+      'lng': lng,
+      'municipality_zone': municipalityZone,
+      'neighbourhood': neighbourhood,
+      'place': place,
+      'route_name': routeName,
+      'route_type': routeType,
+      'state': state,
+      'status': status,
+      'unit': unitNumber,
+      'village': village,
+    };
+  }
+
+  Map<String, dynamic> toUpdateJson() {
+    return {
+      'id': id,
       'city': city,
       'county': county,
       'district': district,

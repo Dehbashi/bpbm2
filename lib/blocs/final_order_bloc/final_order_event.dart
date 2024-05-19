@@ -20,9 +20,16 @@ class RegisterDiscount extends FinalOrderEvent {
 
 class RegisterFinalOrder extends FinalOrderEvent {
   final String discription;
+  final int serviceId;
 
-  const RegisterFinalOrder({required this.discription});
+  const RegisterFinalOrder({
+    required this.discription,
+    required this.serviceId,
+  });
 
   @override
-  List<Object> get props => [discription];
+  List<Object> get props => [
+        discription,
+        serviceId,
+      ];
 }

@@ -1,12 +1,12 @@
 class QuestionItemModel {
-  // final String? pattern;
+  final String? pattern;
   final String id;
   final String title;
   final int price;
   final String nextRelation;
 
   const QuestionItemModel({
-    // required this.pattern,
+    required this.pattern,
     required this.id,
     required this.title,
     required this.price,
@@ -15,6 +15,7 @@ class QuestionItemModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'pattern': pattern ?? '',
       'id': id,
       'title': title,
       'price': price,
@@ -23,8 +24,8 @@ class QuestionItemModel {
   }
 
   QuestionItemModel.fromJson(Map<String, dynamic> json)
-      // : pattern = json['pattern'] ?? null,
-      : id = (json['id'] is String) ? json['id'] : json['id'].toString(),
+      : pattern = json['pattern'] != null ? null : json['pattern'],
+        id = (json['id'] is String) ? json['id'] : json['id'].toString(),
         title = json['title'] ?? '',
         price = (json['price'] is String)
             ? int.parse(json['price'])

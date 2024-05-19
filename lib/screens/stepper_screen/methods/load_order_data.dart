@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bpbm2/data/models/address_model/address_model.dart';
 import 'package:bpbm2/data/models/final_order_data/final_order_data.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/data/models/question_model/question_service.dart';
 import 'package:bpbm2/data/models/time_model/time_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,6 +17,18 @@ Future<FinalOrderData> fetchFinalOrderData() async {
     try {
       final data = json.decode(item) as Map<String, dynamic>;
       questions.add(QuestionModel.fromJson(data));
+    } catch (e) {
+      print('Error decoding JSON: $e');
+    }
+  }
+
+  List<QuestionService> selectedQuestionServices = [];
+  List<String> selectedQuestionServicesJson =
+      prefs.getStringList('selectedQuestionServices') ?? [];
+  for (var item in selectedQuestionServicesJson) {
+    try {
+      final data = json.decode(item) as Map<String, dynamic>;
+      selectedQuestionServices.add(QuestionService.fromJson(data));
     } catch (e) {
       print('Error decoding JSON: $e');
     }
@@ -48,6 +61,7 @@ Future<FinalOrderData> fetchFinalOrderData() async {
 
   final finalOrderData = FinalOrderData(
     selectedQuestions: questions,
+    selectedQuestionServices: selectedQuestionServices,
     userInputs: userInputs,
     selectedAddress: selectedAddress,
     transportationCost: transportationCost,

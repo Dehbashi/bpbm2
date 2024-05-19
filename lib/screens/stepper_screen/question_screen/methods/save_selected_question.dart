@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bpbm2/data/models/question_model/question_item_model.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/data/models/question_model/question_service.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,8 @@ Future<void> saveSelectedQuestion({
   required List<TextEditingController> textEditingControllers,
   required List<QuestionModel> selectedQuestions,
   required List<int> userInputs,
+  required List<QuestionService> selectedQuestionServices,
+  required QuestionService questionService,
 }) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   final provider = Provider.of<PriceProvider>(context, listen: false);
@@ -30,6 +33,13 @@ Future<void> saveSelectedQuestion({
         type: question.type,
         list: question.list,
         items: items,
+      ),
+    );
+    selectedQuestionServices.add(
+      QuestionService(
+        question: question,
+        relation: questionService.relation,
+        serviceTitle: questionService.serviceTitle,
       ),
     );
     provider.addItem(price: items[0].price);
@@ -57,7 +67,13 @@ Future<void> saveSelectedQuestion({
         items: items,
       ),
     );
-    print(inputs);
+    selectedQuestionServices.add(
+      QuestionService(
+        question: question,
+        relation: questionService.relation,
+        serviceTitle: questionService.serviceTitle,
+      ),
+    );
     int textBoxPrice = 0;
     for (int i = 0; i < items.length; i++) {
       textBoxPrice = textBoxPrice + items[i].price * inputs[i];
@@ -71,6 +87,12 @@ Future<void> saveSelectedQuestion({
   List<String> userInputsJson =
       userInputs.map((input) => json.encode(input)).toList();
 
+  List<String> selectedQuestionServicesJson = selectedQuestionServices
+      .map((questionService) => json.encode(questionService.toJson()))
+      .toList();
+
   await prefs.setStringList('selectedQuestions', selectedQuestionsJson);
   await prefs.setStringList('userInputs', userInputsJson);
+  await prefs.setStringList(
+      'selectedQuestionServices', selectedQuestionServicesJson);
 }

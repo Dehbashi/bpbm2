@@ -1,5 +1,7 @@
 import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/data/models/question_model/question_service.dart';
+import 'package:bpbm2/data/models/question_model/relation_model.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_buttons.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_header.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/widgets/question_screen_list.dart';
@@ -27,7 +29,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int relationNow = -1;
   List<TextEditingController> textEditingControllers = [];
   List<int> relationIdHistory = [];
-  // late QuestionModel question;
   QuestionModel question = const QuestionModel(
     id: 0,
     title: '',
@@ -35,7 +36,19 @@ class _QuestionScreenState extends State<QuestionScreen> {
     list: '',
     items: [],
   );
+  QuestionService questionService = const QuestionService(
+    question: QuestionModel(
+      id: 0,
+      title: '',
+      type: '',
+      list: '',
+      items: [],
+    ),
+    relation: RelationModel(now: 0),
+    serviceTitle: '',
+  );
   List<QuestionModel> selectedQuestions = [];
+  List<QuestionService> selectedQuestionServices = [];
   List<int> userInputs = [];
 
   @override
@@ -84,6 +97,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
             builder: (context, state) {
               if (state is QuestionSuccess) {
                 question = state.questionService.question;
+                questionService = state.questionService;
                 relationNow = state.questionService.relation.now;
                 return QuestionScreenList(
                   question: question,
@@ -116,6 +130,8 @@ class _QuestionScreenState extends State<QuestionScreen> {
           ),
         ),
         QuestionScreenButtons(
+          questionService: questionService,
+          selectedQuestionServices: selectedQuestionServices,
           relationIdHistory: relationIdHistory,
           selectedQuestions: selectedQuestions,
           userInputs: userInputs,

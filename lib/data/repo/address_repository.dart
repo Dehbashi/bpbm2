@@ -14,6 +14,10 @@ abstract class IAddressRepository {
     required double lng,
   });
   Future<void> createAddress({required FullAddressModel address});
+  Future<void> updateAddress({
+    required FullAddressModel address,
+    required int addressId,
+  });
 }
 
 class AddressRepository implements IAddressRepository {
@@ -43,5 +47,14 @@ class AddressRepository implements IAddressRepository {
   @override
   Future<void> createAddress({required FullAddressModel address}) async {
     return dataSource.createAddress(address: address);
+  }
+
+  @override
+  Future<void> updateAddress(
+      {required FullAddressModel address, required int addressId}) async {
+    return dataSource.updateAddress(
+      address: address,
+      addressId: addressId,
+    );
   }
 }

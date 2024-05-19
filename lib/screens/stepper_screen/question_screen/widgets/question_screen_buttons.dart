@@ -2,6 +2,7 @@ import 'package:bpbm2/blocs/question_bloc/question_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/common/widgets/elevated_icon_widget.dart';
 import 'package:bpbm2/data/models/question_model/question_model.dart';
+import 'package:bpbm2/data/models/question_model/question_service.dart';
 import 'package:bpbm2/providers/price_provider.dart';
 import 'package:bpbm2/screens/stepper_screen/question_screen/methods/save_selected_question.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,8 @@ class QuestionScreenButtons extends StatefulWidget {
   final QuestionModel question;
   final int nextRelationId;
   final int relationNow;
+  final QuestionService questionService;
+  final List<QuestionService> selectedQuestionServices;
   const QuestionScreenButtons({
     super.key,
     required this.relationIdHistory,
@@ -35,6 +38,8 @@ class QuestionScreenButtons extends StatefulWidget {
     required this.question,
     required this.nextRelationId,
     required this.relationNow,
+    required this.questionService,
+    required this.selectedQuestionServices,
   });
 
   @override
@@ -66,6 +71,7 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
                 provider.removeItem(price: lastQuestion.items[0].price);
               }
               widget.selectedQuestions.removeLast();
+              widget.selectedQuestionServices.removeLast();
               widget.bloc.add(
                 NextQuestionRequest(
                   serviceId: widget.serviceId,
@@ -93,6 +99,8 @@ class _QuestionScreenButtonsState extends State<QuestionScreenButtons> {
               textEditingControllers: widget.textEditingControllers,
               selectedQuestions: widget.selectedQuestions,
               userInputs: widget.userInputs,
+              questionService: widget.questionService,
+              selectedQuestionServices: widget.selectedQuestionServices,
             );
 
             if (widget.nextRelationId != 0) {

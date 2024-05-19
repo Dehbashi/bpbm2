@@ -12,15 +12,17 @@ import 'package:persian_number_utility/persian_number_utility.dart';
 class OrderScreenWidget extends StatelessWidget {
   final FinalOrderSuccess state;
   final String serviceTitle;
+  final int serviceId;
   const OrderScreenWidget({
     super.key,
     required this.state,
     required this.serviceTitle,
+    required this.serviceId,
   });
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _discriptionController = TextEditingController();
+    TextEditingController discriptionController = TextEditingController();
 
     return Column(
       children: [
@@ -53,14 +55,20 @@ class OrderScreenWidget extends StatelessWidget {
           height: 20,
         ),
         DiscriptionBox(
-          controller: _discriptionController,
+          controller: discriptionController,
         ),
         const SizedBox(
           height: 20,
         ),
         StepperButtons(
           onNextPressed: () {
-            BlocProvider.of<StepperBloc>(context).add(NextStep());
+            BlocProvider.of<FinalOrderBloc>(context).add(
+              RegisterFinalOrder(
+                discription: discriptionController.text,
+                serviceId: serviceId,
+              ),
+            );
+            // BlocProvider.of<StepperBloc>(context).add(NextStep());
           },
           onBackPressed: () {
             BlocProvider.of<StepperBloc>(context).add(PreviousStep());

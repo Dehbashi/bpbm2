@@ -50,3 +50,12 @@ class FinalOrderSuccess extends FinalOrderState {
 }
 
 class FinalOrderFailed extends FinalOrderState {}
+
+class FinalStep extends FinalOrderState {
+  final int orderId;
+
+  const FinalStep({required this.orderId});
+
+  @override
+  List<Object> get props => [orderId];
+}

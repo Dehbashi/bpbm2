@@ -15,6 +15,10 @@ abstract class IAddressDataSource {
     required double lng,
   });
   Future<void> createAddress({required FullAddressModel address});
+  Future<void> updateAddress({
+    required FullAddressModel address,
+    required int addressId,
+  });
 }
 
 class AddressRemoteDataSource implements IAddressDataSource {
@@ -92,11 +96,31 @@ class AddressRemoteDataSource implements IAddressDataSource {
       'Tokenpublic': tokenPublic,
       'Authorization': '$tokenPrefix $token',
     };
-    final body = jsonEncode({address.toJson()});
+    final body = jsonEncode({address.toCreateJson()});
     final response = await http.post(url, headers: headers, body: body);
 
     if (response.statusCode == 200) {
       print('create address successful');
+    } else {
+      throw Exception(response.statusCode);
+    }
+  }
+
+  @override
+  Future<void> updateAddress(
+      {required FullAddressModel address, required int addressId}) async {
+    final url = Uri.parse('$baseUrl/user/address/update');
+    final token = await loadToken();
+    final headers = {
+      'Content-Type': contentType,
+      'Tokenpublic': tokenPublic,
+      'Authorization': '$tokenPrefix $token',
+    };
+    final body = jsonEncode({address.toCreateJson()});
+    final response = await http.post(url, headers: headers, body: body);
+
+    if (response.statusCode == 200) {
+      print('update address successful');
     } else {
       throw Exception(response.statusCode);
     }
