@@ -2,7 +2,9 @@ import 'package:bpbm2/common/screen_texts_images/contact_screen_content.dart';
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/common/widgets/form_container_widget.dart';
 import 'package:bpbm2/common/widgets/text_field_widget.dart';
+import 'package:bpbm2/providers/form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ContactscreenFormWidget extends StatefulWidget {
   const ContactscreenFormWidget({
@@ -33,6 +35,8 @@ class _ContactscreenFormWidgetState extends State<ContactscreenFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<FormProvider>(context, listen: false);
+
     return FormContainerWidget(
       formWidget: Form(
         key: _formKey,
@@ -108,10 +112,19 @@ class _ContactscreenFormWidgetState extends State<ContactscreenFormWidget> {
               height: 12.5,
             ),
             ButtonWidget(
-              onPressed: () {
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   // _formKey.currentState!.save();
-                  print(textControllers[2].text);
+                  provider.sendContactForm(
+                    context: context,
+                    subject: textControllers[0].text,
+                    name: textControllers[1].text,
+                    cellNumber: textControllers[2].text,
+                    text: textControllers[3].text,
+                  );
+                  for (var textController in textControllers) {
+                    textController.clear();
+                  }
                 }
               },
               text: 'ارسال درخواست همکاری',

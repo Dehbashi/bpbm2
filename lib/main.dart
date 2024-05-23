@@ -8,17 +8,26 @@ import 'package:bpbm2/blocs/service_list_bloc/service_list_bloc.dart';
 import 'package:bpbm2/blocs/stepper_bloc/stepper_bloc.dart';
 import 'package:bpbm2/blocs/user_order_bloc/user_order_bloc.dart';
 import 'package:bpbm2/data/repo/auth_repository.dart';
+import 'package:bpbm2/providers/form_provider.dart';
 import 'package:bpbm2/screens/intro_screen/intro_screen.dart';
 import 'package:bpbm2/screens/main_screen/main_screen.dart';
 import 'package:bpbm2/screens/service_detail_screen/detail_screens/service_detail_screen.dart';
 import 'package:bpbm2/screens/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   authRepository.loadInfo();
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FormProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
