@@ -10,6 +10,13 @@ abstract class IFormRepository {
     required String subject,
     required String text,
   });
+  Future<ContactFormModel> sendTechnicianForm({
+    required String firstName,
+    required String lastName,
+    required String cellNumber,
+    required String text,
+    required String nationalId,
+  });
 }
 
 class FormRepository implements IFormRepository {
@@ -29,6 +36,23 @@ class FormRepository implements IFormRepository {
       cellNumber: cellNumber,
       subject: subject,
       text: text,
+    );
+  }
+
+  @override
+  Future<ContactFormModel> sendTechnicianForm({
+    required String firstName,
+    required String lastName,
+    required String cellNumber,
+    required String text,
+    required String nationalId,
+  }) async {
+    return dataSource.sendTechnicianForm(
+      firstName: firstName,
+      lastName: lastName,
+      cellNumber: cellNumber,
+      text: text,
+      nationalId: nationalId,
     );
   }
 }

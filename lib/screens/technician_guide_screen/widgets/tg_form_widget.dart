@@ -1,7 +1,9 @@
 import 'package:bpbm2/common/widgets/button_widget.dart';
 import 'package:bpbm2/common/widgets/form_container_widget.dart';
 import 'package:bpbm2/common/widgets/text_field_widget.dart';
+import 'package:bpbm2/providers/form_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TgFormWidget extends StatefulWidget {
   const TgFormWidget({
@@ -32,6 +34,8 @@ class _TgFormWidgetState extends State<TgFormWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<FormProvider>(context, listen: false);
+
     return FormContainerWidget(
       formWidget: Form(
         key: _formKey,
@@ -119,8 +123,17 @@ class _TgFormWidgetState extends State<TgFormWidget> {
             ButtonWidget(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  // _formKey.currentState!.save();
-                  print(textControllers[2].text);
+                  provider.sendTechnicianForm(
+                    context: context,
+                    firstName: textControllers[0].text,
+                    lastName: textControllers[1].text,
+                    nationalId: textControllers[2].text,
+                    cellNumber: textControllers[3].text,
+                    text: textControllers[4].text,
+                  );
+                  for (var textController in textControllers) {
+                    textController.clear();
+                  }
                 }
               },
               text: 'ارسال درخواست همکاری',

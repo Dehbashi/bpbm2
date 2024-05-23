@@ -26,7 +26,7 @@ class MainScreenDrawerQuickLink extends StatelessWidget {
         )
       },
       {'درخواست همکاری': const TechnicianGuideScreen()},
-      {'پشتیبانی': const SupportScreen()},
+      // {'پشتیبانی': const SupportScreen()},
       {'قوانین و مقررات': const RulesScreen()},
       {'مجله بسپارش به ما': 'https://bespareshbema.com/blog'},
     ];

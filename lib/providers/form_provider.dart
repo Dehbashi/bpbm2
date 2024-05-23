@@ -32,7 +32,44 @@ class FormProvider with ChangeNotifier {
     } catch (e) {
       customErrorMessenger(
         context: context,
-        message: e.toString(),
+        message: 'خطای نامشخص',
+      );
+      notifyListeners();
+    }
+  }
+
+  Future<void> sendTechnicianForm({
+    required BuildContext context,
+    required String cellNumber,
+    required String firstName,
+    required String lastName,
+    required String nationalId,
+    required String text,
+  }) async {
+    try {
+      await formRepository.sendTechnicianForm(
+        firstName: firstName,
+        lastName: lastName,
+        cellNumber: cellNumber,
+        text: text,
+        nationalId: nationalId,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'درخواست شما با موفقیت ثبت شد.',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+        ),
+      );
+      notifyListeners();
+    } catch (e) {
+      customErrorMessenger(
+        context: context,
+        message: 'خطای نامشخص',
       );
       notifyListeners();
     }
