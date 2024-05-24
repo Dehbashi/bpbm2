@@ -23,7 +23,7 @@ class ServiceDetailScreenWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'آشنایی با سرویس ${utf8.decode(serviceDetail.serviceExp.title.codeUnits)}',
+              'آشنایی با سرویس ${serviceDetail.serviceExp.title}',
               style: Theme.of(context).textTheme.titleSmall,
             ),
             const SizedBox(
@@ -50,8 +50,8 @@ class ServiceDetailScreenWidget extends StatelessWidget {
             if (serviceDetail.serviceFaqs.isNotEmpty)
               ...serviceDetail.serviceFaqs.map((faq) {
                 return FaqWidget(
-                  question: utf8.decode(faq.title.codeUnits),
-                  answer: utf8.decode(faq.text.codeUnits),
+                  question: faq.title,
+                  answer: faq.text,
                 );
               }).toList()
           ],

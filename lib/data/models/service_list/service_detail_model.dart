@@ -11,8 +11,8 @@ class ServiceDetailModel {
   });
 
   ServiceDetailModel.fromJson(Map<String, dynamic> json)
-      : serviceExp = json['data'],
+      : serviceExp = ServiceExpModel.fromJson(json['data']),
         serviceFaqs = (json['faq'] as List<dynamic>).map((serviceFaq) {
-          return FaqModel.fromJson(json['faq']);
+          return FaqModel.fromJson(serviceFaq);
         }).toList();
 }

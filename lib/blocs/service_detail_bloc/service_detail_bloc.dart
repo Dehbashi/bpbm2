@@ -11,12 +11,11 @@ part 'service_detail_state.dart';
 
 class ServiceDetailBloc extends Bloc<ServiceDetailEvent, ServiceDetailState> {
   ServiceDetailBloc() : super(ServiceDetailInitial()) {
-    on<ServiceDetailEvent>((event, emit) async {
+    on<ServiceDetailEvent>((event, emit) {
       if (event is ServiceDetailStarted) {
         emit(ServiceDetailLoading());
         try {
-          final serviceDetail =
-              await fetchServiceDetailRepository.fetchServiceDetail(
+          final serviceDetail = fetchServiceDetailRepository.fetchServiceDetail(
             serviceId: event.serviceId,
           );
 
@@ -27,6 +26,7 @@ class ServiceDetailBloc extends Bloc<ServiceDetailEvent, ServiceDetailState> {
           );
         } catch (e) {
           emit(ServiceDetailFailed());
+          print(e.toString());
           customErrorMessenger(
             context: event.context,
             message: 'خطای نامشخص',
