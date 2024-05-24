@@ -12,8 +12,13 @@ class SplashScreen extends StatelessWidget {
         fit: StackFit.expand,
         alignment: Alignment.center,
         children: [
-          Image.asset(
-            'assets/images/logo.png',
+          Center(
+            child: SizedBox(
+              width: 200,
+              child: Image.asset(
+                'assets/images/logo.png',
+              ),
+            ),
           ),
           Positioned(
             bottom: 50,
