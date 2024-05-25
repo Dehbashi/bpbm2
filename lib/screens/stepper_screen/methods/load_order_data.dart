@@ -13,6 +13,7 @@ Future<FinalOrderData> fetchFinalOrderData() async {
   List<QuestionModel> questions = [];
   List<String> selectedQuestionsJson =
       prefs.getStringList('selectedQuestions') ?? [];
+
   for (var item in selectedQuestionsJson) {
     try {
       final data = json.decode(item) as Map<String, dynamic>;
@@ -33,6 +34,12 @@ Future<FinalOrderData> fetchFinalOrderData() async {
       print('Error decoding JSON: $e');
     }
   }
+
+  List<QuestionService> selectedProducts = [];
+  selectedProducts.addAll(
+    selectedQuestionServices
+        .where((element) => element.question.list == 'product'),
+  );
 
   List<String> userInputsJson = prefs.getStringList('userInputs') ?? [];
   List<int> userInputs = userInputsJson
@@ -64,6 +71,7 @@ Future<FinalOrderData> fetchFinalOrderData() async {
   final finalOrderData = FinalOrderData(
     selectedQuestions: questions,
     selectedQuestionServices: selectedQuestionServices,
+    selectedProducts: selectedProducts,
     userInputs: userInputs,
     selectedAddress: selectedAddress,
     newAddress: newAddress,

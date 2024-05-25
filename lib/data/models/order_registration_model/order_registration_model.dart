@@ -11,7 +11,7 @@ class OrderRegistrationModel {
   final DateModel date;
   final String? details;
   final String? discount;
-  final List<dynamic> product;
+  final List<RegisterQuestionModel> product;
   final RegisterProfileModel profile;
   final List<RegisterQuestionModel> questions;
   final RegisterServiceModel service;
@@ -37,7 +37,9 @@ class OrderRegistrationModel {
       'date': date.toJson(),
       'details': details ?? '',
       'discount': discount ?? '',
-      'product': [],
+      'product': product.map((item) {
+        return item.toJson();
+      }).toList(),
       'profile': profile.toJson(),
       'question': questions.map((question) {
         return question.toJson();

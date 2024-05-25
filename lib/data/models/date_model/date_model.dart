@@ -11,7 +11,7 @@ class DateModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'id': id.toString(),
       'text': text,
       'title': title,
     };

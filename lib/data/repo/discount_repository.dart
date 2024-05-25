@@ -4,9 +4,9 @@ final discountRepository =
     DiscountRepository(dataSource: DiscountRemoteDataSource());
 
 abstract class IDiscountRepository {
-  Future<void> fetchDiscount({
+  Future<int> fetchDiscount({
     required String discount,
-    required int value,
+    required int servicePrice,
   });
 }
 
@@ -16,11 +16,11 @@ class DiscountRepository implements IDiscountRepository {
   const DiscountRepository({required this.dataSource});
 
   @override
-  Future<void> fetchDiscount(
-      {required String discount, required int value}) async {
+  Future<int> fetchDiscount(
+      {required String discount, required int servicePrice}) async {
     return dataSource.fetchDiscount(
       discount: discount,
-      value: value,
+      servicePrice: servicePrice,
     );
   }
 }

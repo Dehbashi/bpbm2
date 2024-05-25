@@ -31,6 +31,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
     List<dynamic> prices = [];
     List<QuestionModel> services = [];
     String discount = '0';
+    int newDiscount = 0;
     int transportationCost = 0;
     AddressModel address = AddressModel.empty();
     List<UserInputModel> inputs = [];
@@ -59,7 +60,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           prices = fetchPrice(
             questions: questions,
             userInputs: userInputs,
-            discount: 0,
+            discount: int.parse(discount),
             transportationCost: transportationCost,
           );
           inputs = prices[3];
@@ -89,42 +90,36 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
       }
 
       if (event is RegisterDiscount) {
-        emit(
-          FinalOrderSuccess(
-            products: products,
-            priceOfProducts: prices[1],
-            services: services,
-            priceOfServices: prices[0],
-            discount: discount,
-            totalPrice: prices[2],
-            transportationCost: transportationCost,
-            address: address,
-            userInputs: inputs,
-            isDiscountLoading: true,
-          ),
+        LoadingScreen.instance().show(
+          context: context,
+          text: 'در حال محاسبه',
         );
-        Future.delayed(const Duration(seconds: 1));
         await discountRepository
             .fetchDiscount(
           discount: event.discount,
-          value: 0,
+          servicePrice: prices[0],
         )
-            .then((response) {
+            .then((value) {
+          newDiscount = value;
+          print(prices[0]);
+          print(newDiscount);
           emit(
             FinalOrderSuccess(
               products: products,
               priceOfProducts: prices[1],
               services: services,
               priceOfServices: prices[0],
-              discount: discount,
-              totalPrice: prices[2],
+              discount: newDiscount.toString(),
+              totalPrice: prices[2] - newDiscount,
               transportationCost: transportationCost,
               address: address,
               userInputs: inputs,
               isDiscountLoading: false,
             ),
           );
+          LoadingScreen.instance().hide();
         }).catchError((e) {
+          LoadingScreen.instance().hide();
           emit(
             FinalOrderSuccess(
               products: products,
@@ -208,6 +203,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
         );
 
         List<RegisterQuestionModel> questions = [];
+        List<RegisterQuestionModel> products = [];
         for (var item in orderData.selectedQuestions) {
           int index = orderData.selectedQuestions.indexOf(item);
           final selectedQuestion = orderData.selectedQuestions[index];
@@ -216,18 +212,33 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           List<QuestionItemModel> data =
               orderData.selectedQuestions[index].items;
 
-          final question = RegisterQuestionModel(
-            data: data,
-            id: selectedQuestion.id,
-            nextRelation: selectedQuestion.items[0].nextRelation,
-            number: 1,
-            question: selectedQuestionService,
-            relationId: selectedQuestionService.relation.now,
-            title: selectedQuestion.title,
-            type: selectedQuestion.list,
-            questionType: selectedQuestion.type,
-          );
-          questions.add(question);
+          if (selectedQuestion.list == 'service') {
+            final question = RegisterQuestionModel(
+              data: data,
+              id: selectedQuestion.id,
+              nextRelation: selectedQuestion.items[0].nextRelation,
+              number: 1,
+              question: selectedQuestionService,
+              relationId: selectedQuestionService.relation.now,
+              title: selectedQuestion.title,
+              type: selectedQuestion.list,
+              questionType: selectedQuestion.type,
+            );
+            questions.add(question);
+          } else if (selectedQuestion.list == 'product') {
+            final product = RegisterQuestionModel(
+              data: data,
+              id: selectedQuestion.id,
+              nextRelation: selectedQuestion.items[0].nextRelation,
+              number: 1,
+              question: selectedQuestionService,
+              relationId: selectedQuestionService.relation.now,
+              title: selectedQuestion.title,
+              type: selectedQuestion.list,
+              questionType: selectedQuestion.type,
+            );
+            products.add(product);
+          }
         }
 
         final savedService = RegisterServiceModel(
@@ -242,8 +253,8 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           authUser: orderData.cellNumber,
           date: savedDate,
           details: event.discription,
-          discount: null,
-          product: [],
+          discount: newDiscount.toString(),
+          product: products,
           profile: savedProfile,
           questions: questions,
           service: savedService,
@@ -258,6 +269,7 @@ class FinalOrderBloc extends Bloc<FinalOrderEvent, FinalOrderState> {
           );
           LoadingScreen.instance().hide();
         }).catchError((e) {
+          print(e.toString());
           LoadingScreen.instance().hide();
           customErrorMessenger(
             context: context,

@@ -19,7 +19,7 @@ class QuestionItemModel {
       'id': id,
       'title': title,
       'price': price,
-      'nextRelation': nextRelation,
+      'next_relation': nextRelation,
     };
   }
 
