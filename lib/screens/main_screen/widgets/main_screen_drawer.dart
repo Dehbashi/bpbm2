@@ -87,7 +87,9 @@ class _MainScreenDrawerState extends State<MainScreenDrawer>
                               final service = serviceList[index];
                               final imagePath =
                                   'assets/icons/homeicons/${service.id}.webp';
-                              if (index <= 5 || showAllItems) {
+                              if ((index <= 5 || showAllItems) &&
+                                  service.title != 'سایر' &&
+                                  service.title != 'پسیو شبکه های کامپیوتری') {
                                 return MainScreenDrawerServiceListWidget(
                                   service: service,
                                   imagePath: imagePath,

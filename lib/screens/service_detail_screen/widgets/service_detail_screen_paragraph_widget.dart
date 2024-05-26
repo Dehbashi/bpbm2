@@ -22,6 +22,7 @@ class ServiceDetailScreenParagraphWidget extends StatelessWidget {
           );
         } else if (element.localName == 'p') {
           return DefaultTextStyle(
+            textAlign: TextAlign.justify,
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   height: 1.5,
                 ),

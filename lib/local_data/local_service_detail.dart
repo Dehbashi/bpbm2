@@ -1,4 +1,5 @@
 import 'package:bpbm2/data/models/service_list/service_detail_model.dart';
+import 'package:bpbm2/local_data/services/burglar_alarm.dart';
 import 'package:bpbm2/local_data/services/cctv.dart';
 import 'package:bpbm2/local_data/services/central.dart';
 import 'package:bpbm2/local_data/services/central_antenna.dart';
@@ -16,8 +17,11 @@ import 'package:bpbm2/local_data/services/protector.dart';
 import 'package:bpbm2/local_data/services/remote.dart';
 import 'package:bpbm2/local_data/services/sensor.dart';
 import 'package:bpbm2/local_data/services/switch.dart';
+import 'package:bpbm2/local_data/services/tv.dart';
 import 'package:bpbm2/local_data/services/ups.dart';
+import 'package:bpbm2/local_data/services/vent.dart';
 import 'package:bpbm2/local_data/services/video_phone.dart';
+import 'package:bpbm2/local_data/services/wifi.dart';
 import 'package:bpbm2/local_data/services/wiring.dart';
 
 List<ServiceDetailModel> localServiceDetail = [
@@ -41,4 +45,8 @@ List<ServiceDetailModel> localServiceDetail = [
   ServiceDetailModel.fromJson(damperDetail),
   ServiceDetailModel.fromJson(remoteDetail),
   ServiceDetailModel.fromJson(fanDetail),
+  ServiceDetailModel.fromJson(tvDetail),
+  ServiceDetailModel.fromJson(ventDetail),
+  ServiceDetailModel.fromJson(burglarAlarmDetail),
+  ServiceDetailModel.fromJson(wifiDetail),
 ];
